@@ -91,7 +91,9 @@ export function GateRoute() {
   const { add } = useFuel()
   const [done, setDone] = useState<number | null>(null)
   const framed = window.parent !== window
-  const android = (window as { ScrollProofAndroid?: { unlock(minutes: number, kind: string): void } }).ScrollProofAndroid
+  type AndroidBridge = { unlock(minutes: number, kind: string): void }
+  const native = window as Window & { CapableAndroid?: AndroidBridge; ScrollProofAndroid?: AndroidBridge }
+  const android = native.CapableAndroid ?? native.ScrollProofAndroid
   const finish = (minutes: number, kind: 'card' | 'escape') => {
     if (android) { add(minutes); android.unlock(minutes, kind); return } // native overlay wrapper (android-gate/)
     if (framed) {

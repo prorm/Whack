@@ -1,6 +1,6 @@
 ---
 name: brainrot-storyboard-compiler
-description: Compile a Job Skill Node + TrendGenome + language mode (english/hinglish/kanglish) with protected_terms into a ReelStoryboard JSON with a CortisolLock and an UnseenJobTwinTask, gated by deterministic QA. Use when writing a new ScrollProof lesson reel.
+description: Compile a Job Skill Node + TrendGenome + language mode (english/hinglish/kanglish) with protected_terms into a ReelStoryboard JSON with a CortisolLock and an UnseenJobTwinTask, gated by deterministic QA. Use when writing a new CAPABLE lesson reel.
 ---
 
 # Brainrot Storyboard Compiler

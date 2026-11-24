@@ -74,7 +74,7 @@ export const COMPETENCIES: Competency[] = [
   { id: 'site.safety', domain: 'site', title: 'Site electrical safety (practical)', can: 'I work safely on a live site: isolation, PPE, earthing, connectors.',
     prereqs: [], concepts: ['safety'], lessons: [{ label: 'Reels: spot the fault', route: 'flux-reels' }],
     assessment: null, review: 'in_person_only', hazardous: true,
-    inPerson: 'Checked in person by the employer’s supervisor. An app cannot prove safe hands, so ScrollProof never marks this as evidenced.' },
+    inPerson: 'Checked in person by the employer’s supervisor. An app cannot prove safe hands, so CAPABLE never marks this as evidenced.' },
 ]
 
 export const byId = (id: CompetencyId) => COMPETENCIES.find((c) => c.id === id)!

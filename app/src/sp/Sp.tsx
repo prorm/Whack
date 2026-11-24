@@ -1,4 +1,4 @@
-// ScrollProof: one product, five seats. Learn (goal feed) → Jobs (explainable match) → Proof Passport (inspectable
+// CAPABLE: one product, five seats. Learn (goal feed) → Jobs (explainable match) → Proof Passport (inspectable
 // evidence, consent) → Teach (Field Scars + impact) → Employer demo (missions, shortlist, invite).
 // FLUX is the engine underneath. Every person, employer and listing here is DEMO and labelled so.
 import { Fragment, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
@@ -36,7 +36,7 @@ export function Shell({ tab, children, light }: { tab: string; children: ReactNo
   return <div className={`fx-root sp-root ${light ? 'sp-light' : ''}`} lang="en">
     <a href="#sp-main" className="sp-skip" onClick={(e) => { e.preventDefault(); document.getElementById('sp-main')?.focus() }}>Skip to content</a>
     <header className="sp-top">
-      <a href="#/home" className="sp-brand" aria-label="ScrollProof home"><span className="sp-mark" aria-hidden="true"><i /><i /><i /></span><span>Scroll<b>Proof</b></span></a>
+      <a href="#/home" className="sp-brand" aria-label="CAPABLE home"><span className="sp-mark" aria-hidden="true"><i /><i /><i /></span><b>CAPABLE</b></a>
       <span className="sp-engine">powered by FLUX</span>
       {!online && <span className="sp-off" role="status">Offline · learning still works</span>}
     </header>
@@ -309,7 +309,7 @@ function RecordView({ r, job }: { r: EvidenceRecord; job: string | null }) {
       const res = await request<{ token: string; regraded: boolean }>('/api/proof/share', { record: r })
       const url = `${location.origin}${location.pathname}#/sp-view?t=${res.token}`
       setLink({ url, token: res.token }); pp.share('public-link', [r.id], res.token)
-    } catch (e) { setLink({ err: (e as Error).message.includes('fetch') || (e as Error).message.includes('server') ? 'Share links need the ScrollProof server (npm start). Same-device sharing on the Jobs page still works.' : (e as Error).message }) }
+    } catch (e) { setLink({ err: (e as Error).message.includes('fetch') || (e as Error).message.includes('server') ? 'Share links need the CAPABLE server (npm start). Same-device sharing on the Jobs page still works.' : (e as Error).message }) }
   }
   const revokeLink = async (shareId: string, token?: string) => {
     if (token) { try { await request('/api/proof/revoke', { token }) } catch { /* local revoke still applies */ } }
@@ -374,11 +374,11 @@ export function SpView() {
   }, [t])
   const r = state.data?.record
   return <div className="fx-root sp-root sp-light"><main className="sp-main" id="sp-main">
-    <p className="fx-kicker">ScrollProof · shared evidence</p>
+    <p className="fx-kicker">CAPABLE · shared evidence</p>
     {state.status === 'loading' && <p>Loading…</p>}
     {state.status === 'revoked' && <><h1 className="sp-h1">The learner revoked this link.</h1><p className="sp-muted">The server no longer serves this record.</p></>}
     {state.status === 'missing' && <h1 className="sp-h1">No record at this link.</h1>}
-    {state.status === 'offline' && <h1 className="sp-h1">The ScrollProof server is not reachable.</h1>}
+    {state.status === 'offline' && <h1 className="sp-h1">The CAPABLE server is not reachable.</h1>}
     {r && <section className="sp-panel">
       <h1 className="sp-h1">{r.taskLabel}</h1>
       {r.source === 'demo_seed' && <DemoTag>DEMO SEED</DemoTag>}

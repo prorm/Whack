@@ -69,13 +69,13 @@ function Hub() {
   return (
     <div className="fx-hub">
       <header className="fx-top">
-        <a href="#/home" className="fx-back" aria-label="ScrollProof home">←</a>
+        <a href="#/home" className="fx-back" aria-label="CAPABLE home">←</a>
         <span className="fx-logo" aria-label="FLUX"><b>FLUX</b><i>learning engine</i></span>
         <button className="fx-icon" onClick={() => setMuted(!muted)} aria-label={muted ? 'Sound on' : 'Mute'}>{muted ? '🔇' : '🔊'}</button>
       </header>
 
       <section className="fx-hero">
-        <p className="fx-kicker">ScrollProof · Learn</p>
+        <p className="fx-kicker">CAPABLE · Learn</p>
         <h1>Don't watch the lesson.<br /><span>Break it.</span></h1>
         <p className="fx-sub">Every concept is a live machine you can sabotage. Bet before you learn, break it with your hands, fix an apprentice's mistake, win over a customer, then prove it on a job you've never seen.</p>
       </section>

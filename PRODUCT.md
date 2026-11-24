@@ -1,4 +1,4 @@
-# ScrollProof
+# CAPABLE
 
 <!-- impeccable:product-schema 1 -->
 

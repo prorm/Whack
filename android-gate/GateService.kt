@@ -1,7 +1,7 @@
 // REFERENCE SKELETON — NOT COMPILED OR RUN. No Android SDK was available when this was written.
 // Thin native wrapper for Scroll Fuel on Android: polls the foreground app with UsageStatsManager and, when the tank
 // is empty on a gated app, draws the FLUX tollbooth (the same #/flux-gate web page, bundled offline) over it.
-package com.scrollproof.gate
+package com.capable.gate
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -81,7 +81,7 @@ class GateService : Service() {
             webViewClient = object : WebViewClient() {
                 override fun shouldInterceptRequest(view: WebView, req: WebResourceRequest) = loader.shouldInterceptRequest(req.url)
             }
-            addJavascriptInterface(Bridge(), "ScrollProofAndroid")
+            addJavascriptInterface(Bridge(), "CapableAndroid")
             val id = if (app == "com.instagram.android") "instagram" else "youtube-shorts"
             loadUrl("https://appassets.androidplatform.net/index.html#/flux-gate?app=$id")
         }

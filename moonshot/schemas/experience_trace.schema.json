@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "ScrollProof X ExperienceTrace",
+  "title": "CAPABLE X ExperienceTrace",
   "type": "object",
   "required": ["experienceId","sourceOwner","sourceMedia","permissions","problemDescription","statedGoal","facts","actions","spokenExplanations","observedOutcomes","inferredReasoning","confidence","unsupportedClaims","missingSteps","safetyFlags","skills","assessmentCandidates","reviewStatus"],
   "properties": {

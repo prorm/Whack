@@ -31,7 +31,7 @@ def motion(seconds, grounded):
     image = Image.new("RGB", (WIDTH, HEIGHT), base)
     d = ImageDraw.Draw(image)
     nudge = round(25 * max(0, 1-age/.45)**3)
-    monogram(d,(52,62),"SCROLLPROOF  /  DEMO",20,accent,True)
+    monogram(d,(52,62),"CAPABLE  /  DEMO",20,accent,True)
     monogram(d,(52,110),label,24,text,True)
     if grounded:
         d.rounded_rectangle((42,184,498,585),radius=11,fill="#f3f0e7")

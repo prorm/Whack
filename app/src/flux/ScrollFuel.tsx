@@ -118,7 +118,7 @@ export function FuelPage() {
 
       <section className="fx-card">
         <p className="fx-kicker">Phones</p>
-        <p className="fx-sub"><b>Android:</b> a thin wrapper (UsageStatsManager + “display over other apps”) opens this same tollbooth in a WebView. A reference skeleton is in <code>android-gate/</code>; it has not been compiled yet. <b>iPhone:</b> Screen Time APIs show a shield screen instead of an overlay; tapping it would open ScrollProof for one card. Both need store review.</p>
+        <p className="fx-sub"><b>Android:</b> a thin wrapper (UsageStatsManager + “display over other apps”) opens this same tollbooth in a WebView. A reference skeleton is in <code>android-gate/</code>; it has not been compiled yet. <b>iPhone:</b> Screen Time APIs show a shield screen instead of an overlay; tapping it would open CAPABLE for one card. Both need store review.</p>
       </section>
       <button className="fx-reset" onClick={() => { if (armed) { reset(); setArmed(false) } else setArmed(true) }}>{armed ? 'Tap again to erase Scroll Fuel history' : 'Reset Scroll Fuel history on this device'}</button>
     </div>

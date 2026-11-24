@@ -7,7 +7,7 @@ import { defineConfig, type Plugin } from 'vite'
 /** The curated concept pack is part of the shell. Optional media is loaded separately. */
 function offlinePrecache(): Plugin {
   return {
-    name: 'scrollproof-offline-precache',
+    name: 'capable-offline-precache',
     apply: 'build',
     generateBundle(_opts, bundle) {
       const built = Object.keys(bundle).map((f) => '/' + f)

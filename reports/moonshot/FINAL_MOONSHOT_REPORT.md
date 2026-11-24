@@ -1,4 +1,4 @@
-# ScrollProof X · Moonshot decision
+# CAPABLE X · Moonshot decision
 
 **CONDITIONAL GO for the Experience Compiler.** Start with vocational educators and inventory leads who repeatedly teach how to reconcile stock. The first product turns one contributor's correction into an inspectable, versioned lesson. A learner can replay the reason, practice with unfamiliar numbers, and choose whether a reviewer sees the result.
 

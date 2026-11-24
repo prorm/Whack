@@ -43,7 +43,7 @@ export function TopBar({ overlay, compact }: { overlay?: boolean; compact?: bool
   const lang = state.lang
   if (compact) return <header className="topbar career-task-top">
     <div className="career-task-nav">
-      <div className="career-task-brand"><a className="brand" href="#/home" aria-label="ScrollProof home">Scroll<b>Proof</b></a><OfflineChip /></div>
+      <div className="career-task-brand"><a className="brand" href="#/home" aria-label="CAPABLE home"><b>CAPABLE</b></a><OfflineChip /></div>
       <nav aria-label="App navigation">
         <a href="#/opportunities">Explore roles</a>
         <a href="#/workspace">My workspace</a>
@@ -56,7 +56,7 @@ export function TopBar({ overlay, compact }: { overlay?: boolean; compact?: bool
   </header>
   return (
     <header className={`topbar ${overlay ? 'overlay' : ''}`}>
-      <button className="brand" onClick={() => go('home')} aria-label="ScrollProof home">Scroll<b>Proof</b></button>
+      <button className="brand" onClick={() => go('home')} aria-label="CAPABLE home"><b>CAPABLE</b></button>
       <OfflineChip />
       <nav className="topbar-actions" aria-label="App navigation">
         <LangToggle />

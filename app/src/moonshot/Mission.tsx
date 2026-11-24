@@ -590,7 +590,7 @@ export function Mission({ learner = false }: { learner?: boolean }) {
             navigate(2)
           }}>Send to review draft</Jump>}
         </li>)}</ul>
-        <a className="btn ghost" download={`scrollproof-${current.experienceId}-v${current.version}.json`}
+        <a className="btn ghost" download={`capable-${current.experienceId}-v${current.version}.json`}
           href={`data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify({
             playbook: current, type: 'educational simulation', compensation: 'none', provenance: trace?.sourceOwner,
             transcript: trace?.actions.filter((span) => current.steps.some((step) => step.span === span.id)).map((span) => ({
@@ -636,7 +636,7 @@ export function Mission({ learner = false }: { learner?: boolean }) {
           aria-current={(active === 5 ? 4 : active === 8 ? 7 : active) === step ? 'step' : undefined}
           disabled={step === 7 && !attempt} onClick={() => step === 6 && !seed ? startChallenge() : navigate(step)}>{label}</button>)}
     </nav> : <div ref={heading} className="mission-rail" aria-label="Mission workflow">
-      <span>ScrollProof X</span><span aria-current="step">Step {active + 1} of {TITLES.length}</span>
+      <span>CAPABLE X</span><span aria-current="step">Step {active + 1} of {TITLES.length}</span>
     </div>}
     {body}
     {error && <p className="err" role="alert">{error}</p>}

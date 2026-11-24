@@ -1,6 +1,6 @@
-# ScrollProof 4.0: feasibility v2 final report
+# CAPABLE 4.0: feasibility v2 final report
 
-**Central question:** can ScrollProof create a better learning journey for an individual, help them remember, and produce meaningful evidence of capability without becoming expensive, unreliable or a generic AI wrapper?
+**Central question:** can CAPABLE create a better learning journey for an individual, help them remember, and produce meaningful evidence of capability without becoming expensive, unreliable or a generic AI wrapper?
 
 **Short answer.** The *mechanics* are feasible and cheap today. The parts that need to be trustworthy are deterministic code, which tests showed working. The parts that need to be engaging reuse cached AI media, so they don't cost per learner. AI is confined to messy-input understanding and one-time content compilation, and code checks every number either produces. **What is not yet shown is the outcome:** no data here shows that learners learn or remember better. That needs the real-user study in §6. Treat every "personalised" or "effective" claim as a hypothesis until then.
 
@@ -82,7 +82,7 @@ Incremental v2 spend: **$0.211** (cap $2.00). Lifetime: **$0.83** conservative (
 - **Logging:** every action already carries its rule id and reason (`policy.ts`), plus the learner event log. A bandit may run only at population level, only for *modality*, with ≥30 outcomes per arm per context before it can override the default. Bandit data must stay separate from real-learner results.
 - **Pre-registration:** fix hypotheses, metrics and the analysis before recruiting. Report null results.
 
-## 7. What makes ScrollProof different from a generic AI tutor
+## 7. What makes CAPABLE different from a generic AI tutor
 
 1. **Evidence over chat.** Mastery comes from scored answers with uncertainty, credentials need deterministic grading plus human review bound to a specific attempt and evidence, and the trust boundary is enforced in tested code.
 2. **Remix reels built from the learner's own mistakes.** The feed quotes your actual error, repairs it, and tests transfer with fresh numbers, on cached entertaining media and with no per-view AI cost.

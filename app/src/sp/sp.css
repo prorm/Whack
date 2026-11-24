@@ -1,4 +1,4 @@
-/* ScrollProof shell: one dark product (learner seats) and a paper "employer seat" so the two sides never blur. */
+/* CAPABLE shell: one dark product (learner seats) and a paper "employer seat" so the two sides never blur. */
 .sp-root { padding-bottom: 5.5rem; }
 .sp-skip { position: absolute; left: -999px; top: .5rem; z-index: 200; background: var(--volt); color: #000; padding: .5rem .8rem; border-radius: .5rem; font-weight: 800; }
 .sp-skip:focus { left: .5rem; }

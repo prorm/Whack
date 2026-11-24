@@ -5,8 +5,8 @@ The three comparator cuts use the same payout concept, initial error and transfe
 | Direction | Shot sequence | Evidence and tradeoff |
 | --- | --- | --- |
 | Comedic cached hybrid | Sheru observes ₹370 → reaction → percentage split → new prompt → reveal | [19.52 s prior showcase](../../outputs/experience_sprint/scrollproof-payout-check.mp4). Strong opening character and timed cues, 4,916,493 B in the export. App downloads reusable pieces |
-| Practical worksheet cut | Wrong ledger amount → repair the row → new line → reveal the second row | [18 s render](../../moonshot/media/payout-worksheet-cut.mp4), 73,930 B, 10.32 s render. The table makes the action clearer. This staged worksheet uses sparse motion and has no audio track |
-| Minimal motion explanation | Oversized mistake → deterministic formula and fill → six-second solve window → reveal | [18 s render](../../moonshot/media/payout-minimal.mp4), 73,410 B, 8.01 s render. High text legibility. The hook depends on the number and the edit rather than a character |
+| Practical worksheet cut | Wrong ledger amount → repair the row → new line → reveal the second row | [18 s render](../../moonshot/media/payout-worksheet-cut.mp4). The original benchmark produced 73,930 B in 10.32 s. The staged worksheet uses sparse motion and has no audio track |
+| Minimal motion explanation | Oversized mistake → deterministic formula and fill → six-second solve window → reveal | [18 s render](../../moonshot/media/payout-minimal.mp4). The original benchmark produced 73,410 B in 8.01 s. The hook uses the mistake and the edit to make the calculation easy to follow |
 
 **Rubric.** The comedic cut has a two-second hook, deliberate reaction, motion, timed captions and SFX. The practical cut prioritizes hierarchy, instructional accuracy, and traceability and has no tested humor or voice. The minimal cut isolates the calculation and is easiest to reuse. None of the exports demonstrates interaction or learner preference. In the app, cached footage, safe-area-aware overlays, reduced-motion controls, signed-number input and a fresh transfer problem were checked. A view alone creates no answer evidence.
 

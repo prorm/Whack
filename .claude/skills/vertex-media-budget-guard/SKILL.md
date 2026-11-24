@@ -1,6 +1,6 @@
 ---
 name: vertex-media-budget-guard
-description: Choose ScrollProof render tier A (canvas), B (cached plate + keyframe) or C (per-reel Veo) and run paid Vertex image/video calls safely through the CostLedger. Use before any Imagen/Gemini-image/Veo call.
+description: Choose CAPABLE render tier A (canvas), B (cached plate + keyframe) or C (per-reel Veo) and run paid Vertex image/video calls safely through the CostLedger. Use before any Imagen/Gemini-image/Veo call.
 ---
 
 # Vertex Media Budget Guard

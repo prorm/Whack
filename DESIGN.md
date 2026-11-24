@@ -1,5 +1,5 @@
 ---
-name: ScrollProof
+name: CAPABLE
 description: Career exploration, practical learning, and reviewed work samples.
 colors:
   forest: "#182d23"
@@ -80,7 +80,7 @@ components:
     padding: "{spacing.panel-inset}"
 ---
 
-# Design System: ScrollProof
+# Design System: CAPABLE
 
 ## Overview
 

@@ -1,11 +1,11 @@
-# ScrollProof recording script
+# CAPABLE recording script
 
 **Target runtime** 3:00. Follow one learner, one mistake, and one work sample from the lab to the employer seat.
 
 ## Set up the take
 
 1. Use a fresh browser profile or private window at 100% zoom. Prefer a 1280 × 800 viewport or larger. Use the same tab throughout. Switch to full screen before recording and keep the cursor still between clicks.
-2. Load the demo learner once using [Seed the learner](http://localhost:4173/#/home?demo=seed). It returns to the homepage with lessons 1–4 complete, two of four in-app skills proven, and a prior sizing mistake. The script calls out this starting point. This link replaces ScrollProof progress on the browser you use.
+2. Load the demo learner once using [Seed the learner](http://localhost:4173/#/home?demo=seed). It returns to the homepage with lessons 1–4 complete, two of four in-app skills proven, and a prior sizing mistake. The script calls out this starting point. This link replaces CAPABLE progress on the browser you use.
 3. Record screen and microphone. Use the lesson and reel sound controls to keep your voice clear. If you edit the video, use cuts between routes and keep the slider movement, grading and employer evidence inspection continuous. Keep the **DEMO** labels in frame.
 
 ## Voiceover and exact clicks
@@ -24,7 +24,7 @@
 
 ### 0:46–1:06 · Revise the mistake
 
-**Say** “We’ve loaded Ravi’s earlier practice for this demo. He rounded a maximum up. ScrollProof brings that specific mistake back in a short reel and asks him to make the decision again.”
+**Say** “We’ve loaded Ravi’s earlier practice for this demo. He rounded a maximum up. CAPABLE brings that specific mistake back in a short reel and asks him to make the decision again.”
 
 **Show** Open [Revision for Ravi’s goal](http://localhost:4173/#/flux-reels?goal=job-solar-apprentice). Scroll down one card to **REPAIR**. On the cliff question, pick **12** to show the overflow and correction. Hold on the explanation that a maximum rounds down. The reel enters its question after the intro.
 
@@ -56,7 +56,7 @@
 
 ### 2:43–3:00 · Close on the platform
 
-**Say** “AI helps us create lessons faster. Code grades the work. With Field Scars, experienced workers can turn a mistake into someone’s first lesson. Learn it, remember it, prove you can use it. That’s ScrollProof.”
+**Say** “AI helps us create lessons faster. Code grades the work. With Field Scars, experienced workers can turn a mistake into someone’s first lesson. Learn it, remember it, prove you can use it. That’s CAPABLE.”
 
 **Show** Cut briefly to [Teach](http://localhost:4173/#/sp-teach) with **Capture a Field Scar** and **Master review queue** visible. Return to the homepage for the last sentence. The learner’s demo invite is visible above the hero if you sent it.
 
@@ -65,4 +65,4 @@
 - Load [Seed the learner](http://localhost:4173/#/home?demo=seed) again in the recording window to restore Ravi’s baseline. Reapply any audio settings you want.
 - If the lesson audio is quiet, use captions and keep recording. **Skip →** is available during narrated sections and after the temperature goal.
 - If the third evidence checkbox is missing, confirm **Project passed every check** and **PROVEN · system-assessed** on the fixed work order. Then reopen [the apprentice role](http://localhost:4173/#/sp-job?id=job-solar-apprentice).
-- The [previous recording](../../docs/media/scrollproof_demo.mp4) is a reference for pacing and lesson visuals. It shows the previous homepage and follows a different cut.
+- The [CAPABLE launch film](../../docs/media/capable-launch.mp4) shows the full pitch cut and live product walkthrough.

@@ -1,14 +1,14 @@
-# ScrollProof
+# CAPABLE
 
-**Learn by doing. Remember by scrolling. Get hired through proof.**
+**Build skills. Prove you can do the work.**
 
-ScrollProof is an experiential upskilling platform. **FLUX Learn** teaches a trade from absolute basics through narrated, hands-on lessons, then a real project. **FLUX Reels** revise what you learned before you forget it. The **Proof Passport** holds evidence from unseen tasks graded by code. **Opportunities** match that evidence to roles. **Field Scars** let experienced workers turn real site mistakes into lessons for the next learner.
+CAPABLE is an experiential upskilling platform. **FLUX Learn** teaches a trade from absolute basics through narrated, hands-on lessons, then a real project. **FLUX Reels** revise what you learned before you forget it. The **Proof Passport** holds evidence from unseen tasks graded by code. **Opportunities** match that evidence to roles. **Field Scars** let experienced workers turn real site mistakes into lessons for the next learner.
 
 > Learning creates understanding. Reels create retention. Assessments create evidence. Evidence creates opportunities.
 
-▶ **[Watch the 2:50 demo](docs/media/scrollproof_demo.mp4)**: the real app with its own narration. Chapters are in [scrollproof_demo_chapters.txt](docs/media/scrollproof_demo_chapters.txt).
+**[Watch CAPABLE — The Proof Gap](docs/media/capable-launch.mp4)**. The launch film combines the live product walkthrough, animated workforce data, and the planned ElevenLabs voice layer. [Chapter list](docs/media/capable-launch-chapters.txt)
 
-<img src="docs/media/homepage.png" alt="ScrollProof homepage: 'Learn by doing. Remember by scrolling. Get hired through proof.' with a live lesson preview of a solar panel and thermometer" width="100%">
+<img src="docs/media/homepage.png" alt="CAPABLE homepage with a live solar experiment and a cell temperature slider" width="100%">
 
 ## Five career tracks
 
@@ -68,7 +68,7 @@ Node.js 22.18+ and npm:
 
 ```sh
 npm ci --prefix app
-npm run demo --prefix app        # build + ScrollProof server (SQLite) on http://127.0.0.1:4173
+npm run demo --prefix app        # build + CAPABLE server (SQLite) on http://127.0.0.1:4173
 ```
 
 | URL | What it does |
@@ -80,13 +80,15 @@ npm run demo --prefix app        # build + ScrollProof server (SQLite) on http:/
 
 No cloud credentials, paid APIs or separate database are needed to run it. All narration and media ship in `app/public/media/`.
 
+Existing learner progress, evidence links, and local databases work with the CAPABLE build. The new server entry point is `scripts/capable_server.mjs`.
+
 ## Verify
 
 ```sh
 npm run test:all --prefix app      # 49 FLUX (incl. curriculum + proof) · 35 engine · 8 moonshot
 npm run lint --prefix app
 
-node scripts/scrollproof_server.mjs --port 4180 --data app/.data/demo.sqlite
+node scripts/capable_server.mjs --port 4180 --data app/.data/demo.sqlite
 export PLAYWRIGHT_MODULE=<playwright>/index.mjs SP_URL=http://127.0.0.1:4180 FLUX_URL=http://127.0.0.1:4180
 node scripts/verify_learn.mjs       # course map → lesson 1 → lesson 3 → lesson 4 → guided ticket → project → passport
 node scripts/verify_unlocked.mjs    # revise → proof → project → match → consent → employer → share link → revoke
@@ -102,10 +104,10 @@ Executed results and known limitations: [reports/final/FINAL_QA.md](reports/fina
 | Path | Contents |
 |---|---|
 | [`app/src/flux/learn/`](app/src/flux/learn/) | **FLUX Learn**: `course.ts` (curriculum, goals, training generators: pure, tested), `Learn.tsx` (lesson player, course map, project), `scenes.tsx` (stage scenes), `script.json` + `vo.json` (narration) |
-| [`app/src/sp/`](app/src/sp/) | ScrollProof shell: Learn · Revise · Proof · Jobs · Teach, plus the employer seat and the public share-link viewer |
+| [`app/src/sp/`](app/src/sp/) | CAPABLE shell: Learn · Revise · Proof · Jobs · Teach, plus the employer seat and the public share-link viewer |
 | [`app/src/flux/`](app/src/flux/) | FLUX engine: `physics.ts`, `memory.ts`, `assess.ts` (seeded graders + project checks, shared with the server), `passport.ts`, `skills.ts`, `goal.ts`, reels, story episodes, Field Scars, Lab Blueprints |
 | [`scripts/course_tts.py`](scripts/course_tts.py) | Narration (Chirp3-HD) and music bed, cost-logged and cached |
-| [`scripts/scrollproof_server.mjs`](scripts/scrollproof_server.mjs) | Static server + SQLite API: sync, trainer review, `/api/proof/share`, `/api/proof/revoke`, `GET /api/proof/public/<token>` |
+| [`scripts/capable_server.mjs`](scripts/capable_server.mjs) | Static server + SQLite API: sync, trainer review, `/api/proof/share`, `/api/proof/revoke`, `GET /api/proof/public/<token>` |
 | [`reports/final/`](reports/final/) | Submission docs and screenshots |
 
 [Final product](reports/final/FINAL_PRODUCT.md) · [Demo script](reports/final/DEMO_SCRIPT.md) · [Pitch content](reports/final/PITCH_CONTENT.md) · [Pilot plan](reports/final/PILOT_PLAN.md) · [Final QA](reports/final/FINAL_QA.md) · [FLUX engine notes](reports/flux/README.md)

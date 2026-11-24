@@ -1,4 +1,4 @@
-// Assessment graders. Pure, seeded, and importable by both the app and the server (scripts/scrollproof_server.mjs),
+// Assessment graders. Pure, seeded, and importable by both the app and the server (scripts/capable_server.mjs),
 // so a shared proof link carries a grade the server recomputed from the seed and the learner's raw response.
 import { MISCONCEPTIONS, PANELS, diagnoseMax, diagnoseMin, vmpAt, vocAt, workOrder, type Panel } from './physics.ts'
 import { workVariant, type Blueprint } from './blueprint.ts'

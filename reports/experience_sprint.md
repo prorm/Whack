@@ -1,4 +1,4 @@
-# ScrollProof 4.0 experience sprint
+# CAPABLE 4.0 experience sprint
 
 Verified on 24 November 2026 in desktop Chromium 157 on Windows. The primary journey starts with school or job goals, asks learners to confirm a skill, and uses the existing diagnostic and competency graph to recommend lessons. It continues through timed revision, an unseen payout worksheet, trainer review and an opt-in Skill Passport preview. Stock variance is covered in the diagnostic and lessons. The formal assessment in this demo is the payout worksheet.
 

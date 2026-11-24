@@ -1,7 +1,7 @@
 // UnlockED walkthrough: learner → goal feed → motion reel → failed proof → passed proof → match → consent → employer
 // shortlist + invite → learner inbox → trainer review → server share link → revoke → employer posts a mission.
-// Also plays all seven motion reels and saves screenshots. Needs the ScrollProof server running (it serves app/dist):
-//   cd app && npm run build && cd .. && node scripts/scrollproof_server.mjs --port 4180 --data app/.data/demo.sqlite
+// Also plays all seven motion reels and saves screenshots. Needs the CAPABLE server running (it serves app/dist):
+//   cd app && npm run build && cd .. && node scripts/capable_server.mjs --port 4180 --data app/.data/demo.sqlite
 //   PLAYWRIGHT_MODULE=<path>/playwright/index.mjs SP_URL=http://127.0.0.1:4180 node scripts/verify_unlocked.mjs
 import assert from 'node:assert/strict'
 import { mkdir, writeFile } from 'node:fs/promises'

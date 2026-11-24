@@ -9,12 +9,12 @@ import { pathToFileURL } from 'node:url'
 import { payoutTask } from '../app/src/engine/proof.ts'
 
 const root = resolve(import.meta.dirname, '..')
-const captures = resolve(root, process.env.SCROLLPROOF_QA_OUTPUT || 'outputs/experience_sprint')
-const data = await mkdtemp(join(tmpdir(), 'scrollproof-qa-'))
+const captures = resolve(root, process.env.CAPABLE_QA_OUTPUT || process.env.SCROLLPROOF_QA_OUTPUT || 'outputs/experience_sprint')
+const data = await mkdtemp(join(tmpdir(), 'capable-qa-'))
 await mkdir(captures, { recursive: true })
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright')
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM || undefined })
-const serverScript = join(root, 'scripts/scrollproof_server.mjs')
+const serverScript = join(root, 'scripts/capable_server.mjs')
 const axePath = join(root, 'app/node_modules/axe-core/axe.min.js')
 const evidence = { browser: browser.version(), checks: [], access: [], loads: {}, cache: {} }
 const errors = []
@@ -25,7 +25,7 @@ async function start(port, options = [], trainerCode = '') {
   const log = []
   const processHandle = spawn(process.execPath, [serverScript, '--port', String(port),
     '--data', join(data, `qa-${port}.sqlite`), '--metrics', ...options], {
-    windowsHide: true, env: { ...process.env, SCROLLPROOF_TRAINER_CODE: trainerCode },
+    windowsHide: true, env: { ...process.env, CAPABLE_TRAINER_CODE: trainerCode },
   })
   processes.add(processHandle)
   const lines = createInterface({ input: processHandle.stdout })

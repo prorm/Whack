@@ -58,15 +58,15 @@ await feed.evaluate(() => chrome.storage.local.set({ fuelMs: 4000, lastDrainAt: 
 await feed.goto('http://localhost:4180/fake-feed')
 await feed.bringToFront()
 await feed.mouse.wheel(0, 900); await feed.waitForTimeout(400); await feed.mouse.wheel(0, 900)
-await feed.waitForSelector('#scrollproof-tollbooth', { timeout: 15000 })
-const toll = feed.frameLocator('#scrollproof-tollbooth iframe')
+await feed.waitForSelector('#capable-tollbooth', { timeout: 15000 })
+const toll = feed.frameLocator('#capable-tollbooth iframe')
 await toll.locator('.fx-toll').waitFor({ timeout: 10000 })
 await feed.waitForTimeout(1500)
 await feed.screenshot({ path: `${out}/62_ext_tollbooth.png` })
 // page scripts cannot forge an unlock
 await feed.evaluate(() => window.postMessage({ type: 'FLUX_UNLOCKED', minutes: 30, nonce: 'x' }, '*'))
 await feed.waitForTimeout(800)
-assert.equal(await feed.locator('#scrollproof-tollbooth').count(), 1, 'forged unlock was ignored')
+assert.equal(await feed.locator('#capable-tollbooth').count(), 1, 'forged unlock was ignored')
 // solve: tap options until the card resolves, then take whatever the toll grants
 const opts = toll.locator('.fx-reel-opts button, .fx-split-half, .fx-bubbles button')
 await toll.locator('.fx-reel-opts button, .fx-split-half, .fx-bubbles button, .fx-spot').first().waitFor({ timeout: 8000 })
@@ -89,7 +89,7 @@ else {
     await toll.getByRole('button', { name: /back to|breath|Follow-up/ }).first().click()
   })
 }
-await feed.waitForFunction(() => !document.getElementById('scrollproof-tollbooth'), null, { timeout: 15000 })
+await feed.waitForFunction(() => !document.getElementById('capable-tollbooth'), null, { timeout: 15000 })
 const tank = await (await ctx.newPage()).evaluate(() => 0).catch(() => 0)
 void tank
 console.log(JSON.stringify({ extId, errors }, null, 1))

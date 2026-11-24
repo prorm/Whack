@@ -2,7 +2,7 @@
 
 Public first-party materials retrieved 24 November 2026. **Verified** below means documented by the provider. Categories summarize the overlap observed in those sources. Unlisted dimensions are unverified, including offline capability unless called out. The differentiation column is a hypothesis about user value.
 
-| Segment and product | Verified user workflow and overlap | Question for ScrollProof |
+| Segment and product | Verified user workflow and overlap | Question for CAPABLE |
 | --- | --- | --- |
 | AI learning · [Gemini Notebook / NotebookLM](https://support.google.com/gemininotebook/answer/16164461) | Import heterogeneous sources, ask with citations, turn source material into guides, overviews and mind maps. Close on grounded transformation | Does a cited action trace with a reviewer-corrected rubric improve practical transfer? |
 | AI learning · [Khanmigo](https://blog.khanacademy.org/how-khan-academy-is-building-a-better-ai-tutor-our-most-recent-learnings/) | Tutoring uses learner practice history and prerequisite context. Provider reports next-item correctness experiments | Can a narrow task-derived diagnostic work with fewer data points and across offline sessions? |

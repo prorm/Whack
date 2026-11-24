@@ -189,7 +189,7 @@ def build_preview(reels: list[dict], out_path: Path | None = None) -> Path:
 PLAYER_HTML = r"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ScrollProof - Feasibility Preview Player</title>
+<title>CAPABLE - Feasibility Preview Player</title>
 <style>
 :root{--y:#ffd43b;--g:#51cf66;--r:#ff6b6b;--ink:#0d0f1a}
 *{box-sizing:border-box;margin:0}

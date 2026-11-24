@@ -4,7 +4,7 @@ type L = { en: string; kn: string }
 
 // Kannada copy is a first pass for the demo and should be reviewed by a native-speaking trainer.
 export const S = {
-  appName: { en: 'ScrollProof', kn: 'ScrollProof' },
+  appName: { en: 'CAPABLE', kn: 'CAPABLE' },
   langToggle: { en: 'ಕನ್ನಡ', kn: 'English' },
   langToggleLabel: { en: 'Switch to Kannada', kn: 'Switch to English' },
   openWorkOrder: { en: 'Work order', kn: 'ವರ್ಕ್ ಆರ್ಡರ್' },

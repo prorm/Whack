@@ -1,6 +1,6 @@
 # Safety and privacy
 
-Only synthetic materials went to the cloud experiments. ScrollProof retains private media in IndexedDB and offers local preview and deletion. Regulatory obligations and the rights to distribute real recordings require project-specific review before an external pilot.
+Only synthetic materials went to the cloud experiments. CAPABLE retains private media in IndexedDB and offers local preview and deletion. Regulatory obligations and the rights to distribute real recordings require project-specific review before an external pilot.
 
 **Browser environment finding.** The instrumented capture emitted zero POSTs to the app server. The test machine's endpoint security integration posted a synthetic form marker to its own instrumentation endpoint, even after spelling and autocomplete services were disabled on the field. The browser test reports the external hostname and marker class only. Browser and endpoint tooling are outside the app's control. Establish an approved capture environment and handling rules before using workplace material. [Browser evidence](../../moonshot/benchmarks/browser-results.json)
 

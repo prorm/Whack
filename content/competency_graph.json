@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "graph-v1",
-    "author": "Hand-authored for ScrollProof feasibility v2 (not model-generated). Domain: Bengaluru small-business inventory / dispatch coordinator.",
+    "author": "Hand-authored for CAPABLE feasibility v2 (not model-generated). Domain: Bengaluru small-business inventory / dispatch coordinator.",
     "notes": "prereqs are direct prerequisites only; closure is computed in code. Diagnostic items carry deterministic numeric answers."
   },
   "tools": ["excel", "google_sheets", "tally", "whatsapp", "smartphone", "computer", "pos_billing", "barcode_scanner", "email", "two_wheeler"],

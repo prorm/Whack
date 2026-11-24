@@ -1,10 +1,10 @@
-# ScrollProof judge pitch
+# CAPABLE judge pitch
 
 **Build skills. Prove you can do the work.**
 
 ## 30-second pitch
 
-> AI has made it easier to create a course. A learner still has to remember the skill, use it on a new problem, and show an employer what they can do. ScrollProof puts those steps in one place. You practise a workplace scenario, revisit your own mistakes in short reels, and tackle a fresh work order. Your Proof Passport keeps the exact answers and how they were graded. Start with entry-level roles. Build toward a world where the work you can demonstrate helps you get your next opportunity.
+> AI has made it easier to create a course. A learner still has to remember the skill, use it on a new problem, and show an employer what they can do. CAPABLE puts those steps in one place. You practise a workplace scenario, revisit your own mistakes in short reels, and tackle a fresh work order. Your Proof Passport keeps the exact answers and how they were graded. Start with entry-level roles. Build toward a world where the work you can demonstrate helps you get your next opportunity.
 
 ## Seven-slide story
 
@@ -36,7 +36,7 @@
 
 **Show** the proposed model in one sentence. “Learners practise free. Explore paid cohort tools for training providers and hiring tools for employers after the pilot demonstrates value.” Ask for **one vocational training partner and three employers**, each willing to define a work sample and agree how it should be assessed.
 
-**Close** “Every learner deserves a way to show what they can do. We’re building that path in ScrollProof.”
+**Close** “Every learner deserves a way to show what they can do. We’re building that path in CAPABLE.”
 
 ## Judge questions
 

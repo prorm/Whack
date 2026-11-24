@@ -1,4 +1,4 @@
-# ScrollProof
+# CAPABLE
 
 Learn a trade skill in a meme-format reel feed → prove it on an unseen work order → trainer reviews practical evidence → proof passport → local job match.
 
@@ -39,7 +39,7 @@ Learn a trade skill in a meme-format reel feed → prove it on an unseen work or
 - Scroll Fuel: `fuel.ts` (tank/earn/escape/mercy rules, tested), `fuelStore.ts`, `Gate.tsx` (#/flux-gate tollbooth), `ScrollFuel.tsx` (#/flux-fuel + simulator). Browser extension: `extension/src/content.js` + `scripts/build_extension.mjs` → `extension/dist` (gitignored). Unlocks accepted only from our own iframe + nonce. Toll answers never award anything. `android-gate/` is an uncompiled skeleton.
 
 ## UnlockED final (2026-11-24): see reports/final/
-- One product: ScrollProof (`app/src/sp/Sp.tsx`: Learn `#/home`, Jobs, Passport, Teach, Employer seat) on the FLUX engine. Old career home moved to `#/careers`. Meme/"Sheru bhai" reels are retired from the product path.
+- One product: CAPABLE (`app/src/sp/Sp.tsx`: Learn `#/home`, Jobs, Passport, Teach, Employer seat) on the FLUX engine. Old career home moved to `#/careers`. Meme/"Sheru bhai" reels are retired from the product path.
 - Pure, tested core (`npm run test:flux` → `proof.test.ts`): `skills.ts` (competency graph + DEMO jobs + `matchJob`), `assess.ts` (seeded graders, shared with the server), `passport.ts` (records, fingerprint, levels, review binding, consent), `goal.ts` (opportunity-driven feed ranking). Store: `passportStore.ts`.
 - Motion reels (`app/src/flux/motion/`): SVG motion graphics driven by physics.ts; setup → forced prediction → payoff. Veo plates (`scripts/motion_plates.py`, `app/public/media/motion/`) are backdrops only and badged.
 - Server: `/api/proof/share` re-grades from seed + raw answers, `/api/proof/revoke`, `GET /api/proof/public/<token>` (410 after revoke).

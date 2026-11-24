@@ -1,6 +1,6 @@
 # Final QA: what was executed (2026-11-24)
 
-Everything below ran on this machine against the production build (`npm run build`) served by `scripts/scrollproof_server.mjs`. Nothing is estimated.
+Everything below ran on this machine against the production build (`npm run build`) served by `scripts/capable_server.mjs`. Nothing is estimated.
 
 ## Unit tests (`cd app && npm run test:all`)
 | Suite | Result |
@@ -53,7 +53,7 @@ Everything below ran on this machine against the production build (`npm run buil
 Screenshots: `reports/final/screenshots/` (Learn in `learn/`) and `outputs/*_qa/`.
 
 ## Demo recording
-`scripts/record_demo.mjs` drove the real app for 157 s at 1280×720 → `docs/media/scrollproof_demo.mp4`. The audio is the app's own narration (14 lines, placed at the logged start times and cut where the recording skipped ahead) over the lesson music bed. It is not a mockup.
+`scripts/record_demo.mjs` drove the real app for 157 s at 1280×720 in the original QA run. The audio used 14 lines of in-app lesson narration over the lesson music bed. The current [CAPABLE launch film](../../docs/media/capable-launch.mp4) is a separate recording.
 
 ## Spend
 - Narration: 29 Chirp3-HD lines, $0.099.

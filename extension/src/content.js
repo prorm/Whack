@@ -1,4 +1,4 @@
-// ScrollProof Scroll Fuel: content script. Drains the tank while a gated feed is on screen; when it is empty,
+// CAPABLE Scroll Fuel: content script. Drains the tank while a gated feed is on screen; when it is empty,
 // slides the FLUX tollbooth (an extension page, so the whole deck runs offline) over the feed.
 // Nothing is read from the page except its URL. Nothing is sent anywhere.
 (() => {
@@ -27,7 +27,7 @@
     if (overlay?.isConnected) return
     nonce = Math.random().toString(36).slice(2)
     overlay = document.createElement('div')
-    overlay.id = 'scrollproof-tollbooth'
+    overlay.id = 'capable-tollbooth'
     overlay.setAttribute('style', 'position:fixed;inset:0;z-index:2147483647;background:rgba(6,7,12,.96);display:block;animation:spIn .45s cubic-bezier(.2,1.1,.3,1) both')
     const style = document.createElement('style')
     style.textContent = '@keyframes spIn{from{transform:translateY(100%)}}'
@@ -35,7 +35,7 @@
     frame = document.createElement('iframe')
     frame.src = chrome.runtime.getURL(`index.html#/flux-gate?app=${site}&swipes=${swipes}&n=${nonce}`)
     frame.setAttribute('allow', 'autoplay')
-    frame.setAttribute('title', 'ScrollProof tollbooth')
+    frame.setAttribute('title', 'CAPABLE tollbooth')
     frame.setAttribute('style', 'border:0;width:100%;height:100%;display:block;background:#06070c')
     overlay.appendChild(frame)
     document.documentElement.appendChild(overlay)

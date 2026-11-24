@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url'
 import { stockResult, variant } from '../../app/src/moonshot/domain.ts'
 
 const root = resolve(import.meta.dirname, '../..')
-const output = resolve(root, process.env.SCROLLPROOF_MISSION_QA_OUTPUT || 'moonshot/benchmarks')
+const output = resolve(root, process.env.CAPABLE_MISSION_QA_OUTPUT || process.env.SCROLLPROOF_MISSION_QA_OUTPUT || 'moonshot/benchmarks')
 const artifacts = join(output, 'captures')
 const work = await mkdtemp(join(tmpdir(), 'spx-browser-'))
 await mkdir(artifacts, { recursive: true })
@@ -24,8 +24,8 @@ const wait = (ms) => new Promise((done) => setTimeout(done, ms))
 let server
 
 async function start() {
-  server = spawn(process.execPath, [join(root, 'scripts', 'scrollproof_server.mjs'), '--port', '4194',
-    '--data', join(work, 'browser.sqlite'), '--metrics'], { windowsHide: true, env: { ...process.env, SCROLLPROOF_TRAINER_CODE: 'spx-browser-review' } })
+  server = spawn(process.execPath, [join(root, 'scripts', 'capable_server.mjs'), '--port', '4194',
+    '--data', join(work, 'browser.sqlite'), '--metrics'], { windowsHide: true, env: { ...process.env, CAPABLE_TRAINER_CODE: 'spx-browser-review' } })
   createInterface({ input: server.stdout }).on('line', (line) => { if (line.startsWith('{')) http.push(JSON.parse(line)) })
   server.stderr.resume()
   for (let i = 0; i < 120; i++) {

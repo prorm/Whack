@@ -187,6 +187,7 @@ export function SkillPassport() {
   const [draft] = usePayoutDraft()
   const current = draft ? undefined : submissions[0]
   const receipt = current && receipts[current.id]
+  const reviewer = receipt?.reviewer === 'ScrollProof trainer' ? 'CAPABLE trainer' : receipt?.reviewer
   const [consent, saveConsent] = useStored('payout-consent', '')
   const [preview, setPreview] = useState(false)
   const approved = receipt?.decision === 'approved'
@@ -199,7 +200,7 @@ export function SkillPassport() {
       <h2>Calculate rider payouts</h2>
       <dl>
         <div><dt>Practical evidence</dt><dd>{current ? 'Submitted payout worksheet' : 'No worksheet submitted'}</dd></div>
-        <div><dt>Review</dt><dd>{receipt ? `${receipt.reviewer} · ${new Date(receipt.at).toLocaleDateString()}` : 'Pending'}</dd></div>
+        <div><dt>Review</dt><dd>{receipt ? `${reviewer} · ${new Date(receipt.at).toLocaleDateString()}` : 'Pending'}</dd></div>
         <div><dt>Identity</dt><dd>Unverified</dd></div>
       </dl>
       {receipt?.reason && <p>{receipt.reason}</p>}

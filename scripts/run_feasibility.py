@@ -1,4 +1,4 @@
-"""ScrollProof feasibility lab.
+"""CAPABLE feasibility lab.
 
   python scripts/run_feasibility.py --dry-run          # zero spend: config, auth, free model probe, local compositing
   python scripts/run_feasibility.py --tier text        # ~$0.01: TTFT pings, trend miner, 3 storyboards + QA, Tier A reels
@@ -44,7 +44,7 @@ TESTS = [
     {"key": "excel_huss", "title": "Excel VLOOKUP x Huss Valley", "job_role": "Delivery payouts dispatcher",
      "skill": "VLOOKUP exact match: use FALSE as the 4th argument so rider IDs never match the wrong payout row",
      "trend_id": "roblox_huss", "language": "kanglish", "protected": ["VLOOKUP", "FALSE", "#N/A"]},
-    {"key": "plumbing_sheru", "title": "Washer sizing x Sheru Bhai (ScrollProof slice)", "job_role": "Apprentice plumber",
+    {"key": "plumbing_sheru", "title": "Washer sizing x Sheru Bhai (CAPABLE slice)", "job_role": "Apprentice plumber",
      "skill": "Match a replacement washer by checking inner diameter (ID), outer diameter (OD) and thickness, all in mm. "
               "Teach with a 15 mm ID / 24 mm OD / 3 mm example; the job twin must use different numbers.",
      "trend_id": "sheru_bhai", "language": "kanglish", "protected": ["ID", "OD", "thickness", "mm"]},
@@ -311,7 +311,7 @@ def write_report(st: dict, ledger: CostLedger) -> Path:
     res, s = st["results"], settings()
     L = []
     w = L.append
-    w("# ScrollProof feasibility report")
+    w("# CAPABLE feasibility report")
     w(f"\n_Generated {datetime.now().strftime('%Y-%m-%d %H:%M')} by `scripts/run_feasibility.py`. Backend: `{res.get('backend', '?')}`._\n")
     w(f"**Cumulative measured spend (all runs, `reports/cost_log.jsonl`): ${ledger.spent_total():.4f}** of the ${s.max_budget_usd:.2f} kill-switch.\n")
     pf = res.get("preflight", {})
@@ -480,7 +480,7 @@ def main() -> int:
     st["runs"].append({"run_id": run_id, "tiers": tiers or ["dry-run"], "started": datetime.now().isoformat()})
     res = st["results"]
 
-    con.rule(f"[bold cyan]ScrollProof feasibility lab  run={run_id}")
+    con.rule(f"[bold cyan]CAPABLE feasibility lab  run={run_id}")
     res["preflight"] = pf = preflight(True)
     t = Table(show_header=False)
     for k, v in [("python", pf["python"]), ("ffmpeg", pf["ffmpeg"] or "MISSING"), ("auth", pf["auth"]),

@@ -1,13 +1,13 @@
-# Reproduce ScrollProof X
+# Reproduce CAPABLE X
 
 From the workspace root with Node 22.18+ and the installed app dependencies:
 
 ```powershell
 npm --prefix app run build
-node scripts/scrollproof_server.mjs --port 4177 --data app/.data/moonshot.sqlite
+node scripts/capable_server.mjs --port 4177 --data app/.data/moonshot.sqlite
 ```
 
-Open [Moonshot](http://127.0.0.1:4177/#/mission). Click **Load the stock-count demo** and **Extract worksheet facts**. Accept the four demo counts. At **Review the demonstration**, inspect 0:04 and 0:08. Change Instruction 3 to **Use C4 for receipts on the same item row.** Mark all five steps Checked, add the scripted contributor answer, enable local educational derivatives and approve. In the lesson, use Expert replay and ask **Why C4 instead of C5?** Try expected **132** and signed difference **4** in Practice to see the repair. Complete the new worksheet, opt into review and use the same-device preview if you choose. Default server reviews are marked demo. Configure `SCROLLPROOF_TRAINER_CODE` to exercise the trainer authorization boundary.
+Open [Moonshot](http://127.0.0.1:4177/#/mission). Click **Load the stock-count demo** and **Extract worksheet facts**. Accept the four demo counts. At **Review the demonstration**, inspect 0:04 and 0:08. Change Instruction 3 to **Use C4 for receipts on the same item row.** Mark all five steps Checked, add the scripted contributor answer, enable local educational derivatives and approve. In the lesson, use Expert replay and ask **Why C4 instead of C5?** Try expected **132** and signed difference **4** in Practice to see the repair. Complete the new worksheet, opt into review and use the same-device preview if you choose. Default server reviews are marked demo. Configure `CAPABLE_TRAINER_CODE` to exercise the trainer authorization boundary.
 
 The demo uses an actual cached extraction from a synthetic source. Private files stay in the browser. The deliberately wrong draft cell is a labelled rehearsal test. The alternative creative previews and model trials live under `moonshot/media/`.
 

@@ -1,4 +1,4 @@
-# FLUX: the ScrollProof learning engine
+# FLUX: the CAPABLE learning engine
 
 Open `#/flux` (also linked as "FLUX lessons" in the main nav).
 
@@ -49,7 +49,7 @@ Users cannot upload lectures. They upload **scars**: a real failure, compiled in
   - After 3 cards the toll lets the user through anyway (+3 min), so nobody is trapped.
   - A free 2-minute DM break is available once an hour.
   - The tank caps at 30 min and drains only while a gated site is focused.
-- **Tollbooth** (`Gate.tsx`, `#/flux-gate`): the same `ReelView` cards, chosen by the same feed order (callbacks first, due next), thumb-native kinds only. The page is not a credential and says so. It reports an unlock to whatever hosts it: the extension's parent page, the Android bridge (`ScrollProofAndroid.unlock`), or the local tank.
+- **Tollbooth** (`Gate.tsx`, `#/flux-gate`): the same `ReelView` cards, chosen by the same feed order (callbacks first, due next), thumb-native kinds only. The page is not a credential and says so. It reports an unlock to whatever hosts it: the extension's parent page, the Android bridge (`CapableAndroid.unlock`), or the local tank.
 - **Browser extension** (`extension/src/content.js`, `scripts/build_extension.mjs`): an MV3 extension that bundles the whole built app, so the deck runs offline inside the extension.
   - It gates Instagram, YouTube Shorts (only `/shorts`), Reddit and X; the user can toggle each.
   - The content script reads only the URL. It drains the tank, counts Reels/Shorts swiped and shows the tollbooth iframe at zero. It pauses page media and blocks page keys while the toll is up.

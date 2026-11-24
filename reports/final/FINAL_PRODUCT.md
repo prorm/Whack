@@ -1,6 +1,6 @@
-# ScrollProof: learn by doing, remember by scrolling, get hired through proof
+# CAPABLE: learn by doing, remember by scrolling, get hired through proof
 
-ScrollProof is an experiential upskilling platform. It turns practical knowledge into demonstrable skills, and demonstrable skills into opportunities. FLUX is the learning and verification engine underneath.
+CAPABLE is an experiential upskilling platform. It turns practical knowledge into demonstrable skills, and demonstrable skills into opportunities. FLUX is the learning and verification engine underneath.
 
 ## The product hierarchy (do not blur it)
 

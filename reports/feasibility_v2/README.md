@@ -1,4 +1,4 @@
-# ScrollProof feasibility v2
+# CAPABLE feasibility v2
 
 Start with **FINAL_REPORT.md** (answers + one recommended architecture), then **go_no_go.md**.
 

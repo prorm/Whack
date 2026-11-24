@@ -19,8 +19,8 @@ const EMPTY_EVIDENCE = { latest: '', attempts: {} as Record<string, Attempt>, in
 const href = (route: Route, params?: Record<string, string>) => '#/' + route + (params ? '?' + new URLSearchParams(params) : '')
 
 export function Wordmark({ className = '' }: { className?: string }) {
-  return <a href={href('home')} className={`career-wordmark ${className}`} aria-label="ScrollProof home">
-    <span className="career-mark" aria-hidden="true"><i /><i /><i /></span><b>ScrollProof</b>
+  return <a href={href('home')} className={`career-wordmark ${className}`} aria-label="CAPABLE home">
+    <span className="career-mark" aria-hidden="true"><i /><i /><i /></span><b>CAPABLE</b>
   </a>
 }
 

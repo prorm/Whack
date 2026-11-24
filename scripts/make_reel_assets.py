@@ -1,4 +1,4 @@
-"""Generate the layers for the flagship ScrollProof reel (Tier B: cached plates + motion graphics).
+"""Generate the layers for the flagship CAPABLE reel (Tier B: cached plates + motion graphics).
 
   python scripts/make_reel_assets.py video   # 3x 4 s Veo 3.1 Lite, silent, image-conditioned (~$0.36). Needs ENABLE_LIVE_VIDEO_GEN=true
   python scripts/make_reel_assets.py tts     # performed voice lines via Gemini TTS (fallback: edge-tts)

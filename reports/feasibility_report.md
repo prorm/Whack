@@ -1,4 +1,4 @@
-# ScrollProof feasibility report
+# CAPABLE feasibility report
 
 _Generated 2026-11-23 23:53 by `scripts/run_feasibility.py`. Backend: `vertex:hackathons-512621 text@global media@us-central1`._
 
@@ -31,7 +31,7 @@ Not available in this project: `imagen-4.0-fast-generate-001`.
 |---|---|---|---|---|---|---|---|---|---|
 | React useEffect x Sheru Bhai | `gemini-3.5-flash-lite` | 1 | valid | pass | 3/3 | 7790 | 2813/2758/0 | $0.00774 | - |
 | Excel VLOOKUP x Huss Valley | `gemini-3.5-flash-lite` | 1 | valid | pass | 3/3 | 6900 | 2792/2216/0 | $0.00638 | - |
-| Washer sizing x Sheru Bhai (ScrollProof slice) | `gemini-3.5-flash-lite` | 1 | valid | pass | 4/4 | 44393 | 2867/2190/0 | $0.00634 | - |
+| Washer sizing x Sheru Bhai (CAPABLE slice) | `gemini-3.5-flash-lite` | 1 | valid | pass | 4/4 | 44393 | 2867/2190/0 | $0.00634 | - |
 
 Trend miner (text description -> TrendGenome): ok, `gemini-3.8-flash`, 7760 ms, $0.00341, genome `chef_cat_disaster_fix`
 

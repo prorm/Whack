@@ -47,7 +47,7 @@ def main():
             preview = ImageOps.contain(original,(470,640))
             canvas.paste(preview,(40+(470-preview.width)//2,40))
             d.line((534,56,534,664),fill="#7d6e49",width=1)
-            d.text((590,105),f"SCROLLPROOF X  /  {i:02d}",font=font(23, True),fill="#ffd671")
+            d.text((590,105),f"CAPABLE X  /  {i:02d}",font=font(23, True),fill="#ffd671")
             wrap(d,590,184,title,54,"#fff7df",620,True)
             wrap(d,590,395,notes,32,"#e0dde0",580)
             d.text((590,632),"SYNTHETIC RESEARCH DEMO",font=font(19,True),fill="#d7bf86")

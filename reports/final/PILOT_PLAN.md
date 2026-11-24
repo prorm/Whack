@@ -32,7 +32,7 @@
 
 ## Before the pilot starts
 - Fluent human review of every learner-facing string in the pilot language (Kannada first). Until then, no language claims.
-- Replace DEMO employers, candidates and the DEMO trainer seat with real accounts and real trainer codes (`SCROLLPROOF_TRAINER_CODE`).
+- Replace DEMO employers, candidates and the DEMO trainer seat with real accounts and real trainer codes (`CAPABLE_TRAINER_CODE`).
 - Identity: decide on in-person ID checks at the practical. The app does not verify identity.
 - Consent and data: written consent, a data-retention limit, and a revocation route for each learner.
 - Safety: hazardous roles only via a partner's supervised practical; no unsupervised work arising from an app pass.

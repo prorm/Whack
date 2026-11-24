@@ -49,7 +49,7 @@ def worksheet(i, messy=False):
     if messy and i in (1, 3):
         d.rectangle((206, 142, 565, 315), fill="#32444e")
         d.text((225, 160), "Other window", fill="white", font=font(21, True))
-    d.text((34, 483), "ScrollProof X • Illustrative stock data", fill="#47606e", font=font(16))
+    d.text((34, 483), "CAPABLE X • Illustrative stock data", fill="#47606e", font=font(16))
     return image
 
 

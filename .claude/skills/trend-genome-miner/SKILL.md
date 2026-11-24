@@ -1,6 +1,6 @@
 ---
 name: trend-genome-miner
-description: Turn a viral short-form format (a local mp4 or a text description) into a validated TrendGenome JSON in trends/registry or trends/mined. Use when adding a new meme format to ScrollProof.
+description: Turn a viral short-form format (a local mp4 or a text description) into a validated TrendGenome JSON in trends/registry or trends/mined. Use when adding a new meme format to CAPABLE.
 ---
 
 # Trend Genome Miner

@@ -1,19 +1,19 @@
 {
-  "name": "app",
+  "name": "capable",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "start": "node ../scripts/scrollproof_server.mjs",
+    "start": "node ../scripts/capable_server.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "test:engine": "node --test \"src/engine/*.test.ts\"",
     "test:moonshot": "node --test \"src/moonshot/*.test.ts\"",
     "test:flux": "node --test \"src/flux/*.test.ts\" \"src/flux/learn/*.test.ts\"",
     "sim:bandit": "node src/engine/sim_bandit.ts",
-    "demo": "npm run build && node ../scripts/scrollproof_server.mjs --port 4173 --data .data/demo.sqlite",
+    "demo": "npm run build && node ../scripts/capable_server.mjs --port 4173 --data .data/demo.sqlite",
     "test:all": "npm run test:flux && npm run test:engine && npm run test:moonshot"
   },
   "dependencies": {

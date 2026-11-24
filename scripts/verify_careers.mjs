@@ -6,7 +6,7 @@ import { stockResult, variant } from '../app/src/moonshot/domain.ts'
 
 const root = resolve(import.meta.dirname, '..')
 const out = resolve(root, 'outputs/career-experience')
-const base = process.env.SCROLLPROOF_CAREERS_URL || 'http://127.0.0.1:4178/'
+const base = process.env.CAPABLE_CAREERS_URL || process.env.SCROLLPROOF_CAREERS_URL || 'http://127.0.0.1:4178/'
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright')
 const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM || undefined })
 await mkdir(out, { recursive: true })

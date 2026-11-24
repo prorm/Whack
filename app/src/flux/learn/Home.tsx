@@ -83,7 +83,7 @@ export function Home() {
       <SolarLab />
     </section>
 
-    <ol className="hm-steps" aria-label="The ScrollProof journey">
+    <ol className="hm-steps" aria-label="The CAPABLE journey">
       {journey.map(({ title, detail, href }) => <li key={title}>
         <a href={href}><strong>{title}</strong><span>{detail}</span></a>
       </li>)}
