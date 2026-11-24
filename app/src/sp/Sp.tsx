@@ -197,6 +197,7 @@ export function SpJob() {
         <button className="fx-btn" disabled={!agree || !pick.length} onClick={() => { pp.share(job.employerId, pick); setPick([]); setAgree(false) }}>Share {pick.length || ''} record{pick.length === 1 ? '' : 's'}</button>
       </>}
       {shared.length > 0 && <ul className="sp-shares">{shared.map((x) => <li key={x.id}><span>Shared {x.recordIds.length} record{x.recordIds.length > 1 ? 's' : ''} · {fmt(x.at)}</span><button className="fx-btn hot" onClick={() => pp.unshare(x.id)}>Revoke</button></li>)}</ul>}
+      {shared.length > 0 && <a className="sp-link" href={href('sp-employer', { job: job.id })}>See what the employer sees (demo) →</a>}
     </section>
   </Shell>
 }
@@ -208,7 +209,9 @@ export function SpAssess() {
   const back = routeParam('back')
   const comp = byId(cid)
   const a = comp.assessment
-  const [seed, setSeed] = useState(() => 1 + Math.floor(Math.random() * 999_999))
+  const demoVariant = cid === 'solar.cold-max' && routeParam('demo') === 'work-order'
+  const [seed, setSeed] = useState(() => demoVariant ? 8301 : 1 + Math.floor(Math.random() * 999_999))
+  const [fixedVariant, setFixedVariant] = useState(demoVariant)
   const task = useMemo(() => a ? taskFor(a.id, seed) : null, [a, seed])
   const [ans, setAns] = useState<Record<string, string>>({})
   const [rec, setRec] = useState<EvidenceRecord | null>(null)
@@ -220,7 +223,7 @@ export function SpAssess() {
     {back ? <a className="sp-back" href={href('flux-reels', { goal: back })}>← Back to my feed</a> : <a className="sp-back" href={href('sp-passport')}>← Passport</a>}
     <p className="fx-kicker">Proof check · {a.label} · v{a.version}</p>
     <h1 className="sp-h1">{comp.title}</h1>
-    <p className="fx-sub">A task you have not seen before, generated from seed {seed}. Code grades it. No AI, no partial credit for luck: every ask must be right.</p>
+    <p className="fx-sub">{fixedVariant ? 'Fixed demo variant' : 'A fresh task'} generated from seed {seed}. The grader checks your answers against the rules of the task.</p>
     <div className="fx-ticket">
       <header><b>{task.label}</b><span>DEMO task</span></header>
       <p className="sp-story">{task.story}</p>
@@ -239,9 +242,14 @@ export function SpAssess() {
       <details><summary>Worked solution</summary>{rec.working.map((w) => <p key={w}>{w}</p>)}</details>
       <p className="fx-fine">Saved as attempt <code>{rec.id}</code> · fingerprint <code>{rec.fingerprint}</code>. A new attempt replaces this one for matching.</p>
       <div className="fx-row">
-        {back && <a className="fx-cta in" href={href(Object.values(rec.outcomes).every((o) => o?.pass) ? 'sp-job' : 'flux-reels', Object.values(rec.outcomes).every((o) => o?.pass) ? { id: back } : { goal: back })}>{Object.values(rec.outcomes).every((o) => o?.pass) ? 'See my job match →' : 'Back to my feed: repair reels first'}</a>}
-        <a className="fx-btn ghost" href={href('sp-passport', { r: rec.id })}>Inspect evidence</a>
-        <button className="fx-btn ghost" onClick={() => { setSeed(1 + Math.floor(Math.random() * 999_999)); setAns({}); setRec(null) }}>New unseen task</button>
+        <a className="fx-cta in" href={href('sp-passport', { r: rec.id, ...(back ? { job: back } : {}) })}>Inspect evidence</a>
+        {back && (Object.values(rec.outcomes).every((o) => o?.pass)
+          ? <a className="fx-btn ghost" href={href('sp-job', { id: back })}>See my job match →</a>
+          : <a className="fx-btn ghost" href={href('flux-reels', { goal: back })}>Practise with repair reels</a>)}
+        <button className="fx-btn ghost" onClick={() => {
+          const nextSeed = (seed + Math.floor(Math.random() * 999_998)) % 999_999 + 1
+          setSeed(nextSeed); setFixedVariant(false); setAns({}); setRec(null)
+        }}>New unseen task</button>
       </div>
     </section>}
     <p className="fx-fine">Practice and reels never award anything. Only a graded attempt counts, and for safety-critical trades it earns a supervised next step, not a licence.</p>
@@ -254,11 +262,13 @@ export function SpPassport() {
   const sel = routeParam('r')
   const recs = [...pp.s.records].sort((a, b) => b.at - a.at)
   const open = recs.find((r) => r.id === sel)
+  const job = routeParam('job')
   const inApp = COMPETENCIES.filter((c) => c.assessment)
   return <Shell tab="passport">
     <p className="fx-kicker">Proof Passport</p>
-    <h1 className="sp-h1">{pp.s.records.some((r) => r.source === 'demo_seed') ? 'Demo learner (seeded)' : 'Your evidence'}</h1>
+    <h1 className="sp-h1">Your evidence</h1>
     <p className="fx-sub">What you can do, with the exact task, answers and grading behind each claim. You control who sees it.</p>
+    {open && <RecordView r={open} job={job} />}
     <ol className="sp-levels">{LEVELS.map((l) => <li key={l.id} className={l.id}><b>{l.label}</b><span>{l.meaning}</span></li>)}</ol>
     <section className="sp-panel">
       <h2>Skills</h2>
@@ -273,14 +283,14 @@ export function SpPassport() {
         <li className="in_person"><div><b>{byId('site.safety').title}</b><small>{byId('site.safety').inPerson}</small></div><span className="sp-state inperson">In person</span></li>
       </ul>
     </section>
-    {open ? <RecordView r={open} /> : <section className="sp-panel"><h2>Attempts</h2>
+    {!open && <section className="sp-panel"><h2>Attempts</h2>
       {recs.length === 0 ? <p className="sp-muted">No graded attempts yet. Pick a job on Learn, swipe the reels, then take a proof check.</p>
         : <ul className="sp-attempts">{recs.map((r) => <li key={r.id}><a href={href('sp-passport', { r: r.id })}><b>{r.taskLabel}</b><span>{Object.entries(r.outcomes).map(([c, o]) => `${byId(c as CompetencyId).title} ${o?.pass ? '✓' : '✗'}`).join(' · ')}</span><small>{fmt(r.at)}{r.source === 'demo_seed' ? ' · DEMO SEED' : ''}</small></a></li>)}</ul>}
     </section>}
   </Shell>
 }
 
-function RecordView({ r }: { r: EvidenceRecord }) {
+function RecordView({ r, job }: { r: EvidenceRecord; job: string | null }) {
   const pp = usePassport()
   const ok = intact(r)
   const covers = Object.keys(r.outcomes) as CompetencyId[]
@@ -306,9 +316,15 @@ function RecordView({ r }: { r: EvidenceRecord }) {
     pp.unshare(shareId); setLink({})
   }
   return <section className="sp-panel sp-record" aria-labelledby="rec-h">
-    <a className="sp-back" href={href('sp-passport')}>← All attempts</a>
+    <div className="sp-record-nav">
+      <a className="sp-back" href={href('sp-passport')}>← All attempts</a>
+      {job && <a className="sp-link" href={href('sp-job', { id: job })}>See my job match →</a>}
+    </div>
     <h2 id="rec-h">{r.taskLabel} <small>attempt {r.id}</small></h2>
     {r.source === 'demo_seed' && <DemoTag>DEMO SEED · graded by the real grader from scripted answers</DemoTag>}
+    <h3>Submitted vs key</h3>
+    <table className="sp-table"><thead><tr><th>Ask</th><th>Answer</th><th>Key</th><th>Result</th></tr></thead><tbody>
+      {r.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{r.response[a.id]}</code></td><td>{keyOf(r, a.id)} {r.assessmentId === 'proj.rooftop' ? '' : a.unit}</td><td>{r.perAsk[a.id] ? 'Pass' : 'Miss'}</td></tr>)}</tbody></table>
     <dl className="sp-dl">
       <dt>Assessment</dt><dd>{r.assessmentId} · version {r.version} · seed {r.seed}</dd>
       <dt>Assessed</dt><dd>{fmt(r.at)}</dd>
@@ -320,9 +336,6 @@ function RecordView({ r }: { r: EvidenceRecord }) {
     <ul className="sp-givens">{r.givens.map((g) => <li key={g.label}><b>{g.label}</b> {g.value}</li>)}</ul>
     <h3>Rubric</h3><ul>{r.rubric.map((x) => <li key={x}>{x}</li>)}</ul>
     {r.note && <><h3>Learner’s explanation (for trainer review, not graded)</h3><blockquote className="sp-note-q">{r.note}</blockquote></>}
-    <h3>Submitted vs key</h3>
-    <table className="sp-table"><thead><tr><th>Ask</th><th>Answer</th><th>Key</th><th></th></tr></thead><tbody>
-      {r.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{r.response[a.id]}</code></td><td>{keyOf(r, a.id)} {r.assessmentId === 'proj.rooftop' ? '' : a.unit}</td><td>{r.perAsk[a.id] ? '✓' : '✗'}</td></tr>)}</tbody></table>
     <h3>Outcome</h3>
     {covers.map((c) => { const o = r.outcomes[c]!; return <div key={c} className={`sp-oc ${o.pass ? 'ok' : 'bad'}`}><b>{byId(c).title}: {o.pass ? LEVEL_LABEL[levelOf(r, c)] : 'not proven'}</b>
       {o.misconceptions.map((x) => <p key={x} className="fx-mis">{misconception(x).title}. {misconception(x).repair}</p>)}</div> })}
@@ -419,10 +432,11 @@ const EMPLOYERS = [...new Map(SEED_JOBS.map((j) => [j.employerId, j.employer])).
 
 export function SpEmployer() {
   const pp = usePassport()
-  const [emp, setEmp] = useState(EMPLOYERS[0][0])
+  const initialJob = allJobs(pp.s).find((job) => job.id === routeParam('job'))
+  const [emp, setEmp] = useState(initialJob?.employerId ?? EMPLOYERS[0][0])
   const empName = EMPLOYERS.find(([id]) => id === emp)![1]
   const jobs = allJobs(pp.s).filter((j) => j.employerId === emp)
-  const [jobId, setJobId] = useState<string>('')
+  const [jobId, setJobId] = useState(initialJob?.id ?? '')
   const job = jobs.find((j) => j.id === jobId) ?? jobs[0]
   const [inspect, setInspect] = useState<{ name: string; rec: EvidenceRecord } | null>(null)
   const [inviteFor, setInviteFor] = useState('')

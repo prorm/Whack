@@ -1,25 +1,68 @@
-# Demo script: about 170 seconds
+# ScrollProof recording script
 
-**The recorded demo is the real app:** `docs/media/scrollproof_demo.mp4` (170 s, 1280×720). The soundtrack is the app's own lesson narration, placed at the exact moments each line played, over the lesson music bed. Chapter times are in `docs/media/scrollproof_demo_chapters.txt`. To re-record: `node scripts/record_demo.mjs` (see README).
+**Target runtime** 3:00. Follow one learner, one mistake, and one work sample from the lab to the employer seat.
 
-To demo live: `cd app && npm run demo`, then open `http://127.0.0.1:4173/#/home?demo=reset` in a 1280×720 window with sound on.
+## Set up the take
 
-| Time | Screen (exact action) | What the audience hears or sees |
-|---|---|---|
-| 0:00–0:15 | **Homepage**: the live lesson preview, then the five career tracks with their depth labels. Start the solar course → course map 0/5. | *"ScrollProof starts with learning, not a feed. Pick a career; this one goes from 'what is a volt?' to sizing a real rooftop string."* |
-| 0:15–0:40 | **Start lesson 1.** Cold open (06:47, inverter fault), then "Electricity is water": push, flow, power. | The app's narrator speaks; karaoke captions; the variables panel rolls. |
-| 0:40–0:60 | **Experiment:** drag Push to 41.6 V and Flow to 13 A → *Goal reached*. **Test:** type 500 → hint (not the answer), then 540.8. | Every number is computed by code. Wrong answers get a hint. |
-| 1:00–1:04 | Load the seeded learner (lessons 1–4 done). Open **Lesson 3**. | *"Let's jump ahead to a learner on lesson 3."* |
-| 1:04–1:43 | **Predict:** pick "Fewer volts" → the common wrong guess is named. **Experiment:** drag the thermometer down until 12 panels cross 600 V (*INVERTER TRIPS*). **Explain:** the datasheet rule appears line by line. | The learner discovers the rule before being told it. |
-| 1:43–2:01 | **Project:** Mr. Sharma's 14 panels. Inverter A, 2 × 7 → "Array not oversized ✗". Switch to B → all checks ✓. Write the explanation → **Submit**. | Real project work, saved to the Proof Passport with the explanation kept for trainer review. |
-| 2:01–2:08 | **Prove it alone:** unseen work order (new city, panel and inverter) → *PROVEN · system-assessed*. | Proof is a task you have never seen, graded by code. |
-| 2:08–2:17 | **Job match: 4/4.** *Eligible for a supervised practical assessment. Not a licence.* Tick records → agree → **Share**. | The job lists exact skills. The learner controls consent. |
-| 2:17–2:28 | **Employer seat (DEMO):** inspect evidence → **Shortlist** → **Invite to supervised practical**. | Employers see answers, not a score. Nothing is sent. |
-| 2:28–2:31 | **Learn:** the invite banner, *DEMO · not a job offer*. | |
-| 2:31–2:50 | **Revise:** a reel for a learned concept (*One hose*), then **Just show me why**. | *"Reels are for remembering, not learning. Optional, short, and only for what you learned."* |
-| 2:50 | Back to Learn. | *"ScrollProof. Learn by doing. Remember by scrolling. Get hired through proof."* |
+1. Use a fresh browser profile or private window at 100% zoom. Prefer a 1280 × 800 viewport or larger. Use the same tab throughout. Switch to full screen before recording and keep the cursor still between clicks.
+2. Load the demo learner once using [Seed the learner](http://localhost:4173/#/home?demo=seed). It returns to the homepage with lessons 1–4 complete, two of four in-app skills proven, and a prior sizing mistake. The script calls out this starting point. This link replaces ScrollProof progress on the browser you use.
+3. Record screen and microphone. Use the lesson and reel sound controls to keep your voice clear. If you edit the video, use cuts between routes and keep the slider movement, grading and employer evidence inspection continuous. Keep the **DEMO** labels in frame.
 
-## If something goes wrong live
-- **Share links fail:** you are on `vite preview`. Use `npm run demo`.
-- **No sound:** check the 🔇 button in the lesson header. Muted lessons still run, with captions timed to the real narration.
-- **Revise says "Nothing to revise yet":** that is correct on a fresh device. Finish a lesson, or load `#/home?demo=seed`.
+## Voiceover and exact clicks
+
+### 0:00–0:18 · Open on the fault
+
+**Say** “Ravi wants his first job in solar. He’s finished a course, but here’s a question an installer actually faces. This rooftop worked yesterday. Why does the inverter trip when the panels get colder?”
+
+**Show** [Home](http://localhost:4173/#/home). Start at **45 °C / 563.1 V**. On “colder,” drag **Cell temperature** left to **4 °C / 628.9 V**. Pause for one beat on **Inverter trips**. Keep the **600 V inverter limit** in frame.
+
+### 0:18–0:46 · Learn by making a prediction
+
+**Say** “In FLUX Learn, Ravi makes a prediction first. Fewer volts sounds reasonable. Watch what happens when he tests it. The voltage rises as the panels cool, and twelve panels cross the inverter’s limit. Now the datasheet rule explains something he just saw happen.”
+
+**Show** Click **Open full lesson**. Click **Skip →** on the intro if needed. Choose **Fewer volts**, then **See why →**. Move the lesson’s **Cell temperature** slider left until **INVERTER TRIPS** appears. Use **Skip →** during the success narration, or **Continue →** once it finishes, to land on the line-by-line datasheet trace. Hold briefly on the highlighted calculation.
+
+### 0:46–1:06 · Revise the mistake
+
+**Say** “We’ve loaded Ravi’s earlier practice for this demo. He rounded a maximum up. ScrollProof brings that specific mistake back in a short reel and asks him to make the decision again.”
+
+**Show** Open [Revision for Ravi’s goal](http://localhost:4173/#/flux-reels?goal=job-solar-apprentice). Scroll down one card to **REPAIR**. On the cliff question, pick **12** to show the overflow and correction. Hold on the explanation that a maximum rounds down. The reel enters its question after the intro.
+
+### 1:06–1:24 · Make a design decision
+
+**Say** “Now Ravi has a customer’s roof and fourteen panels. Splitting them into two strings solves one problem. The first inverter still fails the array-size check. He switches inverter, sees the checks pass, and explains his design.”
+
+**Show** Open the [Rooftop project](http://localhost:4173/#/fl-project). Use **Inverter A**, **Strings = 2**, **Panels per string = 7**. Point to the failed array-size check. Switch to **Inverter B**. Paste the explanation below and click **Submit project**.
+
+> Two strings of seven stay below the cold voltage limit, and Inverter B can carry the full array.
+
+### 1:24–1:50 · Test whether the skill transfers
+
+**Say** “Here’s the test that matters. We change the city, the panel and the inverter. Ravi has to apply the rule somewhere he hasn’t practised it. He rounds the cold maximum down and the hot minimum up. The grader applies the same rules every time.”
+
+**Show** Open the [fixed recording work order](http://localhost:4173/#/sp-assess?c=solar.cold-max&back=job-solar-apprentice&demo=work-order). Hold on **WO-CHENNAI-9301**. Enter **23** for maximum panels and **7** for minimum panels. Click **Submit for grading**. Hold on **PROVEN · system-assessed**. The variant is fixed and labeled for recording. The ordinary assessment link generates fresh variants.
+
+### 1:50–2:08 · Show what proof looks like
+
+**Say** “This is his Proof Passport. You can open the actual task, see what he submitted and compare it with the grading key. A trainer can review that exact attempt. Ravi decides which records to share.”
+
+**Show** Click **Inspect evidence**. Hold on the first table with answers **23** and **7**, then briefly show the task details or **Trainer review** below. For the next cut, click **See my job match →** at the top of the record.
+
+### 2:08–2:43 · Follow the evidence across to hiring
+
+**Say** “The apprentice role started at two out of four in-app skills. The work order and the project get Ravi to four. He chooses what to share. Let’s switch seats. The hiring team can inspect those same answers and invite him to a supervised practical. This is a simulated employer workflow, and the practical is the next step for a safety-critical role.”
+
+**Show** Hold on **4/4** and **Eligible for a supervised practical assessment**. In **Show my evidence to…**, select all three records and the consent checkbox, then click **Share 3 records**. Click **See what the employer sees (demo) →**. Under **Learner on this device**, use **inspect** on the **Cold-morning string sizing** row. Hold on the same **23** and **7**. Close it, click **Shortlist**, then **Invite to supervised practical** and **Send invite (DEMO)**. If you need a shorter take, end the beat with the answers visible.
+
+### 2:43–3:00 · Close on the platform
+
+**Say** “AI helps us create lessons faster. Code grades the work. With Field Scars, experienced workers can turn a mistake into someone’s first lesson. Learn it, remember it, prove you can use it. That’s ScrollProof.”
+
+**Show** Cut briefly to [Teach](http://localhost:4173/#/sp-teach) with **Capture a Field Scar** and **Master review queue** visible. Return to the homepage for the last sentence. The learner’s demo invite is visible above the hero if you sent it.
+
+## If a take needs a reset
+
+- Load [Seed the learner](http://localhost:4173/#/home?demo=seed) again in the recording window to restore Ravi’s baseline. Reapply any audio settings you want.
+- If the lesson audio is quiet, use captions and keep recording. **Skip →** is available during narrated sections and after the temperature goal.
+- If the third evidence checkbox is missing, confirm **Project passed every check** and **PROVEN · system-assessed** on the fixed work order. Then reopen [the apprentice role](http://localhost:4173/#/sp-job?id=job-solar-apprentice).
+- The [previous recording](../../docs/media/scrollproof_demo.mp4) is a reference for pacing and lesson visuals. It shows the previous homepage and follows a different cut.

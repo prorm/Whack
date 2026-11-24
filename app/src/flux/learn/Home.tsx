@@ -1,34 +1,63 @@
-// The ScrollProof homepage: what it is, a live lesson preview, every career track (and how deep each one is today),
-// how the journey works, and the doors for experienced workers and employers.
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { statusOf } from '../passport'
 import { usePassport } from '../passportStore'
+import { vocAt } from '../physics'
 import { useFlux } from '../store'
-import { LESSONS } from './course'
+import { INVERTER, LESSONS, PANEL } from './course'
 import { useCourse } from './courseStore'
 import { TRACKS, type Field } from './catalog'
-import { Thermo } from './scenes'
 import './learn.css'
+import './home.css'
 
-/** The hero's live lesson: the thermometer sweeps on its own, like a learner dragging it. */
-function LivePreview() {
-  const [t, setT] = useState(8)
-  useEffect(() => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    let k = 0
-    const id = setInterval(() => { k += 1; setT(Math.round(26 + 30 * Math.cos(k / 18))) }, 120)
-    return () => clearInterval(id)
-  }, [])
-  return <div className="hm-preview" aria-label="A live FLUX Learn lesson: cooling a solar panel raises its voltage until a 12-panel string trips the inverter">
-    <div className="ln-stage hm-stage" style={{ ['--mood' as string]: '#22c8f0' }}>
-      <div className="ln-bg" aria-hidden="true"><i className="ln-floor" /></div>
-      <div className="ln-chip left"><i />03 <b>Cold makes volts</b></div>
-      <div className="ln-scene hm-scene"><Thermo t={t} /></div>
-      <p className="ln-caption"><span>Drag</span> <span>the</span> <span className="on">thermometer.</span> <span>Watch</span> <span>the</span> <span>string.</span></p>
+const LAB_MIN_TEMP = 4
+const LAB_MAX_TEMP = 45
+const LAB_PANELS = 12
+const METER_MIN_VOLTS = 540
+const METER_MAX_VOLTS = 640
+const meterPosition = (volts: number) => 100 * (volts - METER_MIN_VOLTS) / (METER_MAX_VOLTS - METER_MIN_VOLTS)
+
+function SolarLab() {
+  const [temperature, setTemperature] = useState(LAB_MAX_TEMP)
+  const voltage = LAB_PANELS * vocAt(PANEL, temperature)
+  const overLimit = voltage > INVERTER.vmax
+  return <section className={`hm-lab${overLimit ? ' is-tripped' : ''}`} aria-labelledby="hm-lab-title">
+    <div className="hm-lab-scene">
+      <img className="hm-lab-image" src="/media/flux/dawn.webp" alt="" fetchPriority="high" />
+      <h2 id="hm-lab-title">The cold morning fault</h2>
+      <div className="hm-lab-reading">
+        <div className="hm-lab-metrics">
+          <p><span>String voltage</span><strong>{voltage.toFixed(1)} <small>V</small></strong></p>
+          <span className="hm-lab-status" role="status">{overLimit ? 'Inverter trips' : 'Below limit'}</span>
+        </div>
+        <div className="hm-lab-meter" aria-hidden="true">
+          <span className="hm-lab-fill" style={{ width: `${meterPosition(voltage)}%` }} />
+          <span className="hm-lab-limit" style={{ left: `${meterPosition(INVERTER.vmax)}%` }} />
+        </div>
+        <p className="hm-lab-spec"><span>{LAB_PANELS} panels in series</span><span>{INVERTER.vmax} V inverter limit</span></p>
+      </div>
     </div>
-    <p className="hm-preview-note">A real lesson, running live. Every number is computed by tested code.</p>
-  </div>
+    <div className="hm-lab-controls">
+      <label className="hm-lab-slider">
+        <span>Cell temperature</span>
+        <span className="hm-lab-temperature" aria-hidden="true">{temperature} °C</span>
+        <input type="range" min={LAB_MIN_TEMP} max={LAB_MAX_TEMP} value={temperature}
+          aria-valuetext={`${temperature} degrees Celsius, ${voltage.toFixed(1)} volts across the string`} aria-describedby="hm-lab-hint"
+          onChange={(e) => setTemperature(e.target.valueAsNumber)} />
+      </label>
+      <div className="hm-lab-footer">
+        <p id="hm-lab-hint">Cool the panels. Watch what happens.</p>
+        <a href="#/fl-lesson?id=l3">Open full lesson <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
 }
+
+const journey = [
+  { title: 'Learn', detail: 'Experiment with real work scenarios.', href: '#/fl-course' },
+  { title: 'Revise', detail: 'Revisit what you missed in short reels.', href: '#/flux-reels' },
+  { title: 'Prove', detail: 'Solve a new task and keep the evidence.', href: '#/sp-passport' },
+  { title: 'Connect', detail: 'Share your work for roles that need it.', href: '#/sp-jobs' },
+]
 
 export function Home() {
   const course = useCourse()
@@ -43,33 +72,26 @@ export function Home() {
   return <div className="ln-map hm">
     <section className="hm-hero">
       <div className="hm-copy">
-        <p className="ln-kick">Upskilling for real work · free for learners</p>
-        <h1>Learn by doing.<br /><span className="hm-y">Remember</span> by scrolling.<br />Get hired through <span className="hm-g">proof</span>.</h1>
-        <p className="ln-lead">Hands-on, narrated lessons that start from absolute basics. Short reels that bring it back before you forget. Unseen tasks that prove you can do the work, and employers who see exactly what you proved.</p>
+        <h1>Build skills.<br /><em>Prove you can<br className="hm-title-break" /> do the work.</em></h1>
+        <p className="ln-lead">Practice real work in interactive labs, revisit what you learn in short reels, and build a Proof Passport employers can inspect.</p>
         <div className="ln-row">
           {done > 0 && nextL ? <a className="ln-btn primary big" href={`#/fl-lesson?id=${nextL.id}`}>Continue · Lesson {nextL.n}: {nextL.title} →</a>
-            : <button className="ln-btn primary big" onClick={() => document.getElementById('careers')?.scrollIntoView({ behavior: 'smooth' })}>Choose a career →</button>}
-          {done > 0 ? <a className="ln-btn big" href="#/flux-reels">Revise{due ? ` · ${due} due` : ''}</a> : <a className="ln-btn big" href="#/fl-lesson?id=l1">Try lesson 1 free</a>}
+            : <button className="ln-btn primary big" onClick={() => document.getElementById('careers-h')?.focus()}>Explore career tracks →</button>}
+          {done > 0 && due > 0 && <a className="hm-text-link" href="#/flux-reels">Revise · {due} due</a>}
         </div>
-        <ul className="hm-facts">
-          <li><b>5</b> career tracks</li><li><b>0</b> AI calls while you learn</li><li><b>Offline</b> once loaded</li>{due > 0 && <li><a href="#/flux-reels"><b>{due}</b> reels due</a></li>}
-        </ul>
       </div>
-      <LivePreview />
+      <SolarLab />
     </section>
 
-    <section className="hm-steps" aria-label="How it works">
-      {[
-        ['01', 'Learn', 'Narrated lessons you take part in: predict, experiment with live sliders, see the rule appear, practise on fresh problems.', '#FFD43B'],
-        ['02', 'Revise', 'Short reels for what you already learned, on a 1 · 3 · 7 · 21-day rhythm. Misses come back first.', '#5ce1ff'],
-        ['03', 'Prove', 'A task you have never seen, and a real project. Graded by code, kept in your Proof Passport.', '#3ddc97'],
-        ['04', 'Get hired', 'Employers see the exact skills you proved, only if you share them. Hazardous trades start supervised.', '#9b6bff'],
-      ].map(([n, t, d, c]) => <div key={n} className="hm-step" style={{ ['--c' as string]: c }}><span>{n}</span><h3>{t}</h3><p>{d}</p></div>)}
-    </section>
+    <ol className="hm-steps" aria-label="The ScrollProof journey">
+      {journey.map(({ title, detail, href }) => <li key={title}>
+        <a href={href}><strong>{title}</strong><span>{detail}</span></a>
+      </li>)}
+    </ol>
 
     <section id="careers" className="hm-careers" aria-labelledby="careers-h">
       <div className="hm-head">
-        <div><p className="ln-kick">Choose a career</p><h2 id="careers-h">Five tracks. Start from zero in any of them.</h2></div>
+        <h2 id="careers-h" tabIndex={-1}>What work do you want to learn?</h2>
         <div className="hm-filter" role="group" aria-label="Filter by field">{(['All', 'Trades', 'Tech', 'Operations'] as const).map((f) =>
           <button key={f} aria-pressed={field === f} onClick={() => setField(f)}>{f}</button>)}</div>
       </div>
@@ -97,14 +119,14 @@ export function Home() {
           </article>
         })}
       </div>
-      <p className="ln-muted hm-honest">Depth today, said plainly: one full course (solar), two story lessons with unseen proof tasks (EV, payments), and two work-sample paths (inventory, dispatch). Every listing and pay figure is DEMO / illustrative.</p>
+      <p className="ln-muted hm-honest">Solar is a full course. EV and payments each have a lesson and an assessment. Inventory and dispatch are work-sample paths. Listings and pay are illustrative.</p>
     </section>
 
     <section className="hm-proofband">
       <div>
-        <p className="ln-kick">Proof, not certificates</p>
-        <h2>Watching never earns anything here.</h2>
-        <p className="ln-lead">Only a graded attempt counts: the exact task, its version, your answers, the mistake the code named, and whether a trainer reviewed it. You choose who sees it, and you can take it back.</p>
+        <h2>Open the work behind the skill.</h2>
+        <p className="ln-lead">Your Proof Passport keeps the task, your answers, how they were graded, and any trainer review. You choose who sees each record and can revoke access.</p>
+        <p className="ln-muted">AI helps create lesson media. FLUX grades work against explicit rules.</p>
         <a className="ln-btn" href="#/sp-passport">Open my Proof Passport →</a>
       </div>
       <ol className="hm-levels">

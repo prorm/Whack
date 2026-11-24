@@ -214,7 +214,7 @@ export function LessonPlayer() {
   const chapter = [...lesson.steps.slice(0, idx + 1)].reverse().find((s) => s.kind === 'say' && s.chapter) as { chapter?: string } | undefined
   const view = step.view
   if (complete) return <LessonDone lesson={lesson} />
-  return <div className="ln-root">
+  return <div className="ln-root ln-player">
     <header className="ln-top">
       <a href="#/fl-course" className="ln-back" aria-label="Back to the course">← {COURSE.title}</a>
       <div className="ln-tools">
@@ -301,7 +301,7 @@ export function Project() {
     course.saveProject({ recordId: r.id, at: r.at, note: note.trim() }); setRec(r.id); sfx('powerup', 0.5)
   }
   const passed = rec && pp.s.records.find((r) => r.id === rec)?.outcomes['solar.design']?.pass
-  return <div className="ln-root">
+  return <div className="ln-root ln-project">
     <header className="ln-top"><a href="#/fl-course" className="ln-back">← {COURSE.title}</a></header>
     <Stage lesson={lesson} step={0} idx={0} chapter="Design it yourself" caption={LINES[rec ? 'p_02' : 'p_01']} progress={narr.progress}>
       <Roof inv={Math.max(0, inv)} strings={strings} per={per} />

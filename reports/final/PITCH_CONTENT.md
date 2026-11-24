@@ -1,55 +1,51 @@
-# Pitch content: slide by slide
+# ScrollProof judge pitch
 
-Mark every number as *illustrative* or *measured*. Nothing below is a user outcome. There are no users yet.
+**Build skills. Prove you can do the work.**
 
-**1 · Title**
-ScrollProof, powered by FLUX. *Learn by doing. Remember by scrolling. Get hired through proof.*
+## 30-second pitch
 
-**2 · Problem**
-- Practical skills are invisible: informal workers can't show what they can do.
-- Certificates are untrusted, and resumes say nothing about the actual task.
-- Passive video builds fatigue, not competence. Watch time is not skill.
-- Employers in the trades screen on paper, then train from scratch.
+> AI has made it easier to create a course. A learner still has to remember the skill, use it on a new problem, and show an employer what they can do. ScrollProof puts those steps in one place. You practise a workplace scenario, revisit your own mistakes in short reels, and tackle a fresh work order. Your Proof Passport keeps the exact answers and how they were graded. Start with entry-level roles. Build toward a world where the work you can demonstrate helps you get your next opportunity.
 
-**3 · Insight**
-The gap is not content. It is the disconnect between learning something, remembering it, demonstrating it and getting hired for it. Learning creates understanding. Reels create retention. Assessments create evidence. Evidence creates opportunities.
+## Seven-slide story
 
-**4 · Product: one journey**
-Discover a role → **FLUX Learn** (narrated, hands-on lessons from absolute basics, then a real project) → **FLUX Reels** revise it on a 1/3/7/21-day schedule → **Proof Passport** (unseen tasks graded by code) → **Opportunities** (explainable match, consent, supervised next step). Experienced workers give back with Field Scars.
+### 1. Build skills. Prove you can do the work.
 
-**5 · FLUX Learn is the innovation**
-A lesson is a cinematic stage you take part in: cold open → teach → predict (the wrong guess is named) → experiment with live sliders and a goal → the rule as a line-by-line trace → test with hints → train on fresh problems → guided job ticket → project. The narration speaks numbers that tests check against the physics code. Reels come after learning, for remembering only: short and optional.
+**Show** the homepage with the voltage just below the threshold. **Say** “The unit of upskilling should be a skill you can demonstrate.” Open with Ravi’s cold-morning fault and trigger it live.
 
-**6 · Proof, not certificates**
-- Unseen tasks generated from seeds and graded deterministically. Known wrong methods are named ("rounded a safety limit up").
-- Passport levels: Practice / System-assessed / Trainer-reviewed / Identity-verified (not available yet, and we say so).
-- Share links are re-graded by the server from raw answers. Revocation is enforced server-side.
-- Hazardous trades earn a supervised practical, never a licence.
+### 2. The course ends. The real test begins.
 
-**7 · Technology**
-- React/TS PWA, works offline. Zero runtime AI in learning, grading or matching.
-- Pure TypeScript engine: physics, assessments, passport and goal ranking, with 49 FLUX unit tests (including curriculum checks) + 35 engine + 8 moonshot (all passing).
-- SQLite server: sync, trainer review, share links.
-- One-off media: Gemini images, Veo plates and TTS, all cached and cost-logged ($4.45 lifetime of a $5 cap: narration $0.10, motion plates $0.60).
-- JSON Lab Blueprints let a practitioner add a new threshold-type episode without code. Their test cases must pass before the episode publishes.
+**Show** a course completion screen as a simple text label alongside the question “Can this person solve a new problem?” A learner needs guided practice, a reason to recall what they learned, and a way to present their work. A hiring team needs evidence against the tasks the role actually requires.
 
-**8 · Business model** (illustrative pricing hypotheses, not validated)
-| Stream | Price | Customer |
-|---|---|---|
-| Successful-hire fee | ₹1,500–3,000 / hire | Local employers |
-| Employer subscription | ₹1,499–4,999 / month | SMEs, contractors |
-| Institutional licence | ₹100–300 / learner / month | ITIs, colleges, training centres |
-| Sponsored skill missions | custom | Industry partners |
-Learners pay ₹0. Mentor rewards come from employer revenue, weighted by verified learning gains. Zero runtime inference keeps the marginal cost of practice near zero; hosting, content, review and support still cost money.
+### 3. One place to practise, retain and prove a skill
 
-**9 · Inclusion**
-Offline PWA, low-data mode (Veo backdrops are skipped under Save-Data), reduced-motion support, captions as on-screen kinetic text, large touch targets, keyboard and screen-reader labels. A Kannada pathway exists for the older inventory flow. The FLUX/motion pathway is English-only today, and a fluent reviewer is needed before any Kannada claim.
+**Show** one chain with the same skill at every step. **FLUX Learn** gives Ravi the simulation. **FLUX Reels** resurfaces the sizing mistake. The **work order** changes the conditions. The **Proof Passport** stores his submission. **Opportunities** shows which job requirements the evidence covers. Run the [three-minute demo](DEMO_SCRIPT.md) here. This is the core differentiation to demonstrate.
 
-**10 · Validation so far (honest)**
-- Measured: automated tests and a 30-step browser walkthrough of the learner-to-employer path (see FINAL_QA.md).
-- Not measured: learning gains, recall, placements, employer satisfaction. These are the pilot's job.
+### 4. AI scales production. The evidence stays inspectable.
 
-**11 · Pilot and ask**
-4 weeks, 30 job seekers, 3 vocational trainers, 3 local employers, one role. Measure unseen-task improvement, delayed recall, trainer agreement with the auto-grade, interview conversion and placements (PILOT_PLAN.md). Ask: an ITI partner and 3 employers willing to define one skill mission each.
+**Show** the lesson scene next to the submitted answers and grading key. AI assists with lesson media and narration. FLUX uses explicit rules for simulation, grading and skill matching. Supported lessons and assessments can run offline after download. A trainer can review a specific attempt, and the learner chooses what to share. In the solar demo, the hiring workflow leads to a supervised practical.
 
-**Closing line:** *Don't show us what you watched. Show us what you can do.*
+### 5. Every role can make training more relevant
+
+**Show** one loop. Employers specify a recurring task. Learners practise and submit work. Trainers review evidence. Experienced workers contribute real incidents through **Field Scars**. Reviewed examples can become scenarios for the next cohort. The product bet is that a growing library of role-specific scenarios, rubrics and work samples makes each new pathway easier to build and assess.
+
+### 6. Start with one job and one measurable outcome
+
+**Show** a stock reconciliation work sample. Solar demonstrates the full journey. The proposed commercial pilot starts with inventory and stock assistants, where a trainer can compare the same worksheet and rubric across candidates. Recruit **30 learners, 3 vocational trainers and 3 local employers** for **four weeks**. Measure performance on a fresh task, recall after 7 and 21 days, reviewer time and agreement, and interviews from shared work samples. These are proposed pilot targets.
+
+### 7. Keep practice accessible. Charge for hiring or cohort value.
+
+**Show** the proposed model in one sentence. “Learners practise free. Explore paid cohort tools for training providers and hiring tools for employers after the pilot demonstrates value.” Ask for **one vocational training partner and three employers**, each willing to define a work sample and agree how it should be assessed.
+
+**Close** “Every learner deserves a way to show what they can do. We’re building that path in ScrollProof.”
+
+## Judge questions
+
+**What is actually different?** The same role requirement drives what you practise, what comes back for recall, what you must apply on a fresh task, and what an employer can inspect. Show the cold-sizing attempt and the same values in the employer view.
+
+**What is running today?** The prototype includes a full solar course and project, revision reels, generated work orders, a Proof Passport, a contribution and review prototype, and a same-device employer workflow. EV, payments, inventory and dispatch show additional tracks at different depths. Employer identities, listings and invites in this workflow are demo data.
+
+**Where does AI help?** AI-assisted media makes realistic scenarios faster to produce. The numerical simulation, assessment and eligibility rules run in code. Human review can add a decision to an individual record.
+
+**Can employers treat this as a qualification?** The record shows what was submitted and how it was scored. A trainer decision refers to the exact attempt. The prototype leaves learner identity unverified. For solar, the demonstrated next step is an in-person supervised practical.
+
+**What have you validated?** The implementation has automated tests and browser walkthroughs. The pilot will measure retention, transfer to a fresh task and whether access to work samples changes interview decisions.
