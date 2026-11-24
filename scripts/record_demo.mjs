@@ -39,8 +39,11 @@ const go = async (hash) => { await collect(); await page.goto(`${BASE}/#/${hash}
 
 // fresh device
 await page.goto(`${BASE}/#/home?demo=reset`); await wait(1500)
-await page.goto(`${BASE}/#/home`); await page.waitForSelector('.ln-hero'); await wait(600)
-mark('Learn: the course map (0/5)'); await wait(3200); await scroll(380); await wait(2200); await scroll(0); await wait(600)
+await page.goto(`${BASE}/#/home`); await page.waitForSelector('.hm-hero'); await wait(600)
+mark('Homepage: a live lesson preview'); await wait(4200)
+await page.locator('#careers').scrollIntoViewIfNeeded(); await scroll(1050); mark('Five career tracks'); await wait(3800)
+await page.locator('.hm-card').first().getByRole('link', { name: /Start the course/ }).click(); await page.waitForSelector('.ln-hero')
+mark('Solar course map (0/5)'); await wait(2600)
 
 // lesson 1 from absolute zero
 await page.getByRole('link', { name: /Start lesson 1/ }).click(); await page.waitForSelector('.ln-stage')

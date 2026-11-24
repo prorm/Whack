@@ -50,7 +50,7 @@ const seedOf = async () => Number((await text()).match(/generated from seed (\d+
 
 await go('home')
 await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); localStorage.setItem('flux:mute', '1') })
-await page.reload(); await page.waitForSelector('.ln-hero')
+await page.reload(); await page.waitForSelector('.hm-hero')
 await shot('01_home_pick_goal'); step('home opens on the FLUX Learn course')
 await page.setViewportSize({ width: 1280, height: 860 }); await shot('01b_home_desktop'); await page.setViewportSize({ width: 400, height: 860 })
 

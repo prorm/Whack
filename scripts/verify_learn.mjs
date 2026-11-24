@@ -29,7 +29,9 @@ const setRange = (label, v) => page.getByRole('slider', { name: new RegExp('^' +
 
 await page.goto(`${BASE}/#/home?demo=reset`); await page.waitForTimeout(1200)
 await page.evaluate(() => { localStorage.setItem('flux:mute', '1'); localStorage.setItem('learn:speed', '8') })
-await page.goto(`${BASE}/#/home`); await page.reload(); await page.waitForSelector('.ln-hero')
+await page.goto(`${BASE}/#/home`); await page.reload(); await page.waitForSelector('.hm-hero')
+assert.match(await text(), /Five tracks/); assert.match(await text(), /EV Charger Installer/); await shot('00_homepage'); step('homepage: five career tracks with honest depth labels')
+await page.goto(`${BASE}/#/fl-course`); await page.waitForSelector('.ln-hero')
 assert.match(await text(), /Rooftop Solar Technician/); assert.match(await text(), /Locked/)
 await shot('01_course_map'); step('course map: 5 lessons, project, proof; lessons 2+ locked')
 
@@ -105,9 +107,9 @@ await page.getByRole('link', { name: 'See it in my passport' }).click(); await p
 assert.match(await text(), /Rooftop string design/); await shot('17_passport_project'); step('passport shows the project record')
 
 // ---- the course map reflects it; revise only shows learned concepts
-await page.goto(`${BASE}/#/home`); await page.waitForTimeout(400); await shot('18_course_map_progress')
+await page.goto(`${BASE}/#/fl-course`); await page.waitForTimeout(400); await shot('18_course_map_progress')
 await page.setViewportSize({ width: 400, height: 860 }); await page.goto(`${BASE}/#/fl-lesson?id=l2`); await page.waitForTimeout(2500); await shot('19_mobile_l2')
-await page.goto(`${BASE}/#/home`); await page.waitForTimeout(500); await shot('20_mobile_map')
+await page.goto(`${BASE}/#/home`); await page.waitForTimeout(500); await shot('20_mobile_home')
 
 await browser.close()
 await writeFile(`${out}/walkthrough.log`, [...log, '', `console errors: ${errors.length}`, ...errors].join('\n'))

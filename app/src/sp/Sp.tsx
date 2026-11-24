@@ -12,6 +12,7 @@ import { allJobs, resetPassport, seedDemo, taskFor, usePassport } from '../flux/
 import { COMPETENCIES, SEED_JOBS, byId, matchJob, needsSupervision, type CompetencyId, type Job, type Match } from '../flux/skills'
 import { useFlux, useScars } from '../flux/store'
 import { CourseMap } from '../flux/learn/Learn'
+import { Home } from '../flux/learn/Home'
 import { resetCourse } from '../flux/learn/courseStore'
 import { DEMO_CANDIDATES } from './demoCandidates'
 import '../flux/flux.css'
@@ -92,13 +93,14 @@ export function SpHome() {
   return <Shell tab="learn">
     {invites.map((i) => { const j = jobs.find((x) => x.id === i.jobId); return j && <a key={i.id} className="sp-invite" href={href('sp-job', { id: j.id })}>
       <b>Interview invite · {j.employer}</b><span>{j.title} · {i.slot}</span><DemoTag>DEMO · not a job offer</DemoTag></a> })}
-    <CourseMap />
-    <section className="sp-loop" aria-label="How ScrollProof works">
-      {[['1', 'Learn', 'Narrated, hands-on lessons from absolute basics: predict, experiment, test, train.'], ['2', 'Revise', 'Short reels bring back only what you learned, right before you forget it.'], ['3', 'Prove', 'Unseen tasks and a real project, graded by tested code, kept in your passport.'], ['4', 'Get hired', 'Employers see exactly what you can do, only if you share it.']].map(([n, t, d]) =>
-        <div key={n}><b>{n}</b><h3>{t}</h3><p>{d}</p></div>)}
-    </section>
+    <Home />
     <DemoControls />
   </Shell>
+}
+
+/** One course's map (the solar course today). */
+export function SpCourse() {
+  return <Shell tab="learn"><CourseMap /></Shell>
 }
 
 function wipeDevice() {

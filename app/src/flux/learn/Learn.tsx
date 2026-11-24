@@ -216,7 +216,7 @@ export function LessonPlayer() {
   if (complete) return <LessonDone lesson={lesson} />
   return <div className="ln-root">
     <header className="ln-top">
-      <a href="#/home" className="ln-back" aria-label="Back to the course">← {COURSE.title}</a>
+      <a href="#/fl-course" className="ln-back" aria-label="Back to the course">← {COURSE.title}</a>
       <div className="ln-tools">
         <button onClick={() => setPaused(!paused)} aria-label={paused ? 'Play' : 'Pause'} aria-pressed={paused}>{paused ? '▶' : '❚❚'}</button>
         {lineNow && <button onClick={narr.replay} aria-label="Replay this line">↺</button>}
@@ -276,7 +276,7 @@ function LessonDone({ lesson }: { lesson: Lesson }) {
     <div className="ln-unlock"><b>Unlocked in Revise</b><span>Short reels for {lesson.concepts.length > 1 ? 'these ideas' : 'this idea'} now come back on a 1 · 3 · 7 · 21-day schedule, so you keep it.</span></div>
     <div className="ln-row">
       {nextL ? <a className="ln-btn primary big" href={`#/fl-lesson?id=${nextL.id}`}>Lesson {nextL.n}: {nextL.title} →</a> : <a className="ln-btn primary big" href="#/fl-project">Start the project →</a>}
-      <a className="ln-btn" href="#/home">Course map</a>
+      <a className="ln-btn" href="#/fl-course">Course map</a>
     </div>
     <p className="ln-muted">Lessons and checks never award a credential. Only the unseen proof task and the project go on your Proof Passport.</p>
   </div></div>
@@ -302,7 +302,7 @@ export function Project() {
   }
   const passed = rec && pp.s.records.find((r) => r.id === rec)?.outcomes['solar.design']?.pass
   return <div className="ln-root">
-    <header className="ln-top"><a href="#/home" className="ln-back">← {COURSE.title}</a></header>
+    <header className="ln-top"><a href="#/fl-course" className="ln-back">← {COURSE.title}</a></header>
     <Stage lesson={lesson} step={0} idx={0} chapter="Design it yourself" caption={LINES[rec ? 'p_02' : 'p_01']} progress={narr.progress}>
       <Roof inv={Math.max(0, inv)} strings={strings} per={per} />
     </Stage>
@@ -336,6 +336,7 @@ export function CourseMap() {
   const unlocked = (l: Lesson) => l.n === 1 || !!course.s.done[`l${l.n - 1}`]
   const ring = 2 * Math.PI * 34
   return <div className="ln-map">
+    <a className="ln-back" href="#/home">← All careers</a>
     <section className="ln-hero">
       <div>
         <p className="ln-kick">FLUX Learn · course 1</p>

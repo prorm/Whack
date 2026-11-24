@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-24T15:43:14.014Z",
+        "reason": "User asked FLUX Learn to match the FACELESS AI Day 4/6 house style, whose engine specifies Inter (UI) + JetBrains Mono; fonts copied from that engine"
+      }
+    ]
+  }
+}

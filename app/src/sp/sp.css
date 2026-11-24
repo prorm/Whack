@@ -154,3 +154,4 @@
 .sp-root .ln-map { color: var(--text); }
 
 .sp-note-q { margin: .4rem 0; padding: .6rem .8rem; border-radius: .6rem; background: #ffffff0a; border: 1px solid var(--line); font-size: .9rem; line-height: 1.45; }
+.sp-main:has(> .hm) { max-width: 1160px; } .sp-main:has(> .ln-map:not(.hm)) { max-width: 940px; }

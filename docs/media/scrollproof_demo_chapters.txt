@@ -1,28 +1,30 @@
-2.8s  Learn: the course map (0/5)
-10.1s  Lesson 1 cold open (narrated)
-19.7s  Absolute basics: electricity is water
-34.3s  Experiment: make 540 W
-40.1s  Goal reached
-48.9s  Test: wrong → hint
-56.6s  Lesson 3: cold makes volts
-65.4s  Predict: the common wrong guess
-68.3s  Experiment: the thermometer
-75.0s  12 panels cross 600 V
-79.8s  The rule as a line-by-line trace
-92.7s  Project: Mr. Sharma’s 14-panel roof
-97.6s  Inverter A: oversized, named
-100.3s  Inverter B: every check passes
-105.7s  Project saved to the Proof Passport
-110.5s  Prove it alone: unseen work order
-113.9s  Graded by code: proven
-117.2s  Match: 4/4, eligible for a SUPERVISED practical
-124.1s  Consent: share chosen records
-126.5s  Employer seat (DEMO)
-129.7s  Employer inspects the evidence
-135.1s  Invite to a supervised practical (DEMO)
-137.4s  Learner: invite, not a job offer
-140.8s  Revise: reels for what you learned
-151.5s  Optional quiz: just show me why
-159.6s  end
+3.6s  Homepage: a live lesson preview
+8.3s  Five career tracks
+12.4s  Solar course map (0/5)
+15.5s  Lesson 1 cold open (narrated)
+25.0s  Absolute basics: electricity is water
+39.8s  Experiment: make 540 W
+45.7s  Goal reached
+55.3s  Test: wrong → hint
+64.4s  Lesson 3: cold makes volts
+72.7s  Predict: the common wrong guess
+75.9s  Experiment: the thermometer
+84.8s  12 panels cross 600 V
+90.3s  The rule as a line-by-line trace
+103.4s  Project: Mr. Sharma’s 14-panel roof
+108.0s  Inverter A: oversized, named
+110.7s  Inverter B: every check passes
+116.0s  Project saved to the Proof Passport
+120.8s  Prove it alone: unseen work order
+124.2s  Graded by code: proven
+127.6s  Match: 4/4, eligible for a SUPERVISED practical
+134.4s  Consent: share chosen records
+136.8s  Employer seat (DEMO)
+140.0s  Employer inspects the evidence
+145.4s  Invite to a supervised practical (DEMO)
+147.7s  Learner: invite, not a job offer
+151.0s  Revise: reels for what you learned
+161.6s  Optional quiz: just show me why
+169.7s  end
 
 narration lines: l1_01, l1_02, l1_03, l1_04, l1_05, l1_06, l3_01, l3_02, l3_03, l3_04, l3_05, l3_06, p_01, p_02

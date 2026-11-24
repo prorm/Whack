@@ -23,6 +23,7 @@ const Sp = {
   employer: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpEmployer }))),
   teach: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpTeach }))),
   view: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpView }))),
+  course: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpCourse }))),
   lesson: lazy(() => import('./flux/learn/Learn').then((m) => ({ default: m.LessonPlayer }))),
   project: lazy(() => import('./flux/learn/Learn').then((m) => ({ default: m.Project }))),
 }
@@ -51,6 +52,7 @@ function Routes() {
     case 'sp-employer': return <S v="employer" />
     case 'sp-teach': return <S v="teach" />
     case 'sp-view': return <S v="view" />
+    case 'fl-course': return <S v="course" />
     case 'fl-lesson': return <S v="lesson" />
     case 'fl-project': return <S v="project" />
     case 'opportunities': return <Opportunities />

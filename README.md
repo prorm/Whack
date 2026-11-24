@@ -6,7 +6,23 @@ ScrollProof is an experiential upskilling platform. **FLUX Learn** teaches a tra
 
 > Learning creates understanding. Reels create retention. Assessments create evidence. Evidence creates opportunities.
 
-▶ **[Watch the 2:40 demo](docs/media/scrollproof_demo.mp4)**: the real app with its own narration. Chapters are in [scrollproof_demo_chapters.txt](docs/media/scrollproof_demo_chapters.txt).
+▶ **[Watch the 2:50 demo](docs/media/scrollproof_demo.mp4)**: the real app with its own narration. Chapters are in [scrollproof_demo_chapters.txt](docs/media/scrollproof_demo_chapters.txt).
+
+<img src="docs/media/homepage.png" alt="ScrollProof homepage: 'Learn by doing. Remember by scrolling. Get hired through proof.' with a live lesson preview of a solar panel and thermometer" width="100%">
+
+## Five career tracks
+
+The homepage (`#/home`) lists every track and says how deep each one is today:
+
+| Track | Field | Learning content today | Proof today |
+|---|---|---|---|
+| Rooftop Solar Technician | Trades | **Full FLUX Learn course:** 5 narrated lessons + project | 4 proof checks, including the project |
+| EV Charger Installer | Trades | Interactive story lesson (6 min, JSON Lab Blueprint) | Unseen EV load work order |
+| Payments Support Engineer | Tech | Interactive story lesson (5 min) | 2 unseen checks (duplicate webhooks, retry backoff) |
+| Inventory & Stock Assistant | Operations | Lesson + work sample + trainer review | Reviewed worksheet |
+| Dispatch & Payout Assistant | Operations | Diagnostic + adaptive lessons + worksheet | Reviewed worksheet |
+
+Only solar has the full multi-lesson course so far. The same lesson engine (`course.ts` data + `scenes.tsx` + narration) is what the other tracks get next.
 
 <img src="docs/media/learn-experiment.png" alt="FLUX Learn lesson 3: the learner drags the cell temperature to 5 °C; one panel reads 52.3 V and a 12-panel string crosses the 600 V inverter limit, with karaoke captions" width="100%">
 
@@ -14,7 +30,7 @@ ScrollProof is an experiential upskilling platform. **FLUX Learn** teaches a tra
 
 | Stage | Experience | Route | What it does |
 |---|---|---|---|
-| 1 · Learn | **FLUX Learn** | `#/home` → `#/fl-lesson?id=l1…l5` | A narrated cinematic lesson you take part in: cold open → teach → **predict** → **experiment** (live sliders with a goal) → rule as a line-by-line trace → **test** (hints, never just the answer) → **train** (fresh generated problems) |
+| 1 · Learn | **FLUX Learn** | `#/home` (careers) → `#/fl-course` → `#/fl-lesson?id=l1…l5` | A narrated cinematic lesson you take part in: cold open → teach → **predict** → **experiment** (live sliders with a goal) → rule as a line-by-line trace → **test** (hints, never just the answer) → **train** (fresh generated problems) |
 | 2 · Build | **Project** | `#/fl-project` | Design Mr. Sharma's 14-panel roof: choose the inverter, lay out strings, pass every check, explain the design to the customer |
 | 3 · Remember | **FLUX Reels** (Revise) | `#/flux-reels` | Short reels for concepts you already learned, on a 1 · 3 · 7 · 21-day schedule. Misses come back first next session. The quiz is optional ("just show me why") |
 | 4 · Prove | **Proof Passport** | `#/sp-assess`, `#/sp-passport` | Unseen work orders and the project, graded by deterministic code, with the exact task, version, answers, mistakes and review status |
@@ -57,7 +73,8 @@ npm run demo --prefix app        # build + ScrollProof server (SQLite) on http:/
 
 | URL | What it does |
 |---|---|
-| `http://127.0.0.1:4173/#/home` | The course, starting from zero |
+| `http://127.0.0.1:4173/#/home` | Homepage: all career tracks |
+| `http://127.0.0.1:4173/#/fl-course` | The solar course map |
 | `http://127.0.0.1:4173/#/home?demo=seed` | Seeded learner: lessons 1–4 done, one passed proof, one failed proof with a named mistake (all labelled DEMO SEED) |
 | `http://127.0.0.1:4173/#/home?demo=reset` | Wipes this device |
 
@@ -96,7 +113,7 @@ Executed results and known limitations: [reports/final/FINAL_QA.md](reports/fina
 ## Boundaries
 
 - Employers, candidates, listings, pay, the trainer, Mr. Sharma and invites are **DEMO** and run on the same device. Nothing is sent, and no invite is a job offer.
-- One full course exists (rooftop solar). EV and payments exist as single story episodes.
+- One full course exists (rooftop solar). EV and payments are single story lessons; inventory and dispatch are the earlier work-sample paths.
 - Narration is English (Indian English voice). There is no Kannada pathway for the new course yet.
 - Identity is not verified. No learning gains, placements or business metrics have been measured yet; that is the [pilot](reports/final/PILOT_PLAN.md)'s job.
 - Media spend to date: $4.45 of a $5 cap, all logged.
