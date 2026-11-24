@@ -1,0 +1,56 @@
+[
+  {
+    "actions": [
+      {
+        "key": "locate_sku",
+        "start_s": 0.0,
+        "observation": "Highlighted SKU TIN-24 row in inventory spreadsheet.",
+        "evidence": "SKU TIN-24 row highlighted in light blue."
+      },
+      {
+        "key": "detect_wrong_row",
+        "start_s": 4.0,
+        "observation": "Received quantity column highlights 12 instead of 30, showing formula pulling from row 5.",
+        "evidence": "Value '12' in Received column for TIN-24 is highlighted yellow."
+      },
+      {
+        "key": "correct_formula",
+        "start_s": 8.0,
+        "observation": "Expected column value updates from 114 to 132 after formula correction.",
+        "evidence": "Value '132' in Expected column for TIN-24 is highlighted yellow."
+      },
+      {
+        "key": "compare_count",
+        "start_s": 13.0,
+        "observation": "Variance calculated as -4 by subtracting expected stock (132) from counted stock (128).",
+        "evidence": "Variance cell shows '-4' and Status updates to 'SHORT 4'."
+      },
+      {
+        "key": "record_and_verify",
+        "start_s": 18.0,
+        "observation": "Instruction to record shortage, keep count and formula visible, and recount/check receipt before adjusting.",
+        "evidence": "Text instruction displayed: 'Record the shortage. Keep the count and formula visible. Recount and check the receipt before adjusting the ledger.'"
+      }
+    ],
+    "opening": 120,
+    "received": 30,
+    "sold": 18,
+    "counted": 128,
+    "expected": 132,
+    "signed_variance": -4,
+    "intermediate": null,
+    "inferred_reasoning": [
+      "The formula incorrectly referenced row 5 instead of row 4 for the received quantity.",
+      "Correcting the cell reference changed the expected total from 114 to 132."
+    ],
+    "stated_reasoning": [
+      "The old formula pulls receipts from the next row.",
+      "That 12 belongs to another item.",
+      "Subtract expected stock from counted stock; four tins are missing."
+    ],
+    "uncertainties": [
+      "Whether the physical count of 128 is correct before recounting.",
+      "Whether the physical delivery receipt matches 30 units."
+    ]
+  }
+]

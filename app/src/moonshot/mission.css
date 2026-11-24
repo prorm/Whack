@@ -1,0 +1,74 @@
+.mission-screen .screen-body { max-width: 61rem; }
+.mission-screen h1 { max-width: 23ch; font-size: clamp(2rem, 6vw, 3.15rem); }
+.mission-rail {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  color: #d9c391;
+  border-block: 1px solid #4b4333;
+  padding-block: .65rem;
+  font-size: .87rem;
+  font-weight: 750;
+}
+.mission-start { display: grid; gap: 1.65rem; }
+.mission-entry, .mission-fields, .mission-stage { display: grid; gap: .95rem; align-content: start; min-width: 0; }
+.mission-entry h2 { font-size: 1.5rem; text-wrap: balance; }
+.mission-entry .btn { justify-self: start; }
+.mission-fields { margin: 0; }
+.mission-source-img { display: block; width: 100%; min-width: 0; border-radius: .65rem; background: #192630; }
+.mission-fields input:not([type='checkbox']), .mission-stage input[type='file'] {
+  width: 100%;
+  min-height: 44px;
+  padding: .55rem .65rem;
+  border: 1px solid #687386;
+  border-radius: .6rem;
+  background: #141920;
+}
+.mission-screen input::file-selector-button {
+  padding: .55rem .65rem;
+  min-height: 44px;
+  background: #2f3540;
+  color: #fff5dd;
+  border: 0;
+  border-radius: .4rem;
+  margin-inline-end: .6rem;
+}
+.mission-status { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.mission-fact-fields, .mission-facts { display: grid; gap: .65rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mission-facts { margin: 0; border-block: 1px solid #4b4333; padding: .8rem 0; }
+.mission-facts dd { font-size: 1.55rem; color: #ffda72; font-variant-numeric: tabular-nums; }
+.mission-timeline, .mission-playbook, .mission-contributions { padding: 0; margin: 0; list-style: none; }
+.mission-timeline li, .mission-contributions li {
+  display: grid;
+  gap: .55rem;
+  border-bottom: 1px solid #3f4652;
+  padding-block: 1rem;
+}
+.mission-trace-title { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.mission-trace-title .btn, .mission-time { color: #ffda72; font-variant-numeric: tabular-nums; }
+.mission-trace-title h2 { font-size: 1.2rem; }
+.mission-edit, .mission-pager { display: grid; gap: .6rem; }
+.mission-citation, .mission-calculation {
+  display: grid;
+  gap: .65rem;
+  padding: .9rem;
+  border: 1px solid #565146;
+  border-radius: .8rem;
+  background: #23231f;
+}
+.mission-playbook li { display: flex; gap: 1rem; padding-block: .85rem; border-bottom: 1px solid #3f4652; }
+.mission-playbook li:first-child { border-top: 1px solid #3f4652; }
+.mission-rubric { margin: 0; display: grid; gap: .75rem; }
+.mission-rubric div { padding-bottom: .55rem; border-bottom: 1px solid #3f4652; }
+.mission-contributions small { color: var(--muted); }
+.mission-mode { margin-bottom: .2rem; }
+.mission-nav { border-top: 1px solid #4b4333; padding-top: 1rem; align-items: center; }
+.mission-nav details { width: 100%; }
+.mission-reel { max-width: min(28rem, max(16rem, calc((100dvh - 16rem) * .5625))); }
+@media (min-width: 55rem) {
+  .mission-start { grid-template-columns: 1.12fr 1fr; gap: 2rem; }
+  .mission-edit { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+}
+@media (max-width: 20rem) {
+  .mission-fact-fields { grid-template-columns: minmax(0, 1fr); }
+}

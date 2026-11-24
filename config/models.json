@@ -1,0 +1,178 @@
+{
+  "_notes": [
+    "Prices are USD and come from the hackathon brief (labelled 'brief'). Entries labelled 'assumed' had no price in the brief: treat them as placeholders.",
+    "Gemini 3.x models route to location=global. Veo and Imagen route to VERTEX_MEDIA_LOCATION (default us-central1).",
+    "Each role lists candidates in preference order; core/vertex_client.py probes them and falls back without crashing on 404."
+  ],
+  "roles": {
+    "trend_miner": {
+      "candidates": [
+        "gemini-3.8-flash",
+        "gemini-3.5-flash",
+        "gemini-3-flash-preview"
+      ]
+    },
+    "storyboard": {
+      "candidates": [
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        "gemini-3.8-flash"
+      ]
+    },
+    "image_anchor": {
+      "candidates": [
+        "imagen-4.0-fast-generate-001",
+        "gemini-3.1-flash-lite-image",
+        "gemini-3.1-flash-image"
+      ]
+    },
+    "image_edit": {
+      "candidates": [
+        "gemini-3.1-flash-lite-image",
+        "gemini-3.1-flash-image"
+      ]
+    },
+    "video_lite": {
+      "candidates": [
+        "veo-3.1-lite-generate-001"
+      ]
+    },
+    "video_fast": {
+      "candidates": [
+        "veo-3.1-fast-generate-001"
+      ]
+    },
+    "tts": {
+      "candidates": [
+        "gemini-3.8-flash-tts",
+        "gemini-3.8-flash-lite-tts",
+        "gemini-2.5-flash-tts"
+      ]
+    }
+  },
+  "models": {
+    "gemini-3.8-flash": {
+      "kind": "text",
+      "location": "global",
+      "price": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75
+      },
+      "price_source": "brief (intro promo to 2026-12-31)"
+    },
+    "gemini-3.5-flash-lite": {
+      "kind": "text",
+      "location": "global",
+      "price": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5
+      },
+      "price_source": "brief"
+    },
+    "gemini-3.5-flash": {
+      "kind": "text",
+      "location": "global",
+      "price": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 5.0
+      },
+      "price_source": "assumed"
+    },
+    "gemini-3.1-flash-lite": {
+      "kind": "text",
+      "location": "global",
+      "price": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5
+      },
+      "price_source": "assumed"
+    },
+    "gemini-3-flash-preview": {
+      "kind": "text",
+      "location": "global",
+      "price": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0
+      },
+      "price_source": "assumed"
+    },
+    "imagen-4.0-fast-generate-001": {
+      "kind": "imagen",
+      "location": "media",
+      "price": {
+        "per_image": 0.02
+      },
+      "price_source": "brief"
+    },
+    "gemini-3.1-flash-lite-image": {
+      "kind": "gemini_image",
+      "location": "global",
+      "price": {
+        "per_image": 0.034
+      },
+      "price_source": "brief"
+    },
+    "gemini-3.1-flash-image": {
+      "kind": "gemini_image",
+      "location": "global",
+      "price": {
+        "per_image": 0.067
+      },
+      "price_source": "assumed"
+    },
+    "veo-3.1-lite-generate-001": {
+      "kind": "veo",
+      "location": "media",
+      "price": {
+        "per_second_audio": 0.05,
+        "per_second_silent": 0.03
+      },
+      "price_source": "brief"
+    },
+    "veo-3.1-fast-generate-001": {
+      "kind": "veo",
+      "location": "media",
+      "price": {
+        "per_second_audio": 0.1,
+        "per_second_silent": 0.1
+      },
+      "price_source": "brief"
+    },
+    "veo-3.1-generate-001": {
+      "kind": "veo",
+      "location": "media",
+      "price": {
+        "per_second_audio": 0.4,
+        "per_second_silent": 0.4
+      },
+      "price_source": "brief"
+    },
+    "gemini-3.8-flash-tts": {
+      "kind": "tts",
+      "location": "global",
+      "price": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 10.0
+      },
+      "price_source": "assumed (audio output tokens)"
+    },
+    "gemini-3.8-flash-lite-tts": {
+      "kind": "tts",
+      "location": "global",
+      "price": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 10.0
+      },
+      "price_source": "assumed (audio output tokens)"
+    },
+    "gemini-2.5-flash-tts": {
+      "kind": "tts",
+      "location": "global",
+      "price": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 10.0
+      },
+      "price_source": "assumed (audio output tokens)"
+    }
+  }
+}

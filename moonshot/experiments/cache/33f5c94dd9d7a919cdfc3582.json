@@ -1,0 +1,3 @@
+{
+  "transcript": "This is tin 24. Check the SKU before checking its totals. The old formula pulls receipts from the next row. That 12 belongs to another item. UC4 for this SKU. Start with 120, add 30 received, then subtract 18 sold, the count is 128. Subtract expected stock from counted stock. Four tins are missing. Record the shortage. Keep the count and formula visible. Recount and check the receipt before adjusting the ledger."
+}

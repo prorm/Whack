@@ -1,0 +1,29 @@
+{
+  "id": "roblox_huss",
+  "name": "Huss Valley Chase (blocky-avatar panic sprint)",
+  "visual_dna": [
+    "Generic blocky low-poly game avatar (original design, no platform branding) sprinting at absurd speed",
+    "First-person or tight follow-cam, heavy camera shake, motion blur, speed lines",
+    "Chaotic cartoon valley with bouncing terrain and obstacle props",
+    "A giant glowing red error monster (e.g. 'LEAK', '#N/A', 'DRIP') looming and gaining from behind",
+    "Freeze-frame on the escape move: bright on-screen fix card, then the chase resumes and the monster pops"
+  ],
+  "character_sheet_prompt": "Single full-frame vertical 9:16 cinematic action shot (not a reference sheet, no labels, no turnaround, no text anywhere) of an original blocky low-poly game avatar with a square head, simple painted face showing panic, bright orange hoodie and blue shorts, mid-sprint pose, plus a giant glowing red blob monster with dripping water and angry glowing eyes, chasing from behind across a bright cartoon valley, low camera angle, motion blur, toy-like 3D render, no words, no letters, no logos, no real game branding",
+  "audio_vibe": "Fast panting chant 'huss huss huss' (performed by our own voice), 150 bpm chiptune-style chase loop (original), alarm stingers when the monster gains, a satisfying pop when the fix lands",
+  "bpm": 150,
+  "cut_cadence_sec": 0.9,
+  "hook_formula": "0-1 s: mid-sprint, monster already huge in the background, avatar yells the problem name. Caption: 'HUSS HUSS HUSS' + the error name in red.",
+  "slang_markers": ["HUSS HUSS HUSS", "Odi odi odi!", "Bhaag bhai bhaag", "Escape move:", "Monster gone, scene clear"],
+  "reusable_broll_prompts": [
+    "9:16 fast follow-cam of an original blocky low-poly cartoon avatar in an orange hoodie sprinting down a bouncy cartoon valley, camera shake, speed lines, loopable 4 seconds, no logos",
+    "9:16 wide shot: giant glowing red blob monster chasing a tiny blocky cartoon avatar across a cartoon valley, dramatic, toy-like 3D",
+    "9:16 slow-motion freeze: blocky cartoon avatar jumping over a gap while a red monster bursts into confetti behind them"
+  ],
+  "retention_psychology": "High arousal (being chased) plus a rhythmic chant creates an audio earworm; the 'escape move' is the only calm moment, so the fix becomes the relief memory; ideal as the CALLBACK format for a concept first learned in a calm format.",
+  "teaching_fit": ["troubleshooting under pressure", "error -> escape move", "callback / spaced recall in a new context"],
+  "safety_notes": [
+    "Do not use Roblox or any platform's name, logo, UI or avatar likeness in generated media; describe a generic blocky avatar",
+    "Panting chant is performed by our own voice, never sampled",
+    "Keep the threat cartoonish; no realistic violence"
+  ]
+}

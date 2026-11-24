@@ -1,0 +1,217 @@
+{
+  "hard_usd": 20,
+  "experiments": {
+    "text-baseline": {
+      "state": "PASSED",
+      "category": "reasoning",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:14+05:30"
+    },
+    "photo": {
+      "state": "PASSED",
+      "category": "reasoning",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:17+05:30"
+    },
+    "native-lite": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Parsed saved response without another provider request.",
+      "updated_at": "2026-11-24T03:01:12+05:30"
+    },
+    "native-flash": {
+      "state": "FAILED",
+      "category": "video_understanding",
+      "note": "ClientError · provider status 400",
+      "updated_at": "2026-11-24T02:50:21+05:30"
+    },
+    "frames-lite": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:23+05:30"
+    },
+    "frames-flash": {
+      "state": "FAILED",
+      "category": "video_understanding",
+      "note": "ClientError · provider status 400",
+      "updated_at": "2026-11-24T02:50:25+05:30"
+    },
+    "silent-native": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:28+05:30"
+    },
+    "occluded-native": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:30+05:30"
+    },
+    "native-followup": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Parsed saved response without another provider request.",
+      "updated_at": "2026-11-24T03:01:12+05:30"
+    },
+    "video-transcript": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Parsed saved response without another provider request.",
+      "updated_at": "2026-11-24T03:01:12+05:30"
+    },
+    "speech-lite": {
+      "state": "PASSED",
+      "category": "speech",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:38+05:30"
+    },
+    "speech-alt": {
+      "state": "PASSED",
+      "category": "speech",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:39+05:30"
+    },
+    "mixed-english": {
+      "state": "PASSED",
+      "category": "speech",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T02:50:40+05:30"
+    },
+    "mixed-english-alt": {
+      "state": "FAILED",
+      "category": "speech",
+      "note": "ClientError · provider status 400",
+      "updated_at": "2026-11-24T02:50:41+05:30"
+    },
+    "community-room": {
+      "state": "PASSED",
+      "note": "Local attribution and idempotent three-role school simulation.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "competitors": {
+      "state": "PASSED",
+      "note": "Read-only first-party competitor sweep; gaps are hypotheses.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "discovery": {
+      "state": "PASSED",
+      "note": "Authenticated publisher, custom model, service and bounded quota metadata inventory.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "image-frontier": {
+      "state": "NEEDS_HUMAN_REVIEW",
+      "note": "Two real candidate images and one lighting edit available.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "kannada-speech": {
+      "state": "NEEDS_HUMAN_REVIEW",
+      "note": "Both listed Kannada voices synthesized; fluency remains pending.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "local-fixtures": {
+      "state": "PASSED",
+      "note": "Independently authored calculations, input, privacy and Q&A scenarios.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "offline-reload": {
+      "state": "PASSED",
+      "note": "Server-killed worksheet, local recording, reconnection sync and revocation passed in Chromium.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "pilot-design": {
+      "state": "NEEDS_HUMAN_REVIEW",
+      "note": "Pilot and consent draft complete. No participants enrolled.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "privacy": {
+      "state": "NEEDS_HUMAN_REVIEW",
+      "note": "App boundary passed; endpoint security in the browser environment observed synthetic form text. Real capture privacy requires pilot review.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "prototype": {
+      "state": "PASSED",
+      "note": "Versioned browser walkthrough, consented evidence and correction path.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "realtime-dubbing": {
+      "state": "BLOCKED",
+      "note": "Verified project route unavailable in bounded inventory; realtime input/voice scope unproven.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "reel-shootout": {
+      "state": "NEEDS_HUMAN_REVIEW",
+      "note": "Three real creative comparators and source excerpt available; preference awaits learners.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "research-synthesis": {
+      "state": "PASSED",
+      "note": "Final decision and reproducible virtual demo.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "skill-mirror": {
+      "state": "PASSED",
+      "note": "Two independently computed numeric rubric items; method unverified.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "tournament": {
+      "state": "PASSED",
+      "note": "Weighted product hypotheses with a selected primary slice.",
+      "updated_at": "2026-11-24T03:20:12+05:30"
+    },
+    "video-generation": {
+      "state": "BLOCKED",
+      "note": "Veo metadata visible; fixed quota or project entitlement not established for fresh generation.",
+      "updated_at": "2026-11-24T03:20:13+05:30"
+    },
+    "native-flash-low": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:01:31+05:30"
+    },
+    "frames-flash-low": {
+      "state": "PASSED",
+      "category": "video_understanding",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:01:38+05:30"
+    },
+    "mixed-english-flash-low": {
+      "state": "PASSED",
+      "category": "speech",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:01:39+05:30"
+    },
+    "image-lite": {
+      "state": "PASSED",
+      "category": "image",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:01:42+05:30"
+    },
+    "image-full": {
+      "state": "PASSED",
+      "category": "image",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:01:51+05:30"
+    },
+    "image-edit": {
+      "state": "PASSED",
+      "category": "image",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:01:57+05:30"
+    },
+    "tts-kannada-chirp": {
+      "state": "PASSED",
+      "category": "speech",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:01:59+05:30"
+    },
+    "tts-kannada-standard": {
+      "state": "PASSED",
+      "category": "speech",
+      "note": "Artifact and run metadata saved.",
+      "updated_at": "2026-11-24T03:02:00+05:30"
+    }
+  }
+}

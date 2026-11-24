@@ -1,0 +1,61 @@
+{
+  "fps": 30,
+  "total_frames": 600,
+  "total_s": 20.0,
+  "scenes": [
+    {
+      "id": "hook",
+      "line": "l1_hook",
+      "pad_before": 0.5,
+      "min": 3.4,
+      "voice_dur_s": 2.197,
+      "from": 0,
+      "frames": 102
+    },
+    {
+      "id": "three",
+      "line": "l2_three",
+      "pad_before": 0.15,
+      "min": 2.6,
+      "voice_dur_s": 1.905,
+      "from": 102,
+      "frames": 78
+    },
+    {
+      "id": "teach",
+      "line": "l3_teach",
+      "pad_before": 0.2,
+      "min": 5.2,
+      "voice_dur_s": 3.383,
+      "from": 180,
+      "frames": 156
+    },
+    {
+      "id": "chase",
+      "line": "l4_chase",
+      "pad_before": 0.25,
+      "min": 4.6,
+      "voice_dur_s": 3.566,
+      "from": 336,
+      "frames": 138
+    },
+    {
+      "id": "cta",
+      "line": "l5_cta",
+      "pad_before": 0.3,
+      "min": 4.2,
+      "voice_dur_s": 1.721,
+      "from": 474,
+      "frames": 126
+    }
+  ],
+  "chase_start_s": 11.2,
+  "chase_end_s": 15.8,
+  "lines": {
+    "l1_hook": "Wrong washer, guru? Scene beda.",
+    "l2_three": "Every washer has three numbers.",
+    "l3_teach": "I.D., the hole. O.D., the outside. And thickness.",
+    "l4_chase": "Huss, huss, huss! Spare is three mil, job needs two. Reject it!",
+    "l5_cta": "Check all three. Then prove it."
+  }
+}

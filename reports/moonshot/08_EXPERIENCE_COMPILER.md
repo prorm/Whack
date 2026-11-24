@@ -1,0 +1,13 @@
+# Experience Compiler
+
+**Evidence.** The demo starts from a synthetic ledger. Gemini 3.8 Flash LOW produced five timestamped readings and four ground-truth facts. The app includes a cached extract from that real request, with the authored source available beside it. The reviewer corrects the separately planted C5 error. The verifier blocks approval when a step has no source, a draft remains unresolved, source/derivative permission is missing, or the synthetic correction still references C5.
+
+**Pipeline.** Private problem → explicit input permission → confirmed counts → ExperienceTrace → contributor explanation and checked steps → approved, versioned same-device playbook → five learner modes → personalized repair → deterministic transfer worksheet → consented evidence. The upload UI retains supported files in IndexedDB. Private media has a local preview and typed fact confirmation. Cloud inference was exercised on synthetic inputs in the lab, and the public-facing prototype replays the cached output. [Trace schema](../../moonshot/schemas/experience_trace.schema.json) · [Raw cached suggestion](../../moonshot/datasets/demo-proposal.json) · [Implementation](../../app/src/moonshot/Mission.tsx)
+
+## Follow-up and source Q&A
+
+The scripted answer explained why a second person needs both the physical count and the formula. Native narration, video with transcript, and video with follow-up each identified 5/5 actions and 3/4 facts at $0.00212, $0.00228 and $0.00224 respectively on Flash-Lite. The follow-up variant surfaced two useful uncertainty checks and also attached the next row's quantity to the wrong SKU. More context did not improve numeric recall in this run. The app preserves the explicit scripted answer beside observations, rather than treating a model paraphrase as the contributor's account. Human review time was unmeasured.
+
+On 12 authored questions, transcript-only lexical retrieval selected the expected span or abstained 5 times. Timestamped observations plus transcript scored 6. The closed-scope reviewed trace rule scored 12, with zero false answers on four deliberately unanswerable questions. These cases helped define the routing rules. That establishes scope mechanics, not open-domain accuracy. The answer links back to the timestamp. [Retrieval records](../../moonshot/benchmarks/local-results.json)
+
+An approved source drives text, synthetic audio, visual calculation, practice, replay, downloadable text and personalized recall. Corrections create a new release and remain reviewable. A validated factual numeric layer stays independent of edits to instruction prose. The user interface displays reviewed text as well as model observations, keeping the contributor in the loop.

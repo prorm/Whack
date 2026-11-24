@@ -1,0 +1,33 @@
+{
+  "backend": "vertex:hackathons-512621 text@global media@us-central1",
+  "resolved": {
+    "video_lite": "veo-3.1-lite-generate-001",
+    "tts": "gemini-3.8-flash-tts"
+  },
+  "log": [
+    {
+      "role": "video_lite",
+      "model": "veo-3.1-lite-generate-001",
+      "available": true,
+      "note": "ok (2722 ms)"
+    },
+    {
+      "role": "tts",
+      "model": "gemini-3.8-flash-tts",
+      "available": true,
+      "note": "ok (1303 ms)"
+    },
+    {
+      "role": "tts",
+      "model": "gemini-3.8-flash-lite-tts",
+      "available": true,
+      "note": "ok (570 ms)"
+    },
+    {
+      "role": "tts",
+      "model": "gemini-2.5-flash-tts",
+      "available": true,
+      "note": "ok (461 ms)"
+    }
+  ]
+}

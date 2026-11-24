@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "version": "graph-v1",
+    "author": "Hand-authored for ScrollProof feasibility v2 (not model-generated). Domain: Bengaluru small-business inventory / dispatch coordinator.",
+    "notes": "prereqs are direct prerequisites only; closure is computed in code. Diagnostic items carry deterministic numeric answers."
+  },
+  "tools": ["excel", "google_sheets", "tally", "whatsapp", "smartphone", "computer", "pos_billing", "barcode_scanner", "email", "two_wheeler"],
+  "nodes": {
+    "read_table":            {"label": "Reading tabular information", "kind": "numeracy", "prereqs": []},
+    "add_sub":               {"label": "Addition and subtraction (quantities, money)", "kind": "numeracy", "prereqs": []},
+    "mult_div":              {"label": "Multiplication and division", "kind": "numeracy", "prereqs": ["add_sub"]},
+    "fractions_decimals":    {"label": "Fractions and decimals", "kind": "numeracy", "prereqs": ["mult_div"]},
+    "percent_basic":         {"label": "Percentages: meaning and percent of a quantity", "kind": "numeracy", "prereqs": ["fractions_decimals"]},
+    "percent_change":        {"label": "Percentage increase / decrease and variance %", "kind": "numeracy", "prereqs": ["percent_basic", "add_sub"]},
+    "commission_calc":       {"label": "Commission / incentive / payout calculation", "kind": "numeracy", "prereqs": ["percent_basic"]},
+    "unit_conversion":       {"label": "Units and pack sizes (kg, dozen, carton)", "kind": "numeracy", "prereqs": ["mult_div"]},
+    "gst_basic":             {"label": "GST and discount calculation basics", "kind": "numeracy", "prereqs": ["percent_basic"]},
+    "sheet_navigation":      {"label": "Spreadsheet cells, rows, columns, cell references", "kind": "spreadsheet", "prereqs": ["read_table"]},
+    "sheet_data_entry":      {"label": "Accurate spreadsheet data entry", "kind": "spreadsheet", "prereqs": ["sheet_navigation"]},
+    "sheet_formulas_basic":  {"label": "Basic formulas (SUM, +, -, *, /)", "kind": "spreadsheet", "prereqs": ["sheet_navigation", "add_sub"]},
+    "sheet_percent_formula": {"label": "Percentage formulas in a spreadsheet", "kind": "spreadsheet", "prereqs": ["sheet_formulas_basic", "percent_basic"]},
+    "sheet_lookup":          {"label": "Lookup / matching rows (VLOOKUP, XLOOKUP)", "kind": "spreadsheet", "prereqs": ["sheet_formulas_basic"]},
+    "sheet_sort_filter":     {"label": "Sorting and filtering", "kind": "spreadsheet", "prereqs": ["sheet_navigation"]},
+    "invoice_reading":       {"label": "Reading bills, invoices, delivery challans", "kind": "operations", "prereqs": ["read_table"]},
+    "stock_count":           {"label": "Physical stock counting and recording", "kind": "operations", "prereqs": ["add_sub", "unit_conversion"]},
+    "order_reconciliation":  {"label": "Reconciling orders vs invoices vs deliveries", "kind": "operations", "prereqs": ["invoice_reading", "add_sub", "sheet_formulas_basic"]},
+    "inventory_reconciliation": {"label": "Reconciling recorded stock vs physical count", "kind": "operations", "prereqs": ["stock_count", "sheet_formulas_basic", "percent_change"]},
+    "dispatch_planning":     {"label": "Planning and assigning dispatches / deliveries", "kind": "operations", "prereqs": ["read_table"]},
+    "daily_reporting":       {"label": "Daily / weekly summary reports", "kind": "operations", "prereqs": ["sheet_formulas_basic"]},
+    "vendor_communication":  {"label": "Coordinating with drivers, vendors, customers (phone/WhatsApp)", "kind": "soft", "prereqs": []}
+  },
+  "diagnostics": {
+    "add_sub":            [{"id": "d_add_1", "q": "You had 240 packets. 85 were dispatched and 30 returned. How many packets now?", "answer": 185}],
+    "mult_div":           [{"id": "d_mul_1", "q": "A carton holds 24 bottles. How many bottles in 15 cartons?", "answer": 360}],
+    "fractions_decimals": [{"id": "d_frac_1", "q": "Write 3/4 as a decimal.", "answer": 0.75}],
+    "percent_basic":      [{"id": "d_pct_1", "q": "What is 15% of 400?", "answer": 60},
+                           {"id": "d_pct_2", "q": "48 out of 60 orders were on time. What percent were on time?", "answer": 80}],
+    "percent_change":     [{"id": "d_chg_1", "q": "Price went from 250 to 300. What is the percent increase?", "answer": 20}],
+    "commission_calc":    [{"id": "d_com_1", "q": "Commission is 2% of order value. Orders worth 12,500 today. Commission?", "answer": 250}],
+    "read_table":         [{"id": "d_tab_1", "q": "Table: Mon 40, Tue 35, Wed 50 orders. Which day had the most orders? Answer with the count.", "answer": 50}],
+    "sheet_navigation":   [{"id": "d_nav_1", "q": "In a spreadsheet, the cell in column C and row 7 is called C7. Which column number is C? (A=1)", "answer": 3}],
+    "sheet_formulas_basic": [{"id": "d_sum_1", "q": "A1=120, A2=80, A3=50. What does =SUM(A1:A3) return?", "answer": 250}],
+    "sheet_percent_formula": [{"id": "d_spf_1", "q": "B2 holds 800 (order value), C2 holds 5 (percent). What does =B2*C2/100 return?", "answer": 40}]
+  },
+  "misconceptions": {
+    "pct_add_instead_of_multiply": {"concept": "percent_basic", "label": "Adds the percent number instead of multiplying (15% of 400 -> 415)", "detect": "answer == base + pct"},
+    "pct_divide_by_percent":       {"concept": "percent_basic", "label": "Divides by the percent instead of multiplying by pct/100 (15% of 400 -> 26.67)", "detect": "abs(answer - base/pct) < 0.1"},
+    "pct_change_wrong_base":       {"concept": "percent_change", "label": "Uses the new value as the base for percent change (250->300 gives 16.67)", "detect": "abs(answer - (new-old)/new*100) < 0.1"},
+    "pct_points_vs_percent":       {"concept": "percent_change", "label": "Confuses percentage points with percent change", "detect": "manual"},
+    "sheet_percent_no_divide":     {"concept": "sheet_percent_formula", "label": "Forgets /100 when the cell holds a whole percent (=B2*C2 -> 4000)", "detect": "answer == base * pct"}
+  }
+}

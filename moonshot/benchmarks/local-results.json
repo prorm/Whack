@@ -1,0 +1,323 @@
+{
+  "classification": "Synthetic fixture, deterministic scoring; no human preference",
+  "retrieval": [
+    {
+      "name": "Whole transcript",
+      "correct": 5,
+      "falseAnswersOnUnobservable": 3,
+      "ms": 2.4184999999999945,
+      "answers": [
+        {
+          "query": "Why C4 instead of C5?",
+          "expected": "error",
+          "actual": ""
+        },
+        {
+          "query": "Why verify the receipt before adjusting the ledger?",
+          "expected": "check",
+          "actual": "check"
+        },
+        {
+          "query": "What formula corrects expected stock?",
+          "expected": "fix",
+          "actual": "count"
+        },
+        {
+          "query": "How was counted stock compared?",
+          "expected": "count",
+          "actual": "count"
+        },
+        {
+          "query": "Why check the SKU first?",
+          "expected": "row",
+          "actual": "row"
+        },
+        {
+          "query": "Who stole the tins?",
+          "expected": "",
+          "actual": "count"
+        },
+        {
+          "query": "What is the phone number?",
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "query": "Who caused the shortage?",
+          "expected": "",
+          "actual": "check"
+        },
+        {
+          "query": "Which item was counted?",
+          "expected": "row",
+          "actual": "error"
+        },
+        {
+          "query": "What does minus four mean?",
+          "expected": "count",
+          "actual": "row"
+        },
+        {
+          "query": "Was the receipt actually checked?",
+          "expected": "",
+          "actual": "check"
+        },
+        {
+          "query": "What was the original wrong row?",
+          "expected": "error",
+          "actual": "error"
+        }
+      ]
+    },
+    {
+      "name": "Timestamped observations + transcript",
+      "correct": 6,
+      "falseAnswersOnUnobservable": 3,
+      "ms": 3.2379999999999995,
+      "answers": [
+        {
+          "query": "Why C4 instead of C5?",
+          "expected": "error",
+          "actual": ""
+        },
+        {
+          "query": "Why verify the receipt before adjusting the ledger?",
+          "expected": "check",
+          "actual": "check"
+        },
+        {
+          "query": "What formula corrects expected stock?",
+          "expected": "fix",
+          "actual": "count"
+        },
+        {
+          "query": "How was counted stock compared?",
+          "expected": "count",
+          "actual": "count"
+        },
+        {
+          "query": "Why check the SKU first?",
+          "expected": "row",
+          "actual": "row"
+        },
+        {
+          "query": "Who stole the tins?",
+          "expected": "",
+          "actual": "count"
+        },
+        {
+          "query": "What is the phone number?",
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "query": "Who caused the shortage?",
+          "expected": "",
+          "actual": "check"
+        },
+        {
+          "query": "Which item was counted?",
+          "expected": "row",
+          "actual": "count"
+        },
+        {
+          "query": "What does minus four mean?",
+          "expected": "count",
+          "actual": "count"
+        },
+        {
+          "query": "Was the receipt actually checked?",
+          "expected": "",
+          "actual": "check"
+        },
+        {
+          "query": "What was the original wrong row?",
+          "expected": "error",
+          "actual": "error"
+        }
+      ]
+    },
+    {
+      "name": "Reviewed trace + explicit abstention routing",
+      "correct": 12,
+      "falseAnswersOnUnobservable": 0,
+      "ms": 3.4916000000000054,
+      "answers": [
+        {
+          "query": "Why C4 instead of C5?",
+          "expected": "error",
+          "actual": "error"
+        },
+        {
+          "query": "Why verify the receipt before adjusting the ledger?",
+          "expected": "check",
+          "actual": "check"
+        },
+        {
+          "query": "What formula corrects expected stock?",
+          "expected": "fix",
+          "actual": "fix"
+        },
+        {
+          "query": "How was counted stock compared?",
+          "expected": "count",
+          "actual": "count"
+        },
+        {
+          "query": "Why check the SKU first?",
+          "expected": "row",
+          "actual": "row"
+        },
+        {
+          "query": "Who stole the tins?",
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "query": "What is the phone number?",
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "query": "Who caused the shortage?",
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "query": "Which item was counted?",
+          "expected": "row",
+          "actual": "row"
+        },
+        {
+          "query": "What does minus four mean?",
+          "expected": "count",
+          "actual": "count"
+        },
+        {
+          "query": "Was the receipt actually checked?",
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "query": "What was the original wrong row?",
+          "expected": "error",
+          "actual": "error"
+        }
+      ]
+    }
+  ],
+  "inputCases": [
+    {
+      "source": "Opening: 120. Received: 30. Sold: 18. Counted: 128.",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "source": "Received: 30; Counted: 128; Sold: 18; Opening: 120",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "source": "opening=0; received=0; sold=0; counted=0",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "source": "Opening: 35. Received: 4. Sold: 10. Counted: 30.",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "source": "Opening: 12, Received: 0, Sold: 2, Counted: 10",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "source": "Opening: 120. Received: 30. Counted: 128.",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "source": "Opening: 120. Received: 30. Sold: 180. Counted: 128.",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "source": "Opening: 120. Opening: 90. Received: 30. Sold: 18. Counted: 128.",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "source": "Opening: 120.5. Received: 30. Sold: 18. Counted: 128.",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "source": "Opening: -120. Received: 30. Sold: 18. Counted: 128.",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "source": "Opening: 123456. Received: 30. Sold: 18. Counted: 128.",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "source": "Stock check, source ambiguous, reported 128.",
+      "expected": false,
+      "actual": false
+    }
+  ],
+  "glossary": [
+    "VLOOKUP",
+    "FALSE",
+    "SUM",
+    "SKU",
+    "stock",
+    "commission",
+    "cell reference",
+    "=B4+C4-D4",
+    "TIN-24",
+    "132",
+    "128",
+    "−4"
+  ],
+  "redaction": [
+    [
+      "Contact a@example.com. Opening: 120.",
+      "Contact [EMAIL]. Opening: 120."
+    ],
+    [
+      "Supplier testhandle@upi. =B4+C4-D4.",
+      "Supplier [PAYMENT]. =B4+C4-D4."
+    ],
+    [
+      "The screened worksheet indicates a discrepancy.",
+      "The screened worksheet indicates a discrepancy."
+    ]
+  ],
+  "school": [
+    {
+      "actor": "cataloguer-demo",
+      "role": "Classify rows",
+      "notes": [
+        "Grouped by supply SKU."
+      ],
+      "status": "contribution recorded"
+    },
+    {
+      "actor": "calculator-demo",
+      "role": "Reconcile quantities",
+      "notes": [
+        "Expected 94, counted 80, variance −14."
+      ],
+      "status": "contribution recorded"
+    },
+    {
+      "actor": "verifier-demo",
+      "role": "Check independently",
+      "notes": [],
+      "status": "awaiting contribution"
+    }
+  ]
+}

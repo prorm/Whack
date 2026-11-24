@@ -1,0 +1,162 @@
+{
+  "requests": [
+    {
+      "id": "text-baseline",
+      "model": "gemini-3.5-flash-lite",
+      "category": "reasoning",
+      "operation": "text",
+      "reserved_max_usd": "0.02348"
+    },
+    {
+      "id": "photo",
+      "model": "gemini-3.5-flash-lite",
+      "category": "reasoning",
+      "operation": "photo",
+      "reserved_max_usd": "0.02348"
+    },
+    {
+      "id": "native-lite",
+      "model": "gemini-3.5-flash-lite",
+      "category": "video_understanding",
+      "operation": "narrated",
+      "reserved_max_usd": "0.02768"
+    },
+    {
+      "id": "native-flash",
+      "model": "gemini-3.8-flash",
+      "category": "video_understanding",
+      "operation": "narrated",
+      "reserved_max_usd": "0.04872"
+    },
+    {
+      "id": "frames-lite",
+      "model": "gemini-3.5-flash-lite",
+      "category": "video_understanding",
+      "operation": "frames",
+      "reserved_max_usd": "0.02768"
+    },
+    {
+      "id": "frames-flash",
+      "model": "gemini-3.8-flash",
+      "category": "video_understanding",
+      "operation": "frames",
+      "reserved_max_usd": "0.04872"
+    },
+    {
+      "id": "silent-native",
+      "model": "gemini-3.5-flash-lite",
+      "category": "video_understanding",
+      "operation": "silent",
+      "reserved_max_usd": "0.02768"
+    },
+    {
+      "id": "occluded-native",
+      "model": "gemini-3.5-flash-lite",
+      "category": "video_understanding",
+      "operation": "occluded",
+      "reserved_max_usd": "0.02768"
+    },
+    {
+      "id": "native-followup",
+      "model": "gemini-3.5-flash-lite",
+      "category": "video_understanding",
+      "operation": "followup",
+      "reserved_max_usd": "0.02768"
+    },
+    {
+      "id": "video-transcript",
+      "model": "gemini-3.5-flash-lite",
+      "category": "video_understanding",
+      "operation": "transcript",
+      "reserved_max_usd": "0.02768"
+    },
+    {
+      "id": "speech-lite",
+      "model": "gemini-3.5-flash-lite",
+      "category": "speech",
+      "operation": "audio",
+      "reserved_max_usd": "0.02768"
+    },
+    {
+      "id": "speech-alt",
+      "model": "gemini-3.1-flash-lite",
+      "category": "speech",
+      "operation": "audio",
+      "reserved_max_usd": "0.024288"
+    },
+    {
+      "id": "mixed-english",
+      "model": "gemini-3.5-flash-lite",
+      "category": "speech",
+      "operation": "mixed",
+      "reserved_max_usd": "0.02348"
+    },
+    {
+      "id": "mixed-english-alt",
+      "model": "gemini-3.8-flash",
+      "category": "speech",
+      "operation": "mixed",
+      "reserved_max_usd": "0.03822"
+    },
+    {
+      "id": "native-flash-low",
+      "model": "gemini-3.8-flash",
+      "category": "video_understanding",
+      "operation": "narrated:low",
+      "reserved_max_usd": "0.04872"
+    },
+    {
+      "id": "frames-flash-low",
+      "model": "gemini-3.8-flash",
+      "category": "video_understanding",
+      "operation": "frames:low",
+      "reserved_max_usd": "0.04872"
+    },
+    {
+      "id": "mixed-english-flash-low",
+      "model": "gemini-3.8-flash",
+      "category": "speech",
+      "operation": "mixed:low",
+      "reserved_max_usd": "0.03822"
+    },
+    {
+      "id": "image-lite",
+      "model": "gemini-3.1-flash-lite-image",
+      "category": "image",
+      "operation": "image-generate",
+      "reserved_max_usd": "0.35"
+    },
+    {
+      "id": "image-full",
+      "model": "gemini-3.1-flash-image",
+      "category": "image",
+      "operation": "image-generate",
+      "reserved_max_usd": "0.35"
+    },
+    {
+      "id": "image-edit",
+      "model": "gemini-3.1-flash-lite-image",
+      "category": "image",
+      "operation": "image-edit",
+      "reserved_max_usd": "0.35"
+    },
+    {
+      "id": "tts-kannada-chirp",
+      "model": "kn-IN-Chirp3-HD-Aoede",
+      "category": "speech",
+      "operation": "tts",
+      "reserved_max_usd": "0.06"
+    },
+    {
+      "id": "tts-kannada-standard",
+      "model": "kn-IN-Standard-A",
+      "category": "speech",
+      "operation": "tts",
+      "reserved_max_usd": "0.06"
+    }
+  ],
+  "hard_usd": 20,
+  "admission_usd": 17,
+  "planned_total_usd": "1.729808",
+  "notes": "No managed endpoints, paid storage, async jobs, or retries in this queue."
+}

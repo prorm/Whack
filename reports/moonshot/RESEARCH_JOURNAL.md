@@ -1,0 +1,63 @@
+- 2026-11-24T02:50:12+05:30 · text-baseline · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:14+05:30 · text-baseline · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:14+05:30 · photo · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:17+05:30 · photo · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:17+05:30 · native-lite · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:20+05:30 · native-lite · FAILED · AttributeError · provider status None
+- 2026-11-24T02:50:20+05:30 · native-flash · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:21+05:30 · native-flash · FAILED · ClientError · provider status 400
+- 2026-11-24T02:50:21+05:30 · frames-lite · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:23+05:30 · frames-lite · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:23+05:30 · frames-flash · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:25+05:30 · frames-flash · FAILED · ClientError · provider status 400
+- 2026-11-24T02:50:25+05:30 · silent-native · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:28+05:30 · silent-native · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:28+05:30 · occluded-native · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:30+05:30 · occluded-native · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:30+05:30 · native-followup · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:33+05:30 · native-followup · FAILED · AttributeError · provider status None
+- 2026-11-24T02:50:33+05:30 · video-transcript · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:36+05:30 · video-transcript · FAILED · AttributeError · provider status None
+- 2026-11-24T02:50:36+05:30 · speech-lite · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:38+05:30 · speech-lite · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:38+05:30 · speech-alt · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:39+05:30 · speech-alt · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:39+05:30 · mixed-english · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:40+05:30 · mixed-english · PASSED · Artifact and run metadata saved.
+- 2026-11-24T02:50:40+05:30 · mixed-english-alt · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T02:50:41+05:30 · mixed-english-alt · FAILED · ClientError · provider status 400
+- 2026-11-24T03:01:12+05:30 · native-lite · PASSED · Parsed saved response without another provider request.
+- 2026-11-24T03:01:12+05:30 · native-followup · PASSED · Parsed saved response without another provider request.
+- 2026-11-24T03:01:12+05:30 · video-transcript · PASSED · Parsed saved response without another provider request.
+- 2026-11-24T03:01:17+05:30 · native-flash-low · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:01:31+05:30 · native-flash-low · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:01:31+05:30 · frames-flash-low · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:01:38+05:30 · frames-flash-low · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:01:38+05:30 · mixed-english-flash-low · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:01:39+05:30 · mixed-english-flash-low · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:01:39+05:30 · image-lite · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:01:42+05:30 · image-lite · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:01:42+05:30 · image-full · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:01:51+05:30 · image-full · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:01:51+05:30 · image-edit · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:01:57+05:30 · image-edit · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:01:57+05:30 · tts-kannada-chirp · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:01:59+05:30 · tts-kannada-chirp · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:01:59+05:30 · tts-kannada-standard · RUNNING · Durable budget reservation recorded.
+- 2026-11-24T03:02:00+05:30 · tts-kannada-standard · PASSED · Artifact and run metadata saved.
+- 2026-11-24T03:20:12+05:30 · discovery · PASSED · Authenticated publisher, custom model, service and bounded quota metadata inventory.
+- 2026-11-24T03:20:12+05:30 · competitors · PASSED · Read-only first-party competitor sweep; gaps are hypotheses.
+- 2026-11-24T03:20:12+05:30 · tournament · PASSED · Weighted product hypotheses with a selected primary slice.
+- 2026-11-24T03:20:12+05:30 · local-fixtures · PASSED · Independently authored calculations, input, privacy and Q&A scenarios.
+- 2026-11-24T03:20:12+05:30 · prototype · PASSED · Versioned browser walkthrough, consented evidence and correction path.
+- 2026-11-24T03:20:12+05:30 · skill-mirror · PASSED · Two independently computed numeric rubric items; method unverified.
+- 2026-11-24T03:20:12+05:30 · community-room · PASSED · Local attribution and idempotent three-role school simulation.
+- 2026-11-24T03:20:12+05:30 · offline-reload · PASSED · Server-killed worksheet, local recording, reconnection sync and revocation passed in Chromium.
+- 2026-11-24T03:20:13+05:30 · reel-shootout · NEEDS_HUMAN_REVIEW · Three real creative comparators and source excerpt available; preference awaits learners.
+- 2026-11-24T03:20:13+05:30 · privacy · NEEDS_HUMAN_REVIEW · App boundary passed; endpoint security in the browser environment observed synthetic form text. Real capture privacy requires pilot review.
+- 2026-11-24T03:20:13+05:30 · pilot-design · NEEDS_HUMAN_REVIEW · Pilot and consent draft complete. No participants enrolled.
+- 2026-11-24T03:20:13+05:30 · research-synthesis · PASSED · Final decision and reproducible virtual demo.
+- 2026-11-24T03:20:13+05:30 · image-frontier · NEEDS_HUMAN_REVIEW · Two real candidate images and one lighting edit available.
+- 2026-11-24T03:20:13+05:30 · video-generation · BLOCKED · Veo metadata visible; fixed quota or project entitlement not established for fresh generation.
+- 2026-11-24T03:20:13+05:30 · kannada-speech · NEEDS_HUMAN_REVIEW · Both listed Kannada voices synthesized; fluency remains pending.
+- 2026-11-24T03:20:13+05:30 · realtime-dubbing · BLOCKED · Verified project route unavailable in bounded inventory; realtime input/voice scope unproven.

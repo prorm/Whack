@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ScrollProof X ExperienceTrace",
+  "type": "object",
+  "required": ["experienceId","sourceOwner","sourceMedia","permissions","problemDescription","statedGoal","facts","actions","spokenExplanations","observedOutcomes","inferredReasoning","confidence","unsupportedClaims","missingSteps","safetyFlags","skills","assessmentCandidates","reviewStatus"],
+  "properties": {
+    "experienceId":{"type":"string"},
+    "sourceOwner":{"type":"string"},
+    "sourceMedia":{"enum":["synthetic","private"]},
+    "attachment":{"type":"object","required":["id","name","mime","size"]},
+    "permissions":{"type":"object","required":["capture","derivatives","publicShare"],"properties":{"capture":{"type":"boolean"},"derivatives":{"type":"boolean"},"publicShare":{"type":"boolean"}}},
+    "problemDescription":{"type":"string"},
+    "statedGoal":{"type":"string"},
+    "facts":{"type":["object","null"],"required":["opening","received","sold","counted"],"additionalProperties":{"type":"integer"}},
+    "actions":{"type":"array","items":{"type":"object","required":["id","at","end","action","seen","speech"]}},
+    "spokenExplanations":{"$ref":"#/$defs/strings"},
+    "observedOutcomes":{"$ref":"#/$defs/strings"},
+    "inferredReasoning":{"$ref":"#/$defs/strings"},
+    "confidence":{"enum":["source-aligned","limited"]},
+    "unsupportedClaims":{"$ref":"#/$defs/strings"},
+    "missingSteps":{"$ref":"#/$defs/strings"},
+    "safetyFlags":{"$ref":"#/$defs/strings"},
+    "skills":{"$ref":"#/$defs/strings"},
+    "assessmentCandidates":{"$ref":"#/$defs/strings"},
+    "reviewStatus":{"enum":["draft","demo-reviewed","withdrawn"]}
+  },
+  "$defs":{"strings":{"type":"array","items":{"type":"string"}}}
+}

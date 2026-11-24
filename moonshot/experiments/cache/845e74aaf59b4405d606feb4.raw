@@ -1,0 +1,48 @@
+{
+  "actions": [
+    {
+      "key": "locate_sku",
+      "start_s": 0,
+      "observation": "Inventory worksheet displaying SKU TIN-24 and BOLT-24 with opening, received, sold, expected, counted, variance, and status values.",
+      "evidence": "SKU TIN-24 with Opening 120, Received 30, Sold 18, Expected 114, Counted 128"
+    },
+    {
+      "key": "correct_formula",
+      "start_s": 4,
+      "observation": "Highlighting received value or recalculating formula for TIN-24.",
+      "evidence": "Highlighted cell 12 under BOLT-9 received column"
+    },
+    {
+      "key": "compare_count",
+      "start_s": 8,
+      "observation": "Expected column for TIN-24 highlighted, showing 132.",
+      "evidence": "Highlighted cell 132 under Expected column for TIN-24"
+    },
+    {
+      "key": "compare_count",
+      "start_s": 13,
+      "observation": "Counted and Variance cells for TIN-24 highlighted, showing Counted 128 and Variance -4.",
+      "evidence": "Highlighted cells 128 and -4 for TIN-24"
+    },
+    {
+      "key": "record_and_verify",
+      "start_s": 18,
+      "observation": "Status cell highlighted as SHORT 4, with instruction text at the bottom.",
+      "evidence": "Highlighted SHORT 4 and text 'Record the shortage. Check the receipt and recount before adjusting.'"
+    }
+  ],
+  "opening": 120,
+  "received": 30,
+  "sold": 18,
+  "counted": 128,
+  "expected": 132,
+  "signed_variance": -4,
+  "intermediate": null,
+  "inferred_reasoning": [
+    "Expected stock is calculated as opening plus received minus sold (120 + 30 - 18 = 132)."
+  ],
+  "stated_reasoning": [
+    "Record the shortage. Check the receipt and recount before adjusting."
+  ],
+  "uncertainties": []
+}

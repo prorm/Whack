@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-24T01:46:36.881Z",
+  "title": "Design System: ScrollProof",
+  "extensions": {
+    "colorMeta": {
+      "forest": {
+        "role": "primary",
+        "displayName": "Deep forest",
+        "tonalRamp": [
+          "oklch(15% 0.014 150)",
+          "oklch(26% 0.025 150)",
+          "oklch(37% 0.032 150)",
+          "oklch(49% 0.038 150)",
+          "oklch(61% 0.040 150)",
+          "oklch(73% 0.038 150)",
+          "oklch(84% 0.027 150)",
+          "oklch(95% 0.013 150)"
+        ]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Golden accent",
+        "tonalRamp": [
+          "oklch(15% 0.051 87)",
+          "oklch(26% 0.093 87)",
+          "oklch(37% 0.120 87)",
+          "oklch(49% 0.142 87)",
+          "oklch(61% 0.150 87)",
+          "oklch(73% 0.142 87)",
+          "oklch(84% 0.101 87)",
+          "oklch(95% 0.050 87)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm paper",
+        "tonalRamp": [
+          "oklch(15% 0.003 98)",
+          "oklch(26% 0.006 98)",
+          "oklch(37% 0.008 98)",
+          "oklch(49% 0.009 98)",
+          "oklch(61% 0.010 98)",
+          "oklch(73% 0.009 98)",
+          "oklch(84% 0.007 98)",
+          "oklch(95% 0.003 98)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Pale surface",
+        "tonalRamp": [
+          "oklch(15% 0.005 88)",
+          "oklch(26% 0.009 88)",
+          "oklch(37% 0.011 88)",
+          "oklch(49% 0.013 88)",
+          "oklch(61% 0.014 88)",
+          "oklch(73% 0.013 88)",
+          "oklch(84% 0.009 88)",
+          "oklch(95% 0.005 88)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Dark ink",
+        "tonalRamp": [
+          "oklch(15% 0.006 126)",
+          "oklch(26% 0.011 126)",
+          "oklch(37% 0.014 126)",
+          "oklch(49% 0.017 126)",
+          "oklch(61% 0.018 126)",
+          "oklch(73% 0.017 126)",
+          "oklch(84% 0.012 126)",
+          "oklch(95% 0.006 126)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted ink",
+        "tonalRamp": [
+          "oklch(15% 0.006 125)",
+          "oklch(26% 0.011 125)",
+          "oklch(37% 0.014 125)",
+          "oklch(49% 0.017 125)",
+          "oklch(61% 0.018 125)",
+          "oklch(73% 0.017 125)",
+          "oklch(84% 0.012 125)",
+          "oklch(95% 0.006 125)"
+        ]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Paper divider",
+        "tonalRamp": [
+          "oklch(15% 0.008 103)",
+          "oklch(26% 0.014 103)",
+          "oklch(37% 0.018 103)",
+          "oklch(49% 0.022 103)",
+          "oklch(61% 0.023 103)",
+          "oklch(73% 0.022 103)",
+          "oklch(84% 0.015 103)",
+          "oklch(95% 0.008 103)"
+        ]
+      },
+      "light-text": {
+        "role": "neutral",
+        "displayName": "Warm light text",
+        "tonalRamp": [
+          "oklch(15% 0.006 92)",
+          "oklch(26% 0.012 92)",
+          "oklch(37% 0.015 92)",
+          "oklch(49% 0.018 92)",
+          "oklch(61% 0.019 92)",
+          "oklch(73% 0.018 92)",
+          "oklch(84% 0.013 92)",
+          "oklch(95% 0.006 92)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The home promise and large page headings."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Task and content sections."
+      },
+      "title": {
+        "displayName": "Role title",
+        "purpose": "Role names within lists."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Explanations, notes and work sample instructions."
+      },
+      "label": {
+        "displayName": "Role metadata",
+        "purpose": "Category and demo role labels."
+      }
+    },
+    "breakpoints": [
+      {
+        "name": "stacked-layout",
+        "value": "49rem"
+      },
+      {
+        "name": "compact-controls",
+        "value": "35rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action on a pale surface.",
+      "html": "<button type=\"button\" class=\"ds-primary\">Save job to workspace</button>",
+      "css": ".ds-primary{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem .9rem;border:1px solid transparent;border-radius:.62rem;background:#182d23;color:#fffbed;font:800 .9rem Manrope,system-ui,sans-serif;cursor:pointer}.ds-primary:focus-visible{outline:3px solid #8a6215;outline-offset:3px}"
+    },
+    {
+      "name": "Hero accent button",
+      "kind": "button",
+      "refersTo": "button-accent",
+      "description": "The main action on the dark hero.",
+      "html": "<button type=\"button\" class=\"ds-accent\">Explore roles</button>",
+      "css": ".ds-accent{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem .9rem;border:1px solid transparent;border-radius:.62rem;background:#f9cc5d;color:#241d12;font:800 .9rem Manrope,system-ui,sans-serif;cursor:pointer}.ds-accent:hover{background:#ffe095}.ds-accent:focus-visible{outline:3px solid #8a6215;outline-offset:3px}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "An outlined alternative beside the main action.",
+      "html": "<button type=\"button\" class=\"ds-secondary\">Teach a skill</button>",
+      "css": ".ds-secondary{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem .9rem;border:1px solid #9b9e8f;border-radius:.62rem;background:transparent;color:#182d23;font:800 .9rem Manrope,system-ui,sans-serif;cursor:pointer}.ds-secondary:hover{background:#eaece2}.ds-secondary:focus-visible{outline:3px solid #8a6215;outline-offset:3px}"
+    },
+    {
+      "name": "Job field",
+      "kind": "input",
+      "refersTo": "job-field",
+      "description": "A labeled field for a job the learner found.",
+      "html": "<label class=\"ds-job-field\">Job title<input type=\"text\" placeholder=\"e.g. Stock assistant\"></label>",
+      "css": ".ds-job-field{display:grid;gap:.35rem;color:#20251c;font:800 .85rem Manrope,system-ui,sans-serif}.ds-job-field input{box-sizing:border-box;min-height:46px;padding:.62rem .7rem;border:1px solid #899181;border-radius:.52rem;background:#fffef9;color:#20251c;font:500 1rem Manrope,system-ui,sans-serif}.ds-job-field input::placeholder{color:#586155}.ds-job-field input:focus-visible{outline:3px solid #8a6215;outline-offset:3px}"
+    },
+    {
+      "name": "Role filters",
+      "kind": "chip",
+      "refersTo": "role-filter",
+      "description": "A pair of filters showing the selected and unselected states.",
+      "html": "<div class=\"ds-filters\" role=\"group\" aria-label=\"Filter by type of work\"><button type=\"button\" aria-pressed=\"true\">All roles</button><button type=\"button\" aria-pressed=\"false\">Stock &amp; inventory</button></div>",
+      "css": ".ds-filters{display:flex;flex-wrap:wrap;gap:.45rem}.ds-filters button{min-height:44px;padding:.55rem .85rem;border:1px solid #9aa091;border-radius:1.4rem;background:#fffcf5;color:#2c422e;font:750 1rem Manrope,system-ui,sans-serif}.ds-filters button[aria-pressed=\"true\"]{background:#182d23;color:#fffbed;border-color:#182d23}.ds-filters button:hover:not([aria-pressed=\"true\"]){background:#e8ecdf}.ds-filters button:focus-visible{outline:3px solid #8a6215;outline-offset:3px}"
+    },
+    {
+      "name": "Detail panel",
+      "kind": "card",
+      "refersTo": "detail-panel",
+      "description": "The pale bordered surface used for notes and jobs.",
+      "html": "<div class=\"ds-detail\"><strong>Requirements to remember</strong><p>Compare the expected and physical stock counts.</p></div>",
+      "css": ".ds-detail{border:1px solid #d2d1c2;border-radius:.9rem;padding:1.2rem;background:#fffcf5;color:#20251c;font:400 1rem/1.55 Manrope,system-ui,sans-serif}.ds-detail p{margin:.5rem 0 0;white-space:pre-wrap;overflow-wrap:anywhere}"
+    },
+    {
+      "name": "Career navigation",
+      "kind": "nav",
+      "description": "Text-first navigation with a visible active link.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a href=\"#/opportunities\" aria-current=\"page\">Explore roles</a><a href=\"#/workspace\">My workspace</a><a href=\"#/mission\">Teach a skill</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:.15rem 1.4rem;align-items:center;border-bottom:1px solid #d2d1c2;background:#f7f6ef}.ds-nav a{display:inline-flex;align-items:center;min-height:44px;color:#20251c;font:750 .9rem Manrope,system-ui,sans-serif;text-decoration:none;text-underline-offset:.28em}.ds-nav a[aria-current],.ds-nav a:hover{text-decoration:underline}.ds-nav a:focus-visible{outline:3px solid #8a6215;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Role-based practice",
+    "overview": "Lead with the work a learner will perform. Keep role requirements and next actions close together. In lessons, preserve room for the task explanation, worksheet, and review evidence.",
+    "keyCharacteristics": [
+      "Warm paper, deep forest, and golden action accents.",
+      "Work imagery that depicts the task.",
+      "Thin dividers, quietly outlined cards, and generous tap targets."
+    ],
+    "rules": [],
+    "dos": [
+      "Do label demo roles and preserve the visible review status of work samples.",
+      "Do keep the main action visible when imagery is unavailable.",
+      "Do retain wrapping controls and visible keyboard focus throughout the learning path."
+    ],
+    "donts": []
+  }
+}

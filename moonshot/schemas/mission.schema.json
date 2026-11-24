@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Moonshot Mission",
+  "type":"object",
+  "required":["mission_id","source_problem_id","description","task_steps","required_skills","prerequisite_skills","expected_deliverable","evaluation_rubric","estimated_effort","safety_classification","compensation_status","publisher_review_status","evidence_requirements","visibility"],
+  "properties":{
+    "mission_id":{"type":"string"},
+    "source_problem_id":{"type":"string"},
+    "description":{"type":"string"},
+    "task_steps":{"type":"array"},
+    "required_skills":{"type":"array"},
+    "prerequisite_skills":{"type":"array"},
+    "expected_deliverable":{"type":"string"},
+    "evaluation_rubric":{"type":"array"},
+    "estimated_effort":{"type":["number","null"]},
+    "safety_classification":{"enum":["low-risk-educational","requires-qualified-review","excluded"]},
+    "compensation_status":{"enum":["simulation","volunteer","paid-confirmed","apprenticeship-confirmed","employment-confirmed","unknown"]},
+    "publisher_review_status":{"enum":["draft","reviewed","withdrawn"]},
+    "evidence_requirements":{"type":"array"},
+    "visibility":{"enum":["private","consented-review","published"]}
+  }
+}

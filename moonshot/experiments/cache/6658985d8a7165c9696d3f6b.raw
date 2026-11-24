@@ -1,0 +1,42 @@
+{
+  "actions": [
+    {
+      "key": "detect_wrong_row",
+      "start_s": 4,
+      "observation": "Cell C5 containing 12 in the BOLT-9 row is highlighted while formula in E4 references C5 instead of C4.",
+      "evidence": "Highlight on '12' in C5; formula displays '=B4+C5-D4'."
+    },
+    {
+      "key": "correct_formula",
+      "start_s": 8,
+      "observation": "Formula in E4 is corrected to use C4, updating Expected stock for TIN-24 to 132.",
+      "evidence": "Formula displays '=B4+C4-D4'; cell E4 highlighted showing '132'."
+    },
+    {
+      "key": "compare_count",
+      "start_s": 13,
+      "observation": "Counted stock of 128 is compared against expected stock of 132, yielding a variance of -4.",
+      "evidence": "Cells Counted (128) and Variance (-4) are highlighted."
+    },
+    {
+      "key": "record_and_verify",
+      "start_s": 18,
+      "observation": "Status is recorded as SHORT 4 with guidance to check receipts and recount.",
+      "evidence": "Cell Status highlighted with 'SHORT 4'; caption reads 'Record the shortage. Check the receipt and recount before adjusting.'"
+    }
+  ],
+  "opening": 120,
+  "received": 30,
+  "sold": 18,
+  "counted": 128,
+  "expected": 132,
+  "signed_variance": -4,
+  "intermediate": 114,
+  "inferred_reasoning": [
+    "The initial formula error caused Expected stock to be miscalculated using row 5 instead of row 4."
+  ],
+  "stated_reasoning": [
+    "Record the shortage. Check the receipt and recount before adjusting."
+  ],
+  "uncertainties": []
+}

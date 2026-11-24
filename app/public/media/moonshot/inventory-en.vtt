@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.000
+This is TIN twenty-four. Check the SKU before checking its totals.
+
+00:00:04.000 --> 00:00:08.000
+The old formula pulls receipts from the next row. That twelve belongs to another item.
+
+00:00:08.000 --> 00:00:13.000
+Use C4 for this SKU. Start with one hundred twenty, add thirty received, then subtract eighteen sold.
+
+00:00:13.000 --> 00:00:18.000
+The count is one hundred twenty-eight. Subtract expected stock from counted stock. Four tins are missing.
+
+00:00:18.000 --> 00:00:23.000
+Record the shortage. Keep the count and formula visible. Recount and check the receipt before adjusting the ledger.

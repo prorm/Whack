@@ -1,0 +1,28 @@
+{
+  "video": {
+    "actions": {"locate_sku":0,"detect_wrong_row":4,"correct_formula":8,"compare_count":13,"record_and_verify":18},
+    "expected":132, "counted":128, "signed_variance":-4, "intermediate":114,
+    "unobservable": ["who caused the shortage", "whether the stock was stolen", "whether the receipt was actually checked"]
+  },
+  "assessment": [
+    [[89,21,16,80], [94,-14]], [[132,14,27,119], [119,0]], [[87,19,23,84], [83,1]],
+    [[45,50,30,58], [65,-7]], [[143,19,12,152], [150,2]], [[10,0,10,0], [0,0]],
+    [[71,28,37,60], [62,-2]], [[179,57,41,192], [195,-3]], [[58,34,32,57], [60,-3]],
+    [[200,52,40,214], [212,2]], [[26,43,28,41], [41,0]], [[91,13,14,92], [90,2]]
+  ],
+  "privacy": [
+    ["Contact a@example.com","EMAIL"], ["Phone +91 98765 43210","PHONE"], ["mobile 9876543210","PHONE"],
+    ["Aadhaar 2345 6789 0123","ID"], ["PAN ABCDE1234F","ID"], ["SKU TIN-24",""],
+    ["Opening 120, received 30, sold 18",""], ["UPI testhandle@upi","PAYMENT"],
+    ["a.name+tag@sub.example.org","EMAIL"], ["Counted 128, difference -4",""],
+    ["स्कूल record 2345-6789-0123","ID"], ["formula =B4+C4-D4",""]
+  ],
+  "protected": ["TIN-24","=B4+C4-D4","120","30","18","132","128","−4"],
+  "probeQuestions": [
+    ["Why C4 instead of C5?","error"], ["Why verify the receipt before adjusting the ledger?","check"],
+    ["What formula corrects expected stock?","fix"], ["How was counted stock compared?","count"],
+    ["Why check the SKU first?","row"], ["Who stole the tins?",""], ["What is the phone number?",""],
+    ["Who caused the shortage?",""], ["Which item was counted?","row"], ["What does minus four mean?","count"],
+    ["Was the receipt actually checked?",""], ["What was the original wrong row?","error"]
+  ]
+}

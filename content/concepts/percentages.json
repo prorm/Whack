@@ -1,0 +1,74 @@
+{
+  "_meta": {"version": "concept-v1", "author": "Hand-authored reference (not model-generated). All answers verified by code in tests."},
+  "concept_id": "percentages",
+  "graph_nodes": ["percent_basic", "commission_calc", "percent_change", "sheet_percent_formula"],
+  "learning_objective": "Calculate a percent of a quantity, a commission, a percentage change, and write the matching spreadsheet formula.",
+  "prerequisites": ["mult_div", "fractions_decimals"],
+  "essential_facts": [
+    "Percent means 'out of 100': 15% = 15/100 = 0.15.",
+    "x% of N = N × x / 100.",
+    "Commission at r% on sales S = S × r / 100; fixed per-order bonus is added separately.",
+    "Percentage change = (new − old) / old × 100; the base is the OLD value.",
+    "In a spreadsheet, if C2 holds 5 (meaning 5%), use =B2*C2/100; if C2 is formatted as 5%, use =B2*C2."
+  ],
+  "vocabulary": [
+    {"term": "percent", "kn": "ಶೇಕಡಾ", "symbol": "%"},
+    {"term": "of", "kn": "ರಲ್ಲಿ"},
+    {"term": "commission", "kn": "ಕಮಿಷನ್"},
+    {"term": "increase", "kn": "ಏರಿಕೆ"},
+    {"term": "decrease", "kn": "ಇಳಿಕೆ"},
+    {"term": "formula", "kn": "ಸೂತ್ರ"},
+    {"term": "base value", "kn": "ಮೂಲ ಮೌಲ್ಯ"}
+  ],
+  "subtopics": {
+    "basic": {
+      "worked_examples": [
+        {"id": "we_b1", "text": "15% of 400", "steps": ["400 × 15 = 6000", "6000 / 100 = 60"], "answer": 60},
+        {"id": "we_b2", "text": "48 of 60 orders on time: what percent?", "steps": ["48 / 60 = 0.8", "0.8 × 100 = 80"], "answer": 80}
+      ],
+      "practice": [
+        {"id": "p_b1", "q": "What is 20% of 350?", "op": "pct_of", "args": [20, 350], "answer": 70},
+        {"id": "p_b2", "q": "What is 5% of 1,200?", "op": "pct_of", "args": [5, 1200], "answer": 60},
+        {"id": "p_b3", "q": "27 out of 90 parcels were late. What percent were late?", "op": "ratio_pct", "args": [27, 90], "answer": 30}
+      ]
+    },
+    "commission": {
+      "worked_examples": [
+        {"id": "we_c1", "text": "2% commission on ₹12,500 of orders", "steps": ["12500 × 2 = 25000", "25000 / 100 = 250"], "answer": 250}
+      ],
+      "practice": [
+        {"id": "p_c1", "q": "Commission is 3% of sales. Sales today are ₹8,400. Commission?", "op": "pct_of", "args": [3, 8400], "answer": 252},
+        {"id": "p_c2", "q": "Incentive is 2% of order value plus ₹10 per order. 6 orders worth ₹4,500 in total. Incentive?", "op": "pct_of_plus_fixed", "args": [2, 4500, 10, 6], "answer": 150}
+      ]
+    },
+    "change": {
+      "worked_examples": [
+        {"id": "we_ch1", "text": "Price rises from 250 to 300", "steps": ["300 − 250 = 50", "50 / 250 = 0.2", "0.2 × 100 = 20%"], "answer": 20}
+      ],
+      "practice": [
+        {"id": "p_ch1", "q": "Stock went from 800 units to 680 units. Percent decrease?", "op": "pct_change", "args": [800, 680], "answer": -15},
+        {"id": "p_ch2", "q": "Daily orders went from 40 to 50. Percent increase?", "op": "pct_change", "args": [40, 50], "answer": 25}
+      ]
+    },
+    "sheet": {
+      "worked_examples": [
+        {"id": "we_s1", "text": "B2 = 800, C2 = 5 (meaning 5%)", "steps": ["=B2*C2/100", "800 × 5 / 100 = 40"], "answer": 40}
+      ],
+      "practice": [
+        {"id": "p_s1", "q": "B3 = 1,500 and C3 = 4 (meaning 4%). Value of =B3*C3/100?", "op": "pct_of", "args": [4, 1500], "answer": 60},
+        {"id": "p_s2", "q": "B4 = 2,000 (old), C4 = 2,300 (new). Value of =(C4-B4)/B4*100?", "op": "pct_change", "args": [2000, 2300], "answer": 15}
+      ]
+    }
+  },
+  "misconceptions": [
+    {"id": "pct_add_instead_of_multiply", "subtopic": "basic", "example_wrong": "15% of 400 = 415", "repair": "Percent of means multiply: 400 × 15 / 100 = 60. Adding gives 415, which is more than the whole."},
+    {"id": "pct_divide_by_percent", "subtopic": "basic", "example_wrong": "15% of 400 = 400 / 15 ≈ 26.7", "repair": "Divide by 100, not by 15: 400 × 15 / 100 = 60."},
+    {"id": "pct_change_wrong_base", "subtopic": "change", "example_wrong": "250 → 300 is 16.7%", "repair": "Divide the change by the OLD value: 50 / 250 = 20%."},
+    {"id": "sheet_percent_no_divide", "subtopic": "sheet", "example_wrong": "=B2*C2 gives 4000 for 800 and 5", "repair": "When C2 holds 5 (not 5%), divide by 100: =B2*C2/100 = 40."}
+  ],
+  "assessment_rubric": [
+    {"criterion": "Correct numeric answer (±0.01)", "points": 3},
+    {"criterion": "Uses the correct base (old value for change)", "points": 1},
+    {"criterion": "Can state the formula used", "points": 1}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "actions": [],
+  "opening": 120,
+  "received": 30,
+  "sold": 18,
+  "counted": 128,
+  "expected": 132,
+  "signed_variance": -4,
+  "intermediate": null,
+  "inferred_reasoning": [],
+  "stated_reasoning": [],
+  "uncertainties": []
+}

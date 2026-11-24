@@ -1,0 +1,52 @@
+[
+  {
+    "actions": [
+      {
+        "key": "locate_sku",
+        "start_s": 0.0,
+        "observation": "Focus on SKU TIN-24 in the inventory worksheet.",
+        "evidence": "This is TIN twenty-four. Check the SKU before checking its totals."
+      },
+      {
+        "key": "detect_wrong_row",
+        "start_s": 4.0,
+        "observation": "Identify that the formula is pulling received value from the wrong row (C5 instead of C4).",
+        "evidence": "The old formula pulls receipts from the next row. That twelve belongs to another item."
+      },
+      {
+        "key": "correct_formula",
+        "start_s": 8.0,
+        "observation": "Correct the formula to use C4 (30 received) instead of C5 (12 received), updating expected stock to 132.",
+        "evidence": "Use C4 for this SKU. Start with one hundred twenty, add thirty received, then subtract eighteen sold."
+      },
+      {
+        "key": "compare_count",
+        "start_s": 13.0,
+        "observation": "Compare counted stock (128) with expected stock (132), resulting in a variance of -4 (SHORT 4).",
+        "evidence": "The count is one hundred twenty-eight. Subtract expected stock from counted stock. Four tins are missing."
+      },
+      {
+        "key": "record_and_verify",
+        "start_s": 18.0,
+        "observation": "Note the shortage status and recommend recounting and checking the receipt before ledger adjustment.",
+        "evidence": "Record the shortage. Keep the count and formula visible. Recount and check the receipt before adjusting the ledger."
+      }
+    ],
+    "opening": 120,
+    "received": 30,
+    "sold": 18,
+    "counted": 128,
+    "expected": 132,
+    "signed_variance": -4,
+    "intermediate": null,
+    "inferred_reasoning": [
+      "The formula error caused the expected stock to be miscalculated initially until C4 was correctly referenced."
+    ],
+    "stated_reasoning": [
+      "The old formula pulls receipts from the next row, making the received value 12 instead of 30.",
+      "With 120 opening, 30 received, and 18 sold, the correct expected stock is 132.",
+      "Counted stock is 128, resulting in a variance of -4."
+    ],
+    "uncertainties": []
+  }
+]
