@@ -50,23 +50,28 @@ const seedOf = async () => Number((await text()).match(/generated from seed (\d+
 
 await go('home')
 await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); localStorage.setItem('flux:mute', '1') })
-await page.reload(); await page.waitForSelector('.sp-hero')
-await shot('01_home_pick_goal'); step('home loads with job picker')
+await page.reload(); await page.waitForSelector('.ln-hero')
+await shot('01_home_pick_goal'); step('home opens on the FLUX Learn course')
 await page.setViewportSize({ width: 1280, height: 860 }); await shot('01b_home_desktop'); await page.setViewportSize({ width: 400, height: 860 })
 
 // demo learner
-await page.getByRole('button', { name: 'Load demo learner' }).click(); await page.waitForTimeout(600)
+await page.getByRole('button', { name: 'Load demo learner' }).click(); await page.waitForTimeout(1500)
+await page.evaluate(() => localStorage.setItem('flux:mute', '1'))
+await go('sp-jobs')
 let body = await text()
-assert.match(body, /Solar installation apprentice/); assert.match(body, /2\/3/)
-await shot('02_home_goal_2_of_3'); step('seeded learner: 2 of 3 in-app skills proven for the solar apprentice goal')
+assert.match(body, /Solar installation apprentice/); assert.match(body, /2\/4/)
+await shot('02_jobs_goal_2_of_4'); step('seeded learner: 2 of 4 in-app skills proven for the solar apprentice goal')
 
 // goal feed: first slot repairs the named mistake with the cliff motion reel
-await page.getByRole('link', { name: /Open my feed/ }).click(); await page.waitForSelector('.fx-reel'); await page.waitForTimeout(2600)
+await go('flux-reels?goal=job-solar-apprentice'); await page.waitForSelector('.fx-reel'); await page.waitForTimeout(1200)
 body = await text()
-assert.match(body, /Fixes your mistake on WO-/i); assert.match(body, /2\/3 proven/i)
-await shot('03_goalfeed_repair_motion_intro'); step('goal feed opens on a REPAIR reel for the learner’s named mistake (rounded up)')
-await page.waitForSelector('.mo-q', { timeout: 9000 }); await shot('04_motion_cliff_question')
-await page.locator('.mo-q button', { hasText: /^12$/ }).click(); await page.waitForTimeout(1800)
+assert.match(body, /Rematch · you missed this last session/i); assert.match(body, /2\/4 proven/i)
+step('revision feed for the goal opens on a REMATCH of the concept missed in an earlier session')
+await feed(1); await page.waitForTimeout(2600)
+assert.match(await text(), /Fixes your mistake on WO-/i)
+await shot('03_goalfeed_repair_motion_intro'); step('next: a REPAIR reel for the learner’s named mistake (rounded up)')
+await page.waitForSelector('.fx-reel-slot[data-i="1"] .mo-q', { timeout: 9000 }); await shot('04_motion_cliff_question')
+await page.locator('.fx-reel-slot[data-i="1"] .mo-q button', { hasText: /^12$/ }).click(); await page.waitForTimeout(1800)
 await shot('05_motion_cliff_payoff_wrong'); step('motion reel: wrong prediction → overflow payoff + explanation')
 // proof slot appears in the feed
 let foundProof = false
@@ -89,9 +94,16 @@ await page.getByLabel(/Max panels/).fill(String(task.key.max)); await page.getBy
 await page.getByRole('button', { name: 'Submit for grading' }).click(); await page.waitForTimeout(400)
 assert.match(await text(), /PROVEN · system-assessed/); await shot('08_proof_pass'); step(`new unseen variant ${task.label}: passed`)
 
+// the project is the last gap
+await go('sp-job?id=job-solar-apprentice'); assert.match(await text(), /1 skill left to prove/); step('after the work order: 3/4, the project is the last gap')
+await go('fl-project'); await page.waitForSelector('.ln-roof')
+await page.getByRole('button', { name: /Inverter B/ }).click()
+await page.getByLabel(/Explain your design/).fill('One string of fourteen stays under 1000 V on the coldest morning and above 200 V in the afternoon.')
+await page.getByRole('button', { name: 'Submit project' }).click(); await page.waitForTimeout(400)
+assert.match(await text(), /Project passed every check/); step('project submitted from FLUX Learn: passes every check')
 // match flips; hazardous → supervised outcome
-await page.getByRole('link', { name: 'See my job match →' }).click(); await page.waitForTimeout(500)
-body = await text(); assert.match(body, /Eligible for a supervised practical assessment/); assert.match(body, /3\/3/)
+await go('sp-job?id=job-solar-apprentice')
+body = await text(); assert.match(body, /Eligible for a supervised practical assessment/); assert.match(body, /4\/4/)
 await shot('09_job_eligible_supervised'); step('match refreshed: eligible for a SUPERVISED practical (not a licence)')
 
 // consent: share with the employer
@@ -151,12 +163,18 @@ await shot('19_employer_post_mission'); await page.getByRole('button', { name: '
 await go('sp-jobs'); assert.match(await text(), /Rooftop solar helper \(weekend\)/); step('employer mission appears in the learner job list; hazardous skills force a supervised start')
 
 // payments goal: a different job builds a different feed
-await go('sp-jobs'); await page.locator('.sp-job').filter({ hasText: 'Junior payments support engineer' }).getByRole('button', { name: 'Aim my feed here' }).click()
+await go('sp-jobs'); await page.locator('.sp-job').filter({ hasText: 'Junior payments support engineer' }).getByRole('button', { name: 'Make this my goal' }).click()
 await go('flux-reels?goal=job-payments-support'); await page.waitForTimeout(1200)
 assert.match(await text(), /Foundation for Retries with backoff/i); step('payments goal feed starts with idempotency as the foundation for backoff')
 
 // ---------------------------------------------------------------- all seven motion reels
-await go('home'); await page.evaluate(() => { sessionStorage.clear(); localStorage.removeItem('scrollproof:flux:v1') })
+// revision shows learned concepts only: mark all seven as learned (not due), so the authored motion reels lead
+await go('home'); await page.evaluate(() => {
+  sessionStorage.clear()
+  const now = Date.now(), card = { reps: 1, lapses: 0, lastAt: now, dueAt: now + 86400000, intervalDays: 1 }
+  const cards = Object.fromEntries(['cold', 'maxstring', 'minstring', 'series', 'evload', 'idem', 'retry'].map((c) => [c, card]))
+  localStorage.setItem('scrollproof:flux:v1', JSON.stringify({ memory: { cards, misses: [] }, warpMs: 0, bets: [], episodes: {}, answered: {}, proofs: {}, vouches: {}, teamFlags: [] }))
+})
 await go('flux-reels'); await page.reload(); await page.waitForSelector('.fx-reel')
 const scenes = ['cold', 'cliff', 'heat', 'hose', 'dinner', 'idem', 'herd']
 for (let i = 0; i < scenes.length; i++) {
@@ -175,7 +193,7 @@ step('all seven motion reels play: intro → forced prediction → payoff, corre
 
 // reduced motion: static final frames, question still forced
 const rm = await browser.newContext({ viewport: { width: 400, height: 860 }, reducedMotion: 'reduce' })
-const rp = await rm.newPage(); await rp.goto(`${BASE}/#/flux-reels`); await rp.waitForSelector('.mo-q', { timeout: 4000 })
+const rp = await rm.newPage(); await rp.goto(`${BASE}/#/flux-reels`); await rp.evaluate((v) => localStorage.setItem('scrollproof:flux:v1', v), await page.evaluate(() => localStorage.getItem('scrollproof:flux:v1'))); await rp.reload(); await rp.waitForSelector('.mo-q', { timeout: 4000 })
 await rp.screenshot({ path: `${out}/20_reduced_motion.png` }); await rm.close(); step('reduced motion: motion reels jump to the question with a static frame')
 
 // offline: the service worker serves the app and the feed

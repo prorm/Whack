@@ -3,7 +3,7 @@
 Mark every number as *illustrative* or *measured*. Nothing below is a user outcome. There are no users yet.
 
 **1 · Title**
-ScrollProof, powered by FLUX. *Scroll less aimlessly. Learn more meaningfully. Prove what you can do.* Learn · Prove · Earn.
+ScrollProof, powered by FLUX. *Learn by doing. Remember by scrolling. Get hired through proof.*
 
 **2 · Problem**
 - Practical skills are invisible: informal workers can't show what they can do.
@@ -12,13 +12,13 @@ ScrollProof, powered by FLUX. *Scroll less aimlessly. Learn more meaningfully. P
 - Employers in the trades screen on paper, then train from scratch.
 
 **3 · Insight**
-Short-form attention is already there. Point it at a job, make every swipe a decision, and turn the decisions that matter into inspectable evidence.
+The gap is not content. It is the disconnect between learning something, remembering it, demonstrating it and getting hired for it. Learning creates understanding. Reels create retention. Assessments create evidence. Evidence creates opportunities.
 
-**4 · Product: one loop**
-Pick a job → goal-directed reels → unseen proof task → Proof Passport → consented employer view → supervised practical / interview invite. Experienced workers feed the loop back with Field Scars.
+**4 · Product: one journey**
+Discover a role → **FLUX Learn** (narrated, hands-on lessons from absolute basics, then a real project) → **FLUX Reels** revise it on a 1/3/7/21-day schedule → **Proof Passport** (unseen tasks graded by code) → **Opportunities** (explainable match, consent, supervised next step). Experienced workers give back with Field Scars.
 
-**5 · The reel is the USP**
-Motion-graphics intuition reels, about 10 s each: setup → forced prediction → payoff that shows why. Every number is computed live by tested code. AI video is used only as a labelled backdrop where real footage sells an analogy (water at the brim, a kinked hose). Misses come back first next session. Every card shows why it is in your feed.
+**5 · FLUX Learn is the innovation**
+A lesson is a cinematic stage you take part in: cold open → teach → predict (the wrong guess is named) → experiment with live sliders and a goal → the rule as a line-by-line trace → test with hints → train on fresh problems → guided job ticket → project. The narration speaks numbers that tests check against the physics code. Reels come after learning, for remembering only: short and optional.
 
 **6 · Proof, not certificates**
 - Unseen tasks generated from seeds and graded deterministically. Known wrong methods are named ("rounded a safety limit up").
@@ -28,9 +28,9 @@ Motion-graphics intuition reels, about 10 s each: setup → forced prediction �
 
 **7 · Technology**
 - React/TS PWA, works offline. Zero runtime AI in learning, grading or matching.
-- Pure TypeScript engine: physics, assessments, passport and goal ranking, with 44 FLUX unit tests + 35 engine + 8 moonshot (all passing).
+- Pure TypeScript engine: physics, assessments, passport and goal ranking, with 49 FLUX unit tests (including curriculum checks) + 35 engine + 8 moonshot (all passing).
 - SQLite server: sync, trainer review, share links.
-- One-off media: Gemini images, Veo plates and TTS, all cached and cost-logged ($4.35 lifetime of a $5 cap; the 2 motion plates tonight cost $0.60).
+- One-off media: Gemini images, Veo plates and TTS, all cached and cost-logged ($4.45 lifetime of a $5 cap: narration $0.10, motion plates $0.60).
 - JSON Lab Blueprints let a practitioner add a new threshold-type episode without code. Their test cases must pass before the episode publishes.
 
 **8 · Business model** (illustrative pricing hypotheses, not validated)

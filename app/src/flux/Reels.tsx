@@ -240,10 +240,10 @@ function ChallengeForm({ reel }: { reel: Reel }) {
   </div>
 }
 
-function Result({ ok, explain, combo, batt, timeout, reel }: { ok: boolean; explain: string; combo: number; batt: number; timeout?: boolean; reel: Reel }) {
+function Result({ ok, explain, combo, batt, timeout, reel, reveal }: { ok: boolean; explain: string; combo: number; batt: number; timeout?: boolean; reel: Reel; reveal?: boolean }) {
   const p = provOf(reel)
   return <div className={`fx-reel-result ${ok ? 'ok' : 'bad'}`} role="status">
-    <span className="stamp">{ok ? (combo >= 3 ? `×${combo} COMBO` : 'NAILED IT') : timeout ? 'TOO SLOW' : 'NOT QUITE'}</span>
+    <span className="stamp">{reveal ? 'HERE’S WHY' : ok ? (combo >= 3 ? `×${combo} COMBO` : 'NAILED IT') : timeout ? 'TOO SLOW' : 'NOT QUITE'}</span>
     <p>{explain}</p>
     {p.contributor && <p className="fx-credit">{p.origin === 'company_bounty' ? 'Sponsored by' : 'Field Scar by'} <b>{p.contributor.name}</b> · {p.contributor.role}, {p.contributor.city}{p.verifiedBy?.length ? <> · verified by {p.verifiedBy.join(' + ')} (DEMO reviewers)</> : null}</p>}
     {p.changelog && p.changelog.length > 1 && <p className="fx-credit">Changelog: {p.changelog.at(-1)!.note}</p>}
@@ -258,7 +258,7 @@ export function Badges({ p }: { p: Provenance }) {
 
 export function ReelView({ reel, active, why, onAnswer, combo, batt, paused }: { reel: Reel; active: boolean; why: string; onAnswer: (ok: boolean) => void; combo: number; batt: number; paused?: boolean }) {
   const [picked, setPicked] = useState<number | null>(null)
-  const [result, setResult] = useState<null | { ok: boolean; timeout?: boolean }>(null)
+  const [result, setResult] = useState<null | { ok: boolean; timeout?: boolean; reveal?: boolean }>(null)
   const [frozen, setFrozen] = useState(false)
   const [tap, setTap] = useState<{ x: number; y: number } | null>(null)
   const [reward, setReward] = useState(false)
@@ -293,7 +293,7 @@ export function ReelView({ reel, active, why, onAnswer, combo, batt, paused }: {
   }
   const pick = (i: number, opts: Opt[]) => { setPicked(i); finish(!!opts[i].ok) }
   const running = active && !paused && !result && (reel.kind !== 'freeze' || frozen) && (reel.kind !== 'motion' || asking)
-  const seconds = reel.kind === 'freeze' ? 8 : reel.kind === 'spot' ? 10 : reel.seconds
+  const seconds = reel.kind === 'motion' ? undefined : reel.kind === 'freeze' ? 8 : reel.kind === 'spot' ? 10 : reel.seconds
 
   let body: ReactNode = null
   if (reel.kind === 'freeze') body = <>
@@ -338,7 +338,8 @@ export function ReelView({ reel, active, why, onAnswer, combo, batt, paused }: {
     body = <>
       <MotionStage scene={SCENES[reel.scene]} active={active && !paused} asking={asking} ok={result ? result.ok : null} pick={picked} onAsk={() => setAsking(true)}
         plateSrc={plate && !saveData ? `/media/motion/${plate}.mp4` : undefined} />
-      {asking && !result && <div className="fx-reel-q mo-q"><h2>{reel.q}</h2><Options options={reel.options} picked={picked} onPick={(i) => pick(i, reel.options)} big={reel.options.length === 2} /></div>}
+      {asking && !result && <div className="fx-reel-q mo-q"><h2>{reel.q}</h2><Options options={reel.options} picked={picked} onPick={(i) => pick(i, reel.options)} big={reel.options.length === 2} />
+        <button className="mo-reveal" onClick={() => { setResult({ ok: true, reveal: true }); sfx('whoosh', 0.3) }}>Just show me why ›</button></div>}
     </>
   }
   if (reel.kind === 'bubbles') body = <>
@@ -356,7 +357,7 @@ export function ReelView({ reel, active, why, onAnswer, combo, batt, paused }: {
         {why && <span className="fx-chip why">↻ {why}</span>}
       </div>
       <Badges p={provOf(reel)} />
-      {result && <Result ok={result.ok} timeout={result.timeout} explain={reel.explain} combo={combo} batt={batt} reel={reel} />}
+      {result && <Result ok={result.ok} timeout={result.timeout} reveal={result.reveal} explain={reel.explain} combo={combo} batt={batt} reel={reel} />}
     </article>
   )
 }
@@ -389,7 +390,8 @@ export function Reels() {
   const feed: Slot<Reel>[] = useMemo(() => {
     const all = [...scarReels(scars), ...REELS]
     if (job) return rankForGoal(all, job, pp.s.records, s.memory, sessionId, now())
-    return orderFeed(all.filter((r) => track === 'all' || r.track === track), s.memory, sessionId, now()).map(({ reel, why }) => ({ type: 'reel' as const, reel, why, tag: 'gap' as const }))
+    const learned = new Set(Object.keys(s.memory.cards))
+    return orderFeed(all.filter((r) => (track === 'all' || r.track === track) && (r.communityId || learned.has(r.concept))), s.memory, sessionId, now()).map(({ reel, why }) => ({ type: 'reel' as const, reel, why: why || 'You learned this', tag: 'gap' as const }))
   }, [track, gen, sessionId, scars.length, job?.id, pp.s.records.length]) // eslint-disable-line react-hooks/exhaustive-deps
   const box = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -406,7 +408,7 @@ export function Reels() {
   return (
     <div className="fx-feed-wrap">
       <header className="fx-hud">
-        <button onClick={() => go(job ? 'sp-job' : 'flux', job ? { id: job.id } : undefined)} aria-label="Back">←</button>
+        <button onClick={() => go(job ? 'sp-job' : 'home', job ? { id: job.id } : undefined)} aria-label="Back">←</button>
         {job ? <a className="sp-goalchip" href={`#/sp-job?id=${encodeURIComponent(job.id)}`} aria-label={`Goal: ${job.title}. ${gaps - left} of ${gaps} skills proven.`}>
           <span>🎯 {job.title}</span><b>{gaps - left}/{gaps} proven</b></a>
           : <div className="fx-tracks" role="group" aria-label="Track">{(['all', 'solar', 'pay'] as const).map((t) => <button key={t} aria-pressed={track === t} onClick={() => { setTrack(t); box.current?.scrollTo(0, 0) }}>{t === 'all' ? 'All' : t === 'solar' ? '⚡ Trades' : '₹ Tech'}</button>)}</div>}
@@ -424,7 +426,13 @@ export function Reels() {
                 onAnswer={(ok) => { grade(slot.reel.concept, ok, slot.reel.id); setCombo(ok ? combo + 1 : 0) }} />}
           {i === active && i < feed.length - 1 && <span className="fx-swipe" aria-hidden="true">swipe ↑</span>}
         </section>)}
-        <section className="fx-reel-slot" data-i={feed.length}>
+        {feed.length === 0 && <section className="fx-reel-slot" data-i={0}><div className="fx-reel end">
+          <span className="fx-kicker">Revise</span>
+          <h2 className="fx-h1">Nothing to revise yet.</h2>
+          <p className="fx-sub">Reels bring back what you learned in FLUX Learn, right before you forget it. Finish a lesson and its reels appear here.</p>
+          <button className="fx-cta in" onClick={() => go('home')}>Go to my course →</button>
+        </div></section>}
+        <section className="fx-reel-slot" data-i={Math.max(1, feed.length)}>
           <div className="fx-reel end">
             <span className="fx-kicker">{job ? 'Goal feed cleared' : 'Feed cleared'}</span>
             <h2 className="fx-h1">{job ? (left ? `${left} proof check${left > 1 ? 's' : ''} left for this job.` : 'Every in-app skill for this job is proven.') : 'That\'s today\'s recall.'}</h2>

@@ -1,6 +1,6 @@
 // Assessment graders. Pure, seeded, and importable by both the app and the server (scripts/scrollproof_server.mjs),
 // so a shared proof link carries a grade the server recomputed from the seed and the learner's raw response.
-import { MISCONCEPTIONS, PANELS, diagnoseMax, diagnoseMin, workOrder, type Panel } from './physics.ts'
+import { MISCONCEPTIONS, PANELS, diagnoseMax, diagnoseMin, vmpAt, vocAt, workOrder, type Panel } from './physics.ts'
 import { workVariant, type Blueprint } from './blueprint.ts'
 
 export interface Given { label: string; value: string }
@@ -133,7 +133,55 @@ export function evTask(bp: Blueprint, seed: number): Task {
   }
 }
 
+
+// ---------------------------------------------------------------- proj.rooftop (design project, many valid answers)
+/** The DEMO project: one roof, one panel, two inverter options. Pure; the server re-grades with the same function. */
+export const ROOFTOP = {
+  customer: 'Mr. Sharma (DEMO customer)', city: 'Bengaluru', panels: 14, tMin: 8, tCellHot: 70,
+  panel: PANELS[0],
+  /** dcAcMax: this DEMO project's array-to-inverter sizing limit. */
+  inverters: [
+    { id: 'A', name: 'GridMitra 5K', acKw: 5, vmax: 600, mpptMin: 120, mpptMax: 550, maxStrings: 2 },
+    { id: 'B', name: 'GridMitra 10K', acKw: 10, vmax: 1000, mpptMin: 200, mpptMax: 850, maxStrings: 2 },
+  ],
+  dcAcMax: 1.3,
+}
+export interface RoofCheck { id: string; label: string; ok: boolean; detail: string }
+/** Every constraint of a design, with the numbers behind it. A design passes when all are true. */
+export function checkRoof(inv: number, strings: number, per: number): RoofCheck[] {
+  const I = ROOFTOP.inverters[inv]
+  const p = ROOFTOP.panel
+  if (!I || !Number.isInteger(strings) || !Number.isInteger(per) || strings < 1 || per < 1) return [{ id: 'valid', label: 'A complete design', ok: false, detail: 'Pick an inverter, strings and panels per string.' }]
+  const vocCold = vocAt(p, ROOFTOP.tMin), vmpHot = vmpAt(p, ROOFTOP.tCellHot), vmpCold = vmpAt(p, ROOFTOP.tMin)
+  const dc = (strings * per * p.pmax) / 1000
+  return [
+    { id: 'count', label: `Uses all ${ROOFTOP.panels} panels`, ok: strings * per === ROOFTOP.panels, detail: `${strings} × ${per} = ${strings * per} panels` },
+    { id: 'inputs', label: `Fits the inverter's ${I.maxStrings} string inputs`, ok: strings <= I.maxStrings, detail: `${strings} string${strings > 1 ? 's' : ''}` },
+    { id: 'cold', label: 'Coldest dawn stays below the maximum', ok: per * vocCold < I.vmax, detail: `${per} × ${r2(vocCold)} = ${r2(per * vocCold)} V vs ${I.vmax} V` },
+    { id: 'hot', label: 'Hottest afternoon stays awake', ok: per * vmpHot >= I.mpptMin, detail: `${per} × ${r2(vmpHot)} = ${r2(per * vmpHot)} V vs ${I.mpptMin} V` },
+    { id: 'window', label: 'Working voltage inside the MPPT window', ok: per * vmpCold <= I.mpptMax, detail: `${per} × ${r2(vmpCold)} = ${r2(per * vmpCold)} V vs ${I.mpptMax} V` },
+    { id: 'size', label: `Array not oversized (DC/AC ≤ ${ROOFTOP.dcAcMax}, DEMO rule)`, ok: dc / I.acKw <= ROOFTOP.dcAcMax + 1e-9, detail: `${r2(dc)} kW ÷ ${I.acKw} kW = ${r2(dc / I.acKw)}` },
+  ]
+}
+function roofTask(seed: number): Task {
+  const p = ROOFTOP.panel
+  return {
+    assessmentId: 'proj.rooftop', version: 1, seed, label: 'PRJ-SHARMA-14',
+    story: `${ROOFTOP.customer} wants all ${ROOFTOP.panels} panels on his roof in ${ROOFTOP.city}. Choose the inverter and design the strings. Values are DEMO.`,
+    givens: [
+      { label: 'Panel', value: `${p.name} · ${p.pmax} W · Voc ${p.voc} V (${p.betaVoc}%/°C) · Vmp ${p.vmp} V (${p.betaVmp}%/°C)` },
+      { label: 'Site', value: `coldest dawn ${ROOFTOP.tMin} °C · hottest cell ${ROOFTOP.tCellHot} °C` },
+      ...ROOFTOP.inverters.map((i) => ({ label: `Inverter ${i.id}`, value: `${i.name} · ${i.acKw} kW · max ${i.vmax} V · MPPT ${i.mpptMin}–${i.mpptMax} V · ${i.maxStrings} strings` })),
+    ],
+    asks: [{ id: 'inv', label: 'Inverter (0 = A, 1 = B)', unit: '' }, { id: 'strings', label: 'Strings', unit: '' }, { id: 'per', label: 'Panels per string', unit: 'panels' }],
+    key: { inv: 1, strings: 1, per: 14 },
+    working: ['Inverter A is too small: 14 × 540 W = 7.56 kW is 1.51 × its 5 kW.', 'Inverter B: 1 × 14 or 2 × 7 both pass every check. Max per string at 8 °C = ⌊1000 ÷ 51.88⌋ = 19; min at 70 °C = ⌈200 ÷ 35.05⌉ = 6.'],
+    tolerance: 0,
+  }
+}
+
 const QUICK: Record<string, (seed: number) => Task> = {
+  'proj.rooftop': roofTask,
   'quick.series': seriesTask, 'quick.idempotency': idemTask, 'quick.backoff': backoffTask, 'wo.solar-string': solarTask,
 }
 /** Every non-blueprint task. EV needs its blueprint: use evTask. */
@@ -151,6 +199,12 @@ export function grade(task: Task, answers: Record<string, string>): Graded {
   for (const a of task.asks) {
     const v = num(answers[a.id])
     perAsk[a.id] = Number.isFinite(v) && Math.abs(v - task.key[a.id]) <= task.tolerance + 1e-9
+  }
+  if (task.assessmentId === 'proj.rooftop') {
+    // a design project has many right answers: every constraint must hold
+    const ok = checkRoof(num(answers.inv), num(answers.strings), num(answers.per)).every((c) => c.ok)
+    for (const a of task.asks) perAsk[a.id] = ok
+    return { pass: ok, perAsk, misconceptions }
   }
   const k = task.key
   const near = (a: string, x: number) => Math.abs(num(answers[a]) - x) <= Math.max(task.tolerance, 0.05)
@@ -179,6 +233,7 @@ export function grade(task: Task, answers: Record<string, string>): Graded {
 /** Which competency each ask of an assessment evidences. Multi-competency tasks are graded per part. */
 export const ASK_COMPETENCY: Record<string, Record<string, string>> = {
   'quick.series': { aV: 'solar.series', bI: 'solar.series' },
+  'proj.rooftop': { inv: 'solar.design', strings: 'solar.design', per: 'solar.design' },
   'wo.solar-string': { max: 'solar.cold-max', min: 'solar.mppt-min' },
   'wo.ev-load': { fixed: 'ev.load', dinner: 'ev.load' },
   'quick.idempotency': { credits: 'pay.idempotency', total: 'pay.idempotency' },

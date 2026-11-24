@@ -53,6 +53,8 @@ export interface EvidenceRecord {
   at: number
   /** 'demo_seed' records were produced by the real grader from scripted answers by the demo seed. */
   source: 'live' | 'demo_seed'
+  /** Free text kept for trainer review (projects). Part of the fingerprint; never graded by code or AI. */
+  note?: string
   fingerprint: string
   review?: Review
 }
@@ -81,14 +83,14 @@ export function seal(r: Omit<EvidenceRecord, 'fingerprint' | 'review'>): Evidenc
 export const intact = (r: EvidenceRecord) => r.fingerprint === fingerprintOf(r)
 
 /** Grade a raw response with the deterministic grader and seal it as an evidence record. */
-export function makeRecord(task: Task, response: Record<string, string>, at: number, id: string, source: EvidenceRecord['source'] = 'live'): EvidenceRecord {
+export function makeRecord(task: Task, response: Record<string, string>, at: number, id: string, source: EvidenceRecord['source'] = 'live', note?: string): EvidenceRecord {
   const g = grade(task, response)
   const rubric = COMPETENCIES.find((c) => c.assessment?.id === task.assessmentId)?.assessment?.rubric ?? []
   return seal({
     id, assessmentId: task.assessmentId, version: task.version, seed: task.seed, taskLabel: task.label, story: task.story,
     givens: task.givens, rubric, asks: task.asks, response: Object.fromEntries(task.asks.map((a) => [a.id, String(response[a.id] ?? '')])),
     key: Object.fromEntries(task.asks.map((a) => [a.id, task.key[a.id]])), perAsk: g.perAsk,
-    outcomes: outcomes(task, g) as EvidenceRecord['outcomes'], working: task.working, at, source,
+    outcomes: outcomes(task, g) as EvidenceRecord['outcomes'], working: task.working, at, source, ...(note ? { note } : {}),
   })
 }
 

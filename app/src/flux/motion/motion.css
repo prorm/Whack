@@ -17,3 +17,4 @@
 .sp-goalchip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sp-goalchip b { color: var(--volt); flex: none; }
 .sp-goalchip { text-decoration: none; }
+.mo-reveal { display: block; margin: .7rem auto 0; background: none; border: 0; color: #ffffffb8 !important; font-weight: 700; font-size: .9rem; text-decoration: underline; text-underline-offset: 3px; min-height: 2.4rem; }

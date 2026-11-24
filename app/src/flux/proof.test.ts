@@ -114,11 +114,16 @@ test('matching: explicit rows, eligibility flips after assessment, hazardous wor
   const solar = SEED_JOBS.find((j) => j.id === 'job-solar-apprentice')!
   let recs: EvidenceRecord[] = []
   let m = matchJob(solar, status(recs))
-  assert.equal(m.eligible, false); assert.equal(m.need, 3); assert.equal(m.next, 'solar.series', 'foundation first')
+  assert.equal(m.eligible, false); assert.equal(m.need, 4); assert.equal(m.next, 'solar.series', 'foundation first')
   const s = right('quick.series', 1), w = right('wo.solar-string', 2)
   recs = [makeRecord(s.t, s.a, T0, 'a1')]
   m = matchJob(solar, status(recs)); assert.equal(m.have, 1); assert.equal(m.eligible, false)
   recs.push(makeRecord(w.t, w.a, T0 + 1, 'a2'))
+  m = matchJob(solar, status(recs)); assert.equal(m.have, 3); assert.equal(m.next, 'solar.design', 'the project is the last gap')
+  // the project: an oversized design fails, a valid design passes
+  const roof = makeTask('proj.rooftop', 1)
+  assert.equal(statusOf([makeRecord(roof, { inv: '0', strings: '2', per: '7' }, T0 + 2, 'pj0')], 'solar.design').state, 'failed')
+  recs.push(makeRecord(roof, { inv: '1', strings: '2', per: '7' }, T0 + 3, 'pj1', 'live', 'Two strings of seven on the 10 kW inverter.'))
   m = matchJob(solar, status(recs))
   assert.equal(m.eligible, true)
   assert.match(m.outcome, /supervised practical/i)

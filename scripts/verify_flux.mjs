@@ -113,19 +113,23 @@ await click(/Finish episode/); await page.waitForSelector('.fx-wrap')
 // ---- Reels: answer the first reels wrong on purpose, then warp and expect callbacks first
 await page.goto(`${BASE}/#/flux-reels`); await page.waitForSelector('.fx-reel')
 // the seven motion (intuition) reels lead the authored feed; slot 0 is a motion reel whose options appear after its intro
-const M = 7
+// Revise shows only concepts learned in the episodes above; find reels by kind instead of by position
+const findSlot = async (sel) => {
+  for (let i = 0; i < 24; i++) {
+    await page.locator('.fx-feed').evaluate((el, i) => el.scrollTo(0, el.clientHeight * i), i); await page.waitForTimeout(500)
+    if (await page.locator(`.fx-reel-slot[data-i="${i}"] ${sel}`).count()) return i
+  }
+  throw new Error('no reel matching ' + sel)
+}
 await page.waitForTimeout(5800); await shot('30_reel_motion')
 const wrongOpt = page.locator('.fx-reel-slot').first().locator('.fx-reel-opts button').nth(1)
 await wrongOpt.click(); await page.waitForTimeout(700); await shot('31_reel_wrong')
 const feedOrder = async () => page.$$eval('.fx-reel-slot', (els) => els.map((e) => e.querySelector('.fx-chip')?.textContent ?? ''))
 const before = await feedOrder()
-// go to reel 2 (split), tap wrong half
-await page.locator('.fx-feed').evaluate((el, M) => el.scrollTo(0, el.clientHeight * (M + 1)), M); await page.waitForTimeout(900)
-await shot('32_reel_split')
-await page.locator('.fx-reel-slot').nth(M + 1).locator('.fx-split-half').nth(1).click(); await page.waitForTimeout(700); await shot('33_reel_split_result')
-await page.locator('.fx-feed').evaluate((el, M) => el.scrollTo(0, el.clientHeight * (M + 2)), M); await page.waitForTimeout(900)
-await page.locator('.fx-reel-slot').nth(M + 2).locator('.fx-spot').click({ position: { x: 200, y: 480 } }); await page.waitForTimeout(1500); await shot('34_reel_spot')
-await page.locator('.fx-feed').evaluate((el, M) => el.scrollTo(0, el.clientHeight * (M + 4)), M); await page.waitForTimeout(1500); await shot('35_reel_bubbles')
+// the hot/cold split reel: tap the wrong half
+const sp = await findSlot('.fx-split-half'); await shot('32_reel_split')
+await page.locator(`.fx-reel-slot[data-i="${sp}"] .fx-split-half`).nth(1).click(); await page.waitForTimeout(700); await shot('33_reel_split_result')
+await findSlot('.fx-bubbles'); await page.waitForTimeout(1000); await shot('35_reel_bubbles')
 // same session: no rematch
 assert.equal((await feedOrder()).filter((c) => c === 'REMATCH').length, 0, 'no callbacks in the same session')
 await page.goto(`${BASE}/#/flux`); await page.waitForSelector('.fx-hub')

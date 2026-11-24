@@ -149,3 +149,8 @@
 .sp-light .sp-req, .sp-light .sp-oc, .sp-light .sp-skills li { background: #20251c08; }
 .sp-light .fx-mis { color: #b3122f; }
 @media (prefers-reduced-motion: reduce) { .sp-ep img { transition: none; } }
+.sp-employer-link { display: grid; gap: .2rem; margin: 1.4rem 0; padding: 1rem 1.1rem; border-radius: 1rem; border: 1px dashed var(--line); text-decoration: none; }
+.sp-employer-link span { color: var(--muted); font-size: .9rem; }
+.sp-root .ln-map { color: var(--text); }
+
+.sp-note-q { margin: .4rem 0; padding: .6rem .8rem; border-radius: .6rem; background: #ffffff0a; border: 1px solid var(--line); font-size: .9rem; line-height: 1.45; }

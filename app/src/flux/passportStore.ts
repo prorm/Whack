@@ -6,6 +6,7 @@ import type { Blueprint } from './blueprint'
 import { makeTask, type Task } from './assess'
 import { attachReview, grant, makeRecord, revoke, type EvidenceRecord, type Review, type Share } from './passport'
 import { SEED_JOBS, type CompetencyId, type Job } from './skills'
+import { DAY, emptyMemory, review } from './memory'
 
 export const EV_BP = EV_JSON as unknown as Blueprint
 export const taskFor = (assessmentId: string, seed: number): Task => makeTask(assessmentId, seed, EV_BP)
@@ -34,8 +35,8 @@ export const allJobs = (s: PassportState) => [...s.jobs, ...SEED_JOBS]
 export function usePassport() {
   const s = useSyncExternalStore((f) => { subs.add(f); return () => subs.delete(f) }, () => state)
   /** Grade + seal + store. Returns the record. */
-  const submit = useCallback((task: Task, response: Record<string, string>) => {
-    const r = makeRecord(task, response, Date.now(), uid('att'))
+  const submit = useCallback((task: Task, response: Record<string, string>, note?: string) => {
+    const r = makeRecord(task, response, Date.now(), uid('att'), 'live', note)
     set({ ...state, records: [...state.records, r] })
     return r
   }, [])
@@ -75,6 +76,11 @@ export function seedDemo(now = Date.now()) {
     makeRecord(solar, { max: String(solar.key.max + 1), min: String(solar.key.min) }, now - 86_400_000, 'att-demo-solar', 'demo_seed'),
   ]
   set({ ...blank(), records, goal: 'job-solar-apprentice' })
+  // lessons 1-4 done, and the concepts they taught are in revision memory (yesterday, so some are due)
+  localStorage.setItem('scrollproof:learn:v1', JSON.stringify({ at: {}, done: { l1: now - 3 * DAY, l2: now - 3 * DAY, l3: now - 2 * DAY, l4: now - 2 * DAY }, checks: {} }))
+  let m = emptyMemory()
+  for (const [c, ok, ago] of [['series', true, 3], ['cold', true, 2], ['maxstring', false, 2], ['minstring', true, 2]] as const) m = review(m, c, ok, now - ago * DAY, 'seed', ok ? undefined : 'mo-cliff')
+  localStorage.setItem('scrollproof:flux:v1', JSON.stringify({ memory: m, warpMs: 0, bets: [], episodes: {}, answered: {}, proofs: {}, vouches: {}, teamFlags: [] }))
 }
 export const resetPassport = () => set(blank())
 

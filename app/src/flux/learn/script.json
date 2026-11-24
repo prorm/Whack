@@ -1,0 +1,40 @@
+{
+  "voice": "en-IN-Chirp3-HD-Charon",
+  "fallbackVoice": "en-US-Chirp3-HD-Charon",
+  "lines": [
+    { "id": "l1_01", "text": "Six forty-seven A.M. A brand new solar inverter dies on a cold Bengaluru morning. By the end of this course, you'll know exactly why, and how to stop it." },
+    { "id": "l1_02", "text": "But we start from zero. Electricity in a wire behaves a lot like water in a pipe." },
+    { "id": "l1_03", "text": "Voltage is the push. Like water pressure, it is how hard the electricity is being pushed. We measure it in volts." },
+    { "id": "l1_04", "text": "Current is the flow. How much electricity actually moves through the wire every second. We measure it in amps." },
+    { "id": "l1_05", "text": "Power is push times flow. Volts times amps gives watts. Your turn. Make this panel deliver five hundred and forty watts." },
+    { "id": "l1_06", "text": "Exactly. Forty-one point six volts times thirteen amps is about five hundred and forty watts. That is the rating printed on a real panel." },
+
+    { "id": "l2_01", "text": "One panel pushes about forty-two volts while it works. An inverter wants hundreds. So how do we get there?" },
+    { "id": "l2_02", "text": "Connect panels end to end. That is called series. Each panel adds its push on top of the last one, but the same current flows through all of them." },
+    { "id": "l2_03", "text": "Predict. Three panels in series. What does the string push?" },
+    { "id": "l2_04", "text": "Volts add up in series. Current stays the same. Like stacking water tanks on top of each other." },
+    { "id": "l2_05", "text": "Now connect them side by side. That is parallel. The push stays the same, but the flows add up." },
+    { "id": "l2_06", "text": "Your turn. Build a series string that pushes more than three hundred volts." },
+    { "id": "l2_07", "text": "Eight panels in series. About three hundred and thirty volts. That is how rooftop strings are built." },
+
+    { "id": "l3_01", "text": "Here is the part most new installers get wrong. A panel's voltage is not fixed. It changes with temperature." },
+    { "id": "l3_02", "text": "Predict. On a freezing morning, does a panel push more volts, fewer volts, or the same?" },
+    { "id": "l3_03", "text": "Let's find out. Drag the thermometer, and watch one panel, and a string of twelve." },
+    { "id": "l3_04", "text": "Colder means more volts. Below about twenty-two degrees, twelve of these panels push past six hundred volts. The limit of this inverter." },
+    { "id": "l3_05", "text": "The datasheet gives you the rule. The voltage at twenty-five degrees, and a temperature coefficient. Minus zero point two seven percent, for every degree." },
+    { "id": "l3_06", "text": "Eight degrees is seventeen degrees colder than twenty-five. Minus times minus is plus. So the voltage rises four point six percent, to fifty-one point nine volts." },
+
+    { "id": "l4_01", "text": "Every inverter has a window. Too much voltage, and it is damaged. Too little, and it falls asleep." },
+    { "id": "l4_02", "text": "This one is damaged above six hundred volts. And it only works between one hundred and twenty, and five hundred and fifty." },
+    { "id": "l4_03", "text": "So we check two moments. The coldest dawn, when the voltage is highest. And the hottest afternoon, when it is lowest." },
+    { "id": "l4_04", "text": "Your turn. Pick a number of panels that survives the coldest dawn, and stays awake on the hottest afternoon." },
+    { "id": "l4_05", "text": "Six hundred divided by fifty-one point nine is eleven point five seven. You can't install half a panel, and you never round up a safety limit. Eleven." },
+    { "id": "l4_06", "text": "For the minimum, a hot panel works at about thirty-five volts. One twenty divided by thirty-five is three point four. Round up. Four panels, or the inverter sleeps." },
+
+    { "id": "l5_01", "text": "Time for a real job ticket. New city, new panel, new inverter. I will guide you step by step." },
+    { "id": "l5_02", "text": "That is the whole method. Coldest morning for the maximum, round down. Hottest afternoon for the minimum, round up." },
+
+    { "id": "p_01", "text": "Your first project. Mister Sharma wants fourteen panels on his roof. Choose an inverter, design the strings, and explain your design to him." },
+    { "id": "p_02", "text": "Solid design. It is saved to your Proof Passport, with every number you chose." }
+  ]
+}

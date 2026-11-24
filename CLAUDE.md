@@ -45,3 +45,9 @@ Learn a trade skill in a meme-format reel feed → prove it on an unseen work or
 - Server: `/api/proof/share` re-grades from seed + raw answers, `/api/proof/revoke`, `GET /api/proof/public/<token>` (410 after revoke).
 - Hazardous competencies always force a supervised outcome; `site.safety` is in-person only and never evidenced in-app.
 - Demo: `cd app && npm run demo`, then `#/home?demo=seed` / `#/home?demo=reset`. Walkthrough: `scripts/verify_unlocked.mjs`; video: `scripts/record_demo.mjs`.
+
+## Product hierarchy (2026-11-24, supersedes "reels as the learning path")
+- **FLUX Learn is the primary learning experience** (`app/src/flux/learn/`, home `#/home`, lessons `#/fl-lesson?id=l1..l5`, project `#/fl-project`). Narrated interactive lessons: teach → predict → experiment → trace → test → train → guided ticket → project. Curriculum is pure data in `course.ts`, tested by `course.test.ts` (narration numbers must match physics.ts).
+- **Reels are revision only** (`#/flux-reels`, tab "Revise"): only concepts already in memory appear; motion-reel quizzes are optional. Never make reels the way a concept is first taught.
+- Narration: `scripts/course_tts.py` (Chirp3-HD `en-IN-Charon`, cost-logged) → `app/public/media/learn/vo_<id>.m4a` + `vo.json`. Change a line in `script.json` → re-run it.
+- House style for Learn = FACELESS AI Day 4/6 look: navy stage, mood tint, grid floor, glass panels, rolling mono numbers, karaoke captions.

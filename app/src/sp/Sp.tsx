@@ -4,14 +4,15 @@
 import { Fragment, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useDelivery } from '../Chrome'
 import { request } from '../learn/sync'
-import { go, routeParam, type Route } from '../router'
+import { routeParam, type Route } from '../router'
 import { CONCEPT_NAMES } from '../flux/Episode'
 import { misconception } from '../flux/assess'
-import { media } from '../flux/fx'
 import { CHECKLIST, LEVELS, intact, latestFor, levelOf, statusOf, visibleTo, type CheckId, type EvidenceRecord, type Level } from '../flux/passport'
 import { allJobs, resetPassport, seedDemo, taskFor, usePassport } from '../flux/passportStore'
 import { COMPETENCIES, SEED_JOBS, byId, matchJob, needsSupervision, type CompetencyId, type Job, type Match } from '../flux/skills'
 import { useFlux, useScars } from '../flux/store'
+import { CourseMap } from '../flux/learn/Learn'
+import { resetCourse } from '../flux/learn/courseStore'
 import { DEMO_CANDIDATES } from './demoCandidates'
 import '../flux/flux.css'
 import './sp.css'
@@ -19,12 +20,14 @@ import './sp.css'
 const href = (r: Route, p?: Record<string, string>) => `#/${r}${p ? '?' + new URLSearchParams(p) : ''}`
 const TABS: { id: string; label: string; icon: string; route: Route }[] = [
   { id: 'learn', label: 'Learn', icon: '▶', route: 'home' },
+  { id: 'revise', label: 'Revise', icon: '↻', route: 'flux-reels' },
+  { id: 'passport', label: 'Proof', icon: '◆', route: 'sp-passport' },
   { id: 'jobs', label: 'Jobs', icon: '◎', route: 'sp-jobs' },
-  { id: 'passport', label: 'Passport', icon: '◆', route: 'sp-passport' },
   { id: 'teach', label: 'Teach', icon: '✚', route: 'sp-teach' },
-  { id: 'employer', label: 'Employer', icon: '▣', route: 'sp-employer' },
 ]
 const fmt = (t: number) => new Date(t).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+/** Projects have many right designs: show the rule, not one 'key'. */
+const keyOf = (r: EvidenceRecord, id: string) => r.assessmentId === 'proj.rooftop' ? 'any design passing all checks' : String(r.key[id])
 const LEVEL_LABEL = Object.fromEntries(LEVELS.map((l) => [l.id, l.label])) as Record<Level, string>
 
 export function Shell({ tab, children, light }: { tab: string; children: ReactNode; light?: boolean }) {
@@ -65,7 +68,7 @@ function MatchRows({ job, m, learner = true }: { job: Job; m: Match; learner?: b
       <div><b>{c.title}</b><small>{c.can}</small>{r.state === 'in_person' && <small className="sp-note">{c.inPerson}</small>}</div>
       <div className="sp-req-side"><StateBadge row={r} />
         {learner && r.state !== 'evidenced' && r.state !== 'in_person' && <span className="sp-req-act">
-          <a className="fx-btn ghost" href={href('flux-reels', { goal: job.id })}>Learn</a>
+          <a className="fx-btn ghost" href={'#/' + c.lessons[0].route}>Learn</a>
           <a className="fx-btn" href={href('sp-assess', { c: r.id, back: job.id })}>Prove</a></span>}
         {r.recordId && <a className="sp-link" href={href('sp-passport', { r: r.recordId })}>evidence</a>}
       </div>
@@ -75,70 +78,43 @@ function MatchRows({ job, m, learner = true }: { job: Job; m: Match; learner?: b
 
 function DemoTag({ children = 'DEMO' }: { children?: ReactNode }) { return <span className="sp-demo">{children}</span> }
 
-// ---------------------------------------------------------------- Learn (home)
+// ---------------------------------------------------------------- Learn (home): the course is the product
 export function SpHome() {
   const pp = usePassport()
-  const { s: fx, now } = useFlux()
   const jobs = allJobs(pp.s)
-  const goal = jobs.find((j) => j.id === pp.s.goal)
-  const st = (c: CompetencyId) => statusOf(pp.s.records, c)
-  const m = goal ? matchJob(goal, st) : null
   const invites = pp.s.invites.filter((i) => i.candidateId === 'me' && i.status === 'sent')
-  const [armed, setArmed] = useState(false)
-  const due = Object.values(fx.memory.cards).filter((c) => now() >= c.dueAt).length
   // reproducible demo: #/home?demo=seed loads the seeded learner, #/home?demo=reset wipes this device
   const demo = routeParam('demo')
   useEffect(() => {
-    if (demo === 'seed') { localStorage.removeItem('scrollproof:flux:v1'); sessionStorage.clear(); seedDemo(); location.replace('#/home'); location.reload() }
-    if (demo === 'reset') { resetPassport(); localStorage.removeItem('scrollproof:flux:v1'); sessionStorage.clear(); location.replace('#/home'); location.reload() }
+    if (demo === 'seed') { sessionStorage.clear(); seedDemo(); location.replace('#/home'); location.reload() }
+    if (demo === 'reset') { wipeDevice(); location.replace('#/home'); location.reload() }
   }, [demo])
   return <Shell tab="learn">
-    <section className="sp-hero">
-      <p className="fx-kicker">Learn · Prove · Earn</p>
-      <h1>Scroll less aimlessly.<br /><span>Prove what you can do.</span></h1>
-      <p className="fx-sub">Pick a job. Your feed becomes the shortest path to it: 10-second intuition reels for the skills you are missing, then an unseen task that proves them. Employers see evidence, not watch time.</p>
-    </section>
-
     {invites.map((i) => { const j = jobs.find((x) => x.id === i.jobId); return j && <a key={i.id} className="sp-invite" href={href('sp-job', { id: j.id })}>
       <b>Interview invite · {j.employer}</b><span>{j.title} · {i.slot}</span><DemoTag>DEMO · not a job offer</DemoTag></a> })}
-
-    {goal && m ? <section className="sp-goal" aria-labelledby="goal-h">
-      <div className="sp-goal-head"><p className="fx-kicker">Your goal</p><button className="sp-link" onClick={() => pp.setGoal(undefined)}>change</button></div>
-      <h2 id="goal-h">{goal.title}</h2>
-      <p className="sp-muted">{goal.employer} · {goal.city} · {goal.pay}</p>
-      <Meter m={m} />
-      <p className={`sp-outcome ${m.eligible ? 'ok' : ''}`}>{m.outcome}</p>
-      <a className="fx-cta in sp-wide" href={href('flux-reels', { goal: goal.id })}>{m.eligible ? 'Keep it sharp: open my feed' : `Open my feed · aimed at ${byId(m.next!).title}`} ↑</a>
-      <MatchRows job={goal} m={m} />
-    </section>
-      : <section aria-labelledby="pick-h">
-        <h2 id="pick-h" className="sp-h2">Pick a job to aim your feed</h2>
-        <ul className="sp-jobs">{jobs.map((j) => { const jm = matchJob(j, st); return <li key={j.id}><JobCard job={j} m={jm} onAim={() => pp.setGoal(j.id)} /></li> })}</ul>
-      </section>}
-
-    <section className="sp-loop" aria-label="How it works">
-      {[['1', 'Reels', 'Intuition first: motion reels you must predict, not watch.'], ['2', 'Prove', 'An unseen task, graded by tested code. Misses are named.'], ['3', 'Passport', 'Inspectable evidence. You choose who sees it.'], ['4', 'Match', 'Employers see exact skills, then invite.']].map(([n, t, d]) =>
+    <CourseMap />
+    <section className="sp-loop" aria-label="How ScrollProof works">
+      {[['1', 'Learn', 'Narrated, hands-on lessons from absolute basics: predict, experiment, test, train.'], ['2', 'Revise', 'Short reels bring back only what you learned, right before you forget it.'], ['3', 'Prove', 'Unseen tasks and a real project, graded by tested code, kept in your passport.'], ['4', 'Get hired', 'Employers see exactly what you can do, only if you share it.']].map(([n, t, d]) =>
         <div key={n}><b>{n}</b><h3>{t}</h3><p>{d}</p></div>)}
     </section>
-
-    <section aria-labelledby="ep-h">
-      <h2 id="ep-h" className="sp-h2">Deep dives <small>{due ? `${due} memories due` : 'memory charged'}</small></h2>
-      <div className="sp-eps">
-        {[['flux-solar', 'dawn.webp', 'The Cold Morning Killer', 'Solar · 8 min'], ['flux-ev', 'ev_night.webp', 'The 9 PM Blackout', 'EV · 6 min'], ['flux-pay', 'pay.webp', 'Charged Twice', 'Payments · 5 min']].map(([r, img, t, d]) =>
-          <a key={r} href={href(r as Route)} className="sp-ep"><img src={media(img)} alt="" loading="lazy" /><b>{t}</b><small>{d}</small></a>)}
-      </div>
-      <p className="fx-fine">Episodes and reels run offline with zero AI calls. Every number is computed by tested code.</p>
-    </section>
-
-    <section className="sp-demo-ctl" aria-label="Demo controls">
-      <p className="fx-kicker">Demo controls</p>
-      <p className="fx-fine">Load a seeded learner: two attempts graded by the real grader (one pass, one fail with a named mistake), marked DEMO SEED. Nothing is reviewed or shared.</p>
-      <div className="fx-row">
-        <button className="fx-btn" onClick={() => { seedDemo(); go('home') }}>Load demo learner</button>
-        <button className="fx-btn ghost" onClick={() => { if (!armed) return setArmed(true); resetPassport(); localStorage.removeItem('scrollproof:flux:v1'); sessionStorage.clear(); location.reload() }}>{armed ? 'Tap again: erase everything on this device' : 'Reset demo'}</button>
-      </div>
-    </section>
+    <DemoControls />
   </Shell>
+}
+
+function wipeDevice() {
+  resetPassport(); resetCourse()
+  localStorage.removeItem('scrollproof:flux:v1'); sessionStorage.clear()
+}
+function DemoControls() {
+  const [armed, setArmed] = useState(false)
+  return <section className="sp-demo-ctl" aria-label="Demo controls">
+    <p className="fx-kicker">Demo controls</p>
+    <p className="fx-fine">Load a seeded learner: lessons 1–4 finished, two proof attempts graded by the real grader (one pass, one fail with a named mistake), marked DEMO SEED. Nothing is reviewed or shared.</p>
+    <div className="fx-row">
+      <button className="fx-btn" onClick={() => { sessionStorage.clear(); seedDemo(); location.reload() }}>Load demo learner</button>
+      <button className="fx-btn ghost" onClick={() => { if (!armed) return setArmed(true); wipeDevice(); location.reload() }}>{armed ? 'Tap again: erase everything on this device' : 'Reset demo'}</button>
+    </div>
+  </section>
 }
 
 function JobCard({ job, m, onAim }: { job: Job; m: Match; onAim?: () => void }) {
@@ -148,7 +124,7 @@ function JobCard({ job, m, onAim }: { job: Job; m: Match; onAim?: () => void }) 
     <p className="sp-muted">{job.pay}</p>
     <Meter m={m} />
     <p className="sp-chips">{m.rows.map((r) => <span key={r.id} className={`sp-chip ${r.state}`}>{byId(r.id).title}</span>)}</p>
-    <div className="fx-row">{onAim && <button className="fx-btn" onClick={onAim}>Aim my feed here</button>}<a className="fx-btn ghost" href={href('sp-job', { id: job.id })}>Details</a></div>
+    <div className="fx-row">{onAim && <button className="fx-btn" onClick={onAim}>Make this my goal</button>}<a className="fx-btn ghost" href={href('sp-job', { id: job.id })}>Details</a></div>
   </article>
 }
 
@@ -156,10 +132,22 @@ function JobCard({ job, m, onAim }: { job: Job; m: Match; onAim?: () => void }) 
 export function SpJobs() {
   const pp = usePassport()
   const st = (c: CompetencyId) => statusOf(pp.s.records, c)
+  const jobs = allJobs(pp.s)
+  const goal = jobs.find((j) => j.id === pp.s.goal)
+  const m = goal ? matchJob(goal, st) : null
   return <Shell tab="jobs">
-    <h1 className="sp-h1">Jobs that match what you can prove</h1>
-    <p className="fx-sub">No hidden score. Each job lists the exact skills it needs and which ones your evidence covers. All listings are DEMO.</p>
-    <ul className="sp-jobs">{allJobs(pp.s).map((j) => <li key={j.id}><JobCard job={j} m={matchJob(j, st)} onAim={() => { pp.setGoal(j.id); go('home') }} /></li>)}</ul>
+    <h1 className="sp-h1">Opportunities that match what you can prove</h1>
+    <p className="fx-sub">No hidden score. Each role lists the exact skills it needs and which ones your evidence covers. All listings are DEMO.</p>
+    {goal && m && <section className="sp-goal" aria-labelledby="goal-h">
+      <div className="sp-goal-head"><p className="fx-kicker">Your goal</p><button className="sp-link" onClick={() => pp.setGoal(undefined)}>change</button></div>
+      <h2 id="goal-h">{goal.title}</h2>
+      <p className="sp-muted">{goal.employer} · {goal.city} · {goal.pay}</p>
+      <Meter m={m} />
+      <p className={`sp-outcome ${m.eligible ? 'ok' : ''}`}>{m.outcome}</p>
+      <MatchRows job={goal} m={m} />
+    </section>}
+    <ul className="sp-jobs">{jobs.filter((j) => j.id !== goal?.id).map((j) => <li key={j.id}><JobCard job={j} m={matchJob(j, st)} onAim={() => pp.setGoal(j.id)} /></li>)}</ul>
+    <a className="sp-employer-link" href={href('sp-employer')}><b>Hiring? Open the employer seat (DEMO)</b><span>Post a skill mission, see consenting candidates, inspect their evidence, invite.</span></a>
   </Shell>
 }
 
@@ -193,7 +181,8 @@ export function SpJob() {
       <p className={`sp-outcome ${m.eligible ? 'ok' : ''}`}>{m.outcome}</p>
       <MatchRows job={job} m={m} />
       <div className="fx-row">
-        <a className="fx-cta in" href={href('flux-reels', { goal: job.id })} onClick={() => pp.setGoal(job.id)}>Train for this job ↑</a>
+        <a className="fx-cta in" href={href('home')} onClick={() => pp.setGoal(job.id)}>Learn for this job →</a>
+        <a className="fx-btn ghost" href={href('flux-reels', { goal: job.id })} onClick={() => pp.setGoal(job.id)}>Revise for this job</a>
       </div>
     </section>
     <section className="sp-panel" aria-labelledby="share-h">
@@ -328,9 +317,10 @@ function RecordView({ r }: { r: EvidenceRecord }) {
     <h3>Task</h3><p>{r.story}</p>
     <ul className="sp-givens">{r.givens.map((g) => <li key={g.label}><b>{g.label}</b> {g.value}</li>)}</ul>
     <h3>Rubric</h3><ul>{r.rubric.map((x) => <li key={x}>{x}</li>)}</ul>
+    {r.note && <><h3>Learner’s explanation (for trainer review, not graded)</h3><blockquote className="sp-note-q">{r.note}</blockquote></>}
     <h3>Submitted vs key</h3>
     <table className="sp-table"><thead><tr><th>Ask</th><th>Answer</th><th>Key</th><th></th></tr></thead><tbody>
-      {r.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{r.response[a.id]}</code></td><td>{r.key[a.id]} {a.unit}</td><td>{r.perAsk[a.id] ? '✓' : '✗'}</td></tr>)}</tbody></table>
+      {r.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{r.response[a.id]}</code></td><td>{keyOf(r, a.id)} {r.assessmentId === 'proj.rooftop' ? '' : a.unit}</td><td>{r.perAsk[a.id] ? '✓' : '✗'}</td></tr>)}</tbody></table>
     <h3>Outcome</h3>
     {covers.map((c) => { const o = r.outcomes[c]!; return <div key={c} className={`sp-oc ${o.pass ? 'ok' : 'bad'}`}><b>{byId(c).title}: {o.pass ? LEVEL_LABEL[levelOf(r, c)] : 'not proven'}</b>
       {o.misconceptions.map((x) => <p key={x} className="fx-mis">{misconception(x).title}. {misconception(x).repair}</p>)}</div> })}
@@ -379,7 +369,7 @@ export function SpView() {
       {r.source === 'demo_seed' && <DemoTag>DEMO SEED</DemoTag>}
       <p>{state.data!.regraded ? 'Re-graded by the server from the seed and the raw answers.' : 'Stored as submitted.'} Shared {fmt(state.data!.at)}.</p>
       <ul className="sp-givens">{r.givens.map((g) => <li key={g.label}><b>{g.label}</b> {g.value}</li>)}</ul>
-      <table className="sp-table"><tbody>{r.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{r.response[a.id]}</code></td><td>{r.key[a.id]}</td><td>{r.perAsk[a.id] ? '✓' : '✗'}</td></tr>)}</tbody></table>
+      <table className="sp-table"><tbody>{r.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{r.response[a.id]}</code></td><td>{keyOf(r, a.id)}</td><td>{r.perAsk[a.id] ? '✓' : '✗'}</td></tr>)}</tbody></table>
       {Object.entries(r.outcomes).map(([c, o]) => <p key={c}><b>{byId(c as CompetencyId).title}</b>: {o?.pass ? 'passed (system-assessed)' : 'not passed'}</p>)}
       <p className="fx-fine">Identity is not verified. A pass on a safety-critical skill qualifies for supervised assessment only.</p>
     </section>}
@@ -443,7 +433,7 @@ export function SpEmployer() {
   ]
   const ranked = job ? cands.map((c) => ({ c, m: matchJob(job, (x) => statusOf(c.records, x)) })).sort((a, b) => Number(b.m.eligible) - Number(a.m.eligible) || b.m.have - a.m.have) : []
   const short = job ? pp.s.shortlist[job.id] ?? [] : []
-  return <Shell tab="employer" light>
+  return <Shell tab="jobs" light>
     <p className="fx-kicker">Employer seat <DemoTag>DEMO · same device · no outbound messages</DemoTag></p>
     <label className="sp-acting">Acting as <select value={emp} onChange={(e) => { setEmp(e.target.value); setJobId('') }}>{EMPLOYERS.map(([id, n]) => <option key={id} value={id}>{n}</option>)}</select></label>
     <h1 className="sp-h1">Hire for skills you can inspect</h1>
@@ -478,7 +468,8 @@ export function SpEmployer() {
         <h2>{inspect.rec.taskLabel} <small>v{inspect.rec.version} · {fmt(inspect.rec.at)}</small></h2>
         {inspect.rec.source === 'demo_seed' && <DemoTag>DEMO SEED</DemoTag>}
         <ul className="sp-givens">{inspect.rec.givens.map((g) => <li key={g.label}><b>{g.label}</b> {g.value}</li>)}</ul>
-        <table className="sp-table"><thead><tr><th>Ask</th><th>Answer</th><th>Key</th><th></th></tr></thead><tbody>{inspect.rec.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{inspect.rec.response[a.id]}</code></td><td>{inspect.rec.key[a.id]}</td><td>{inspect.rec.perAsk[a.id] ? '✓' : '✗'}</td></tr>)}</tbody></table>
+        <table className="sp-table"><thead><tr><th>Ask</th><th>Answer</th><th>Key</th><th></th></tr></thead><tbody>{inspect.rec.asks.map((a) => <tr key={a.id}><td>{a.label}</td><td><code>{inspect.rec.response[a.id]}</code></td><td>{keyOf(inspect.rec, a.id)}</td><td>{inspect.rec.perAsk[a.id] ? '✓' : '✗'}</td></tr>)}</tbody></table>
+        {inspect.rec.note && <blockquote className="sp-note-q">“{inspect.rec.note}”</blockquote>}
         {Object.entries(inspect.rec.outcomes).map(([c, o]) => <p key={c}><b>{byId(c as CompetencyId).title}</b>: {o?.pass ? LEVEL_LABEL[levelOf(inspect.rec, c as CompetencyId)] : 'not passed'} {o?.misconceptions.map((x) => <span key={x} className="fx-mis">{misconception(x).title}</span>)}</p>)}
         <p className="fx-fine">Fingerprint {inspect.rec.fingerprint} {intact(inspect.rec) ? 'intact' : 'BROKEN'}. Identity not verified.</p>
       </div></div>}

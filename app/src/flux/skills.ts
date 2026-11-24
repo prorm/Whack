@@ -2,7 +2,7 @@
 // Pure and deterministic. A competency is only ever "evidenced" by an assessment record (passport.ts), never by
 // reel answers, watch time or memory meters.
 
-export type CompetencyId = 'solar.series' | 'solar.cold-max' | 'solar.mppt-min' | 'ev.load' | 'pay.idempotency' | 'pay.backoff' | 'site.safety'
+export type CompetencyId = 'solar.series' | 'solar.cold-max' | 'solar.mppt-min' | 'solar.design' | 'ev.load' | 'pay.idempotency' | 'pay.backoff' | 'site.safety'
 export type Domain = 'solar' | 'ev' | 'payments' | 'site'
 export type ReviewNeed = 'system' | 'trainer_recommended' | 'in_person_only'
 
@@ -41,6 +41,8 @@ export const ASSESSMENTS = {
     rubric: ['Max panels: coldest-dawn Voc, rounded down', 'Min panels: hottest-cell Vmp vs MPPT minimum, rounded up', 'Each part graded separately; known wrong methods are named'] },
   ev: { id: 'wo.ev-load', version: 1, label: 'Unseen EV charger load work order', minutes: 4, unseen: true,
     rubric: ['Highest fixed charger current that never trips the main breaker', 'Current the car gets at dinner with load balancing (2 A margin)', 'Both parts within ±0.01 A to pass'] },
+  rooftop: { id: 'proj.rooftop', version: 1, label: 'Project: design a 14-panel rooftop', minutes: 8, unseen: false,
+    rubric: ['Uses every panel the customer wants', 'Each string survives the coldest dawn and stays awake on the hottest afternoon', 'Fits the inverter inputs, MPPT window and the DEMO 1.3 DC/AC limit', 'Written explanation for the customer is kept for trainer review'] },
   idem: { id: 'quick.idempotency', version: 1, label: 'Duplicate webhook ledger check', minutes: 2, unseen: true,
     rubric: ['Credits applied = unique event IDs', 'Total credited counts each event once', 'Both parts correct to pass'] },
   backoff: { id: 'quick.backoff', version: 1, label: 'Retry backoff schedule check', minutes: 2, unseen: true,
@@ -49,14 +51,17 @@ export const ASSESSMENTS = {
 
 export const COMPETENCIES: Competency[] = [
   { id: 'solar.series', domain: 'solar', title: 'Series & parallel wiring', can: 'I can predict string voltage and current for series and parallel panels.',
-    prereqs: [], concepts: ['series'], lessons: [{ label: 'Reels: one hose, one current', route: 'flux-reels' }],
+    prereqs: [], concepts: ['series'], lessons: [{ label: 'FLUX Learn: lesson 2', route: 'home' }],
     assessment: ASSESSMENTS.series, review: 'system', hazardous: false },
   { id: 'solar.cold-max', domain: 'solar', title: 'Cold-morning string sizing', can: 'I can size the longest safe string from the coldest-dawn voltage.',
-    prereqs: ['solar.series'], concepts: ['cold', 'maxstring'], lessons: [{ label: 'Episode: The Cold Morning Killer', route: 'flux-solar' }],
+    prereqs: ['solar.series'], concepts: ['cold', 'maxstring'], lessons: [{ label: 'FLUX Learn: lessons 3–5', route: 'home' }],
     assessment: ASSESSMENTS.solarWo, review: 'trainer_recommended', hazardous: true },
   { id: 'solar.mppt-min', domain: 'solar', title: 'MPPT window (minimum string)', can: 'I can find the fewest panels that keep the inverter awake on the hottest afternoon.',
     prereqs: ['solar.series'], concepts: ['minstring'], lessons: [{ label: 'Episode: The Cold Morning Killer', route: 'flux-solar' }],
     assessment: ASSESSMENTS.solarWo, review: 'trainer_recommended', hazardous: true },
+  { id: 'solar.design', domain: 'solar', title: 'Rooftop string design (project)', can: 'I can choose an inverter and lay out strings that pass every voltage and sizing check.',
+    prereqs: ['solar.cold-max', 'solar.mppt-min'], concepts: ['explain'], lessons: [{ label: 'FLUX Learn: project', route: 'fl-project' }],
+    assessment: ASSESSMENTS.rooftop, review: 'trainer_recommended', hazardous: true },
   { id: 'ev.load', domain: 'ev', title: 'EV charger load & breaker headroom', can: 'I can set a charger current that never trips the main breaker at dinner time.',
     prereqs: [], concepts: ['evload'], lessons: [{ label: 'Episode: The 9 PM Blackout', route: 'flux-ev' }],
     assessment: ASSESSMENTS.ev, review: 'trainer_recommended', hazardous: true },
@@ -102,7 +107,7 @@ export interface Job {
 
 export const SEED_JOBS: Job[] = [
   { id: 'job-solar-apprentice', title: 'Solar installation apprentice', employer: 'Suryodaya Rooftop Solar (DEMO)', employerId: 'emp-suryodaya', city: 'Bengaluru',
-    pay: '₹14,000–18,000 / month stipend (illustrative)', requires: ['solar.series', 'solar.cold-max', 'solar.mppt-min', 'site.safety'],
+    pay: '₹14,000–18,000 / month stipend (illustrative)', requires: ['solar.series', 'solar.cold-max', 'solar.mppt-min', 'solar.design', 'site.safety'],
     supervised: true, summary: 'Size strings on residential rooftops under a senior technician. Supervised from day one.', demo: true, createdBy: 'seed' },
   { id: 'job-ev-helper', title: 'EV charger installation helper', employer: 'ChargeGrid Services (DEMO)', employerId: 'emp-chargegrid', city: 'Mysuru',
     pay: '₹15,000–19,000 / month (illustrative)', requires: ['ev.load', 'site.safety'],

@@ -23,6 +23,8 @@ const Sp = {
   employer: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpEmployer }))),
   teach: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpTeach }))),
   view: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpView }))),
+  lesson: lazy(() => import('./flux/learn/Learn').then((m) => ({ default: m.LessonPlayer }))),
+  project: lazy(() => import('./flux/learn/Learn').then((m) => ({ default: m.Project }))),
 }
 // keyed by the full hash: a new param (another record, another skill) gets fresh component state
 const S = ({ v }: { v: keyof typeof Sp }) => { const C = Sp[v]; return <Suspense fallback={null}><C key={location.hash} /></Suspense> }
@@ -49,6 +51,8 @@ function Routes() {
     case 'sp-employer': return <S v="employer" />
     case 'sp-teach': return <S v="teach" />
     case 'sp-view': return <S v="view" />
+    case 'fl-lesson': return <S v="lesson" />
+    case 'fl-project': return <S v="project" />
     case 'opportunities': return <Opportunities />
     case 'opportunity': return <Opportunity />
     case 'workspace': return <Workspace />
