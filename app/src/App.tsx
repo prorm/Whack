@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { OfflineCtx } from './Chrome'
 import { Feed } from './Feed'
 import { useOffline } from './offline'
@@ -13,6 +13,19 @@ import { Challenge, SkillPassport, SkillReview } from './learn/SkillProof'
 import { SyncProvider } from './learn/sync'
 import { Mission } from './moonshot/Mission'
 import { CareerHome, Opportunities, Opportunity, Workspace } from './careers/Careers'
+const Flux = lazy(() => import('./flux/Flux').then((m) => ({ default: m.Flux })))
+const Sp = {
+  home: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpHome }))),
+  jobs: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpJobs }))),
+  job: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpJob }))),
+  assess: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpAssess }))),
+  passport: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpPassport }))),
+  employer: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpEmployer }))),
+  teach: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpTeach }))),
+  view: lazy(() => import('./sp/Sp').then((m) => ({ default: m.SpView }))),
+}
+// keyed by the full hash: a new param (another record, another skill) gets fresh component state
+const S = ({ v }: { v: keyof typeof Sp }) => { const C = Sp[v]; return <Suspense fallback={null}><C key={location.hash} /></Suspense> }
 import './learn/journey.css'
 
 function Routes() {
@@ -27,7 +40,15 @@ function Routes() {
     }
   }, [route])
   switch (route) {
-    case 'home': return <CareerHome />
+    case 'home': return <S v="home" />
+    case 'careers': return <CareerHome />
+    case 'sp-jobs': return <S v="jobs" />
+    case 'sp-job': return <S v="job" />
+    case 'sp-assess': return <S v="assess" />
+    case 'sp-passport': return <S v="passport" />
+    case 'sp-employer': return <S v="employer" />
+    case 'sp-teach': return <S v="teach" />
+    case 'sp-view': return <S v="view" />
     case 'opportunities': return <Opportunities />
     case 'opportunity': return <Opportunity />
     case 'workspace': return <Workspace />
@@ -47,6 +68,15 @@ function Routes() {
     case 'challenge': return <Challenge />
     case 'skill-review': return <SkillReview />
     case 'skill-passport': return <SkillPassport />
+    case 'flux': return <Suspense fallback={null}><Flux /></Suspense>
+    case 'flux-solar': return <Suspense fallback={null}><Flux view="solar" /></Suspense>
+    case 'flux-pay': return <Suspense fallback={null}><Flux view="pay" /></Suspense>
+    case 'flux-reels': return <Suspense fallback={null}><Flux view="reels" /></Suspense>
+    case 'flux-ev': return <Suspense fallback={null}><Flux view="ev" /></Suspense>
+    case 'flux-studio': return <Suspense fallback={null}><Flux view="studio" /></Suspense>
+    case 'flux-queue': return <Suspense fallback={null}><Flux view="queue" /></Suspense>
+    case 'flux-fuel': return <Suspense fallback={null}><Flux view="fuel" /></Suspense>
+    case 'flux-gate': return <Suspense fallback={null}><Flux view="gate" /></Suspense>
     default: return <Journey />
   }
 }

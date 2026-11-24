@@ -1,0 +1,374 @@
+{
+  "id": "ev",
+  "template": "threshold_gauge",
+  "title": "The 9 PM Blackout",
+  "track": "Electrician → EV charger installer",
+  "minutes": 6,
+  "concept": "evload",
+  "author": {
+    "name": "FLUX team",
+    "role": "Blueprint written as JSON, no code",
+    "demo": true
+  },
+  "media": {
+    "poster": "ev_night.webp",
+    "video": "v_ev.mp4",
+    "voOpen": "ev_open",
+    "voRule": "ev_rule",
+    "voWin": "ev_balance"
+  },
+  "open": {
+    "stamp": "21:04",
+    "sub": "WHITEFIELD · NEW 7.4 kW CHARGER · DAY 1",
+    "lines": [
+      "The whole flat just went dark.",
+      "The charger worked perfectly at 6 PM.",
+      "Nobody touched anything. What changed?"
+    ]
+  },
+  "bet": {
+    "q": "A new 32 A car charger keeps tripping the flat's main breaker. When does it happen?",
+    "options": [
+      {
+        "id": "plug",
+        "label": "The moment it is plugged in",
+        "icon": "🔌"
+      },
+      {
+        "id": "dinner",
+        "label": "Around dinner time",
+        "icon": "🍛"
+      },
+      {
+        "id": "full",
+        "label": "At 3 AM, when the battery is nearly full",
+        "icon": "🔋"
+      }
+    ],
+    "answer": "dinner",
+    "explain": [
+      "The charger draws the same 32 A all evening. The house does not.",
+      "At 7 PM the AC pushes the flat close to the 40 A main breaker. At 8:30 the induction cooktop joins in, and the total crosses it.",
+      "The fix is not a bigger main breaker. It is either a smaller fixed charger current, or a charger that measures the house and backs off."
+    ]
+  },
+  "constants": {
+    "V": 230,
+    "mainLimit": 40,
+    "base": 0.5,
+    "ac": 1.2,
+    "cook": 2.0,
+    "margin": 2,
+    "minEv": 6
+  },
+  "inputs": [
+    {
+      "id": "charger",
+      "label": "Charger setting",
+      "min": 6,
+      "max": 32,
+      "step": 1,
+      "start": 32,
+      "unit": "A"
+    },
+    {
+      "id": "hour",
+      "label": "Clock",
+      "min": 17,
+      "max": 24,
+      "step": 0.25,
+      "start": 18,
+      "kind": "clock"
+    },
+    {
+      "id": "balance",
+      "label": "Load balancing",
+      "min": 0,
+      "max": 1,
+      "step": 1,
+      "start": 0,
+      "kind": "toggle"
+    }
+  ],
+  "derived": [
+    {
+      "id": "acOn",
+      "expr": "hour >= 19 && hour < 23.5"
+    },
+    {
+      "id": "cookOn",
+      "expr": "hour >= 20.5 && hour < 21.5"
+    },
+    {
+      "id": "houseKw",
+      "expr": "base + ac * acOn + cook * cookOn",
+      "label": "House load",
+      "unit": "kW",
+      "show": true
+    },
+    {
+      "id": "houseA",
+      "expr": "houseKw * 1000 / V",
+      "label": "House current",
+      "unit": "A",
+      "show": true
+    },
+    {
+      "id": "avail",
+      "expr": "floor(mainLimit - houseA - margin)"
+    },
+    {
+      "id": "evA",
+      "expr": "balance ? (avail >= minEv ? min(charger, avail) : 0) : charger",
+      "label": "Car is taking",
+      "unit": "A",
+      "show": true
+    },
+    {
+      "id": "total",
+      "expr": "houseA + evA"
+    },
+    {
+      "id": "peakHouseA",
+      "expr": "(base + ac + cook) * 1000 / V"
+    },
+    {
+      "id": "safeFixed",
+      "expr": "min(32, floor(mainLimit - peakHouseA))"
+    }
+  ],
+  "gauge": {
+    "value": "total",
+    "limit": "mainLimit",
+    "max": 60,
+    "unit": "A",
+    "label": "Current through the main breaker",
+    "stack": [
+      {
+        "id": "houseA",
+        "label": "House"
+      },
+      {
+        "id": "evA",
+        "label": "Car"
+      }
+    ]
+  },
+  "zones": [
+    {
+      "id": "ok",
+      "upTo": 0.8,
+      "label": "COMFORTABLE",
+      "tone": "ok"
+    },
+    {
+      "id": "near",
+      "upTo": 1.0,
+      "label": "NEAR THE LIMIT",
+      "tone": "warn"
+    },
+    {
+      "id": "trip",
+      "upTo": null,
+      "label": "OVERLOAD · MAIN TRIPS",
+      "tone": "bad"
+    }
+  ],
+  "sweep": {
+    "input": "hour",
+    "from": 17,
+    "to": 24,
+    "step": 0.25
+  },
+  "missions": [
+    {
+      "id": "kill",
+      "title": "Sabotage #1",
+      "goal": "Black out the flat. You may not touch the charger.",
+      "hint": "The charger is locked at 32 A. Drag the clock into the evening and watch the house load.",
+      "win": "Dinner + AC + car crossed the main breaker.",
+      "when": "total > mainLimit",
+      "start": {
+        "charger": 32,
+        "hour": 18,
+        "balance": 0
+      },
+      "lock": [
+        "charger",
+        "balance"
+      ]
+    },
+    {
+      "id": "fixed",
+      "title": "Sabotage #2",
+      "goal": "No load balancing. Find the HIGHEST fixed charger setting that survives the whole evening, then run the evening.",
+      "hint": "Find the worst moment (AC + cooking) and leave the car only what fits under the main breaker.",
+      "win": "The highest setting that never crosses the main breaker.",
+      "when": "balance == 0 && peak <= mainLimit && charger == safeFixed",
+      "sweep": true,
+      "start": {
+        "charger": 32,
+        "hour": 18,
+        "balance": 0
+      },
+      "lock": [
+        "balance"
+      ]
+    },
+    {
+      "id": "balance",
+      "title": "Fix it properly",
+      "goal": "Keep the charger set to 32 A and charge THROUGH dinner without tripping.",
+      "hint": "Switch on load balancing. The charger measures the house and takes only what is left.",
+      "win": "The car slowed down during dinner instead of the flat going dark.",
+      "when": "balance == 1 && cookOn == 1 && evA > 0 && total <= mainLimit && charger == 32",
+      "start": {
+        "charger": 32,
+        "hour": 20.75,
+        "balance": 0
+      },
+      "lock": [
+        "charger"
+      ]
+    }
+  ],
+  "rule": {
+    "q": "The 32 A charger gets its own circuit. Which breaker do you fit?",
+    "options": [
+      {
+        "t": "32 A",
+        "why": "Sized at exactly the load. A charger draws full current for hours, so common practice sizes the circuit for 125% of it."
+      },
+      {
+        "t": "40 A",
+        "ok": true,
+        "why": "32 × 1.25 = 40 A, with a cable rated for 40 A (often 6 mm² copper on a short run; check the cable table for how it is laid)."
+      },
+      {
+        "t": "63 A",
+        "why": "Too big for the cable. The cable could overheat long before a 63 A breaker trips."
+      }
+    ],
+    "explain": "Two rules: the whole house must fit under the main breaker at its busiest moment, and a charger's own circuit is sized for 125% of its continuous current."
+  },
+  "work": {
+    "vary": {
+      "mainLimit": [
+        32,
+        40,
+        63
+      ],
+      "base": [
+        0.3,
+        0.5,
+        0.8
+      ],
+      "ac": [
+        0,
+        1.5,
+        2.2
+      ],
+      "cook": [
+        1.2,
+        2.0,
+        2.5
+      ]
+    },
+    "givens": [
+      {
+        "id": "mainLimit",
+        "label": "Main breaker",
+        "unit": "A"
+      },
+      {
+        "id": "base",
+        "label": "Always-on load (fridge, lights, fans)",
+        "unit": "kW"
+      },
+      {
+        "id": "ac",
+        "label": "AC in the evening",
+        "unit": "kW"
+      },
+      {
+        "id": "cook",
+        "label": "Induction cooking at dinner",
+        "unit": "kW"
+      }
+    ],
+    "ask": [
+      {
+        "id": "fixed",
+        "label": "Highest fixed charger setting that never trips the main",
+        "expr": "min(32, floor(mainLimit - (base + ac + cook) * 1000 / V))",
+        "unit": "A"
+      },
+      {
+        "id": "dinner",
+        "label": "With load balancing (2 A margin), what does the car get at dinner?",
+        "expr": "min(32, floor(mainLimit - (base + ac + cook) * 1000 / V - margin))",
+        "unit": "A"
+      }
+    ],
+    "valid": "floor(mainLimit - (base + ac + cook) * 1000 / V - margin) >= minEv",
+    "story": "230 V single-phase flat. Charger can be set from 6 A to 32 A. All the loads below can run at the same time at dinner."
+  },
+  "tests": [
+    {
+      "name": "AC evening runs near the limit",
+      "inputs": {
+        "charger": 32,
+        "hour": 19.5,
+        "balance": 0
+      },
+      "expect": {
+        "houseA": 7.39,
+        "total": 39.39
+      }
+    },
+    {
+      "name": "dinner trips a 40 A main",
+      "inputs": {
+        "charger": 32,
+        "hour": 21,
+        "balance": 0
+      },
+      "expect": {
+        "houseA": 16.09,
+        "total": 48.09
+      }
+    },
+    {
+      "name": "balancing backs off at dinner",
+      "inputs": {
+        "charger": 32,
+        "hour": 21,
+        "balance": 1
+      },
+      "expect": {
+        "evA": 21,
+        "total": 37.09
+      }
+    },
+    {
+      "name": "6 PM is easy even balanced",
+      "inputs": {
+        "charger": 32,
+        "hour": 18,
+        "balance": 1
+      },
+      "expect": {
+        "evA": 32,
+        "total": 34.17
+      }
+    },
+    {
+      "name": "highest safe fixed setting",
+      "inputs": {},
+      "expect": {
+        "safeFixed": 23
+      }
+    }
+  ],
+  "sweepLabel": "▶ Run the evening"
+}

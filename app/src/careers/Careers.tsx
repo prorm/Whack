@@ -12,6 +12,7 @@ const PAGE_LINKS = [
   ['opportunities', 'Explore roles'],
   ['workspace', 'My workspace'],
   ['mission', 'Teach a skill'],
+  ['flux', 'FLUX lessons'],
 ] as const
 const EMPTY_EVIDENCE = { latest: '', attempts: {} as Record<string, Attempt>, intents: {} as Record<string, { state: string; receipt?: Receipt }> }
 

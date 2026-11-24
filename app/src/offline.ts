@@ -7,7 +7,7 @@ const connection = (navigator as Navigator & { connection?: NetworkInfo }).conne
 
 export function useOffline() {
   const [status, setStatus] = useState<OfflineStatus>(() => {
-    if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return 'unsupported'
+    if (!import.meta.env.PROD || !('serviceWorker' in navigator) || location.protocol === 'chrome-extension:') return 'unsupported'
     return navigator.serviceWorker.controller ? 'ready' : 'caching'
   })
   const [online, setOnline] = useState(navigator.onLine)
@@ -27,7 +27,8 @@ export function useOffline() {
   }, [])
 
   useEffect(() => {
-    if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return
+    // inside the browser extension the files are already local: no service worker
+    if (!import.meta.env.PROD || !('serviceWorker' in navigator) || location.protocol === 'chrome-extension:') return
     let stopped = false
     const workers = navigator.serviceWorker
     const update = () => {

@@ -1,5 +1,5 @@
 import { createServer } from 'node:http'
-import { createHash, timingSafeEqual } from 'node:crypto'
+import { createHash, randomUUID, timingSafeEqual } from 'node:crypto'
 import { createReadStream } from 'node:fs'
 import { mkdir, readFile, stat } from 'node:fs/promises'
 import { dirname, extname, resolve, sep } from 'node:path'
@@ -7,6 +7,9 @@ import { DatabaseSync } from 'node:sqlite'
 import { brotliCompressSync, constants, gzipSync } from 'node:zlib'
 import { grade, payoutTask } from '../app/src/engine/proof.ts'
 import { gradeInventory, variant } from '../app/src/moonshot/domain.ts'
+import { makeTask } from '../app/src/flux/assess.ts'
+import { makeRecord } from '../app/src/flux/passport.ts'
+import EV_BLUEPRINT from '../app/src/flux/blueprints/ev_charger.json' with { type: 'json' }
 
 const root = resolve(import.meta.dirname, '../app/dist')
 const args = process.argv.slice(2)
@@ -31,6 +34,9 @@ db.exec(`
     device TEXT NOT NULL, id TEXT NOT NULL, payload TEXT NOT NULL,
     PRIMARY KEY (device, id)
   );
+  CREATE TABLE IF NOT EXISTS proof_share (
+    token TEXT PRIMARY KEY, device TEXT NOT NULL, payload TEXT NOT NULL, revoked INTEGER NOT NULL DEFAULT 0, at INTEGER NOT NULL
+  );
   CREATE TABLE IF NOT EXISTS mission_evidence (
     device TEXT NOT NULL, id TEXT NOT NULL, payload TEXT, receipt TEXT, withdrawn INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (device, id)
@@ -52,6 +58,24 @@ const validSubmission = (item) => item && id(item.id) && Number.isSafeInteger(it
   item.cells && Object.keys(item.cells).length === cells.length &&
   cells.every((cell) => typeof item.cells[cell] === 'string' && item.cells[cell].length <= 48)
 const hash = (value) => createHash('sha256').update(value).digest()
+const addShare = db.prepare('INSERT INTO proof_share (token, device, payload, at) VALUES (?, ?, ?, ?)')
+const revokeShare = db.prepare('UPDATE proof_share SET revoked = 1 WHERE token = ? AND device = ?')
+const readShare = db.prepare('SELECT payload, revoked, at FROM proof_share WHERE token = ?')
+const ASSESSMENTS = new Set(['quick.series', 'wo.solar-string', 'wo.ev-load', 'quick.idempotency', 'quick.backoff'])
+/** Re-grade a learner's record from its seed and raw answers. The client's grade is never trusted. */
+function regrade(record) {
+  if (!record || typeof record !== 'object' || !ASSESSMENTS.has(record.assessmentId) || !id(record.id) ||
+      !Number.isSafeInteger(record.seed) || record.seed < 1 || !Number.isSafeInteger(record.at) ||
+      !record.response || typeof record.response !== 'object' || !['live', 'demo_seed'].includes(record.source)) return null
+  const response = {}
+  for (const [k, v] of Object.entries(record.response)) {
+    if (typeof v !== 'string' || v.length > 48 || !/^[a-z]{1,12}$/i.test(k)) return null
+    response[k] = v
+  }
+  const task = makeTask(record.assessmentId, record.seed, EV_BLUEPRINT)
+  if (task.version !== record.version) return null
+  return makeRecord(task, response, record.at, record.id, record.source)
+}
 const findMission = db.prepare('SELECT * FROM mission_evidence WHERE device = ? AND id = ?')
 const addMission = db.prepare('INSERT OR IGNORE INTO mission_evidence (device,id,payload) VALUES (?,?,?)')
 const hideMission = db.prepare(`INSERT INTO mission_evidence (device,id,withdrawn) VALUES (?,?,1)
@@ -135,6 +159,22 @@ async function api(request, response, pathname) {
     }
     insertReceipt.run(device, submissionId, JSON.stringify(receipt))
     return json(response, 200, receipt)
+  }
+  if (pathname === '/api/proof/share') {
+    const server = regrade(body.record)
+    if (!server) return json(response, 400, { error: 'Invalid evidence record.' })
+    if (JSON.stringify(server.outcomes) !== JSON.stringify(body.record.outcomes)) {
+      return json(response, 422, { error: 'The grade on this record does not match a fresh grade of its answers.' })
+    }
+    const token = randomUUID()
+    addShare.run(token, device, JSON.stringify(server), Date.now())
+    return json(response, 200, { token, regraded: true })
+  }
+  if (pathname === '/api/proof/revoke') {
+    const { token: shareToken } = body
+    if (typeof shareToken !== 'string' || !/^[a-f0-9-]{36}$/.test(shareToken)) return json(response, 400, { error: 'Invalid link.' })
+    const result = revokeShare.run(shareToken, device)
+    return result.changes ? json(response, 200, { revoked: true }) : json(response, 404, { error: 'Only the learner who created a link can revoke it.' })
   }
   if (pathname === '/api/review-config') {
     return json(response, 200, { demo: !process.env.SCROLLPROOF_TRAINER_CODE })
@@ -244,6 +284,13 @@ createServer(async (request, response) => {
     })))
     if (latency > 0) await new Promise((resolveDelay) => setTimeout(resolveDelay, latency))
     if (failMedia && /^\/(media|fixtures)\//.test(pathname)) return json(response, 404, { error: 'Media unavailable.' })
+    const shared = /^\/api\/proof\/public\/([a-f0-9-]{36})$/.exec(pathname)
+    if (shared && request.method === 'GET') {
+      const row = readShare.get(shared[1])
+      if (!row) return json(response, 404, { error: 'No record at this link.' })
+      if (row.revoked) return json(response, 410, { error: 'The learner revoked this link.' })
+      return json(response, 200, { record: JSON.parse(row.payload), regraded: true, at: row.at })
+    }
     if (pathname.startsWith('/api/')) await api(request, response, pathname)
     else await file(request, response, pathname)
   } catch (error) {

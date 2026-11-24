@@ -30,3 +30,18 @@ Learn a trade skill in a meme-format reel feed → prove it on an unseen work or
 - Hand-authored ground truth lives in `content/` (competency graph, percentages ConceptSpec). Never replace it with model output.
 - v2 LLM calls go through `core/v2_llm.py` (worst-case guard, +$2 v2 cap, $5 lifetime, disk cache). Prerequisites come from the graph, never from the model.
 - Numbers in generated lessons must be {op, args}; code recomputes every answer. Prose and Kannada remain UNVERIFIED until a fluent human reviews them.
+
+## FLUX learning engine (2026-11-24): see reports/flux/README.md
+- `app/src/flux/`: `physics.ts` (solar string rules, work-order generator, misconception detector) and `memory.ts` (1/3/7/21 ladder, battery, callback ordering) are pure and tested (`npm run test:flux`). UI: `Flux.tsx` hub, `Episode.tsx` (solar), `PayLab.tsx` (payments), `Rooftop.tsx` sim, `Reels.tsx` feed. Routes `#/flux`, `#/flux-solar`, `#/flux-pay`, `#/flux-reels`.
+- Media comes from `scripts/flux_media.py` (cached in `outputs/flux/`, shipped compressed to `app/public/media/flux/`). Never bake numbers into media.
+- Field Scars (UGC): `cards.ts` (provenance + No Passive Scroll validator), `sieve.ts` (AI-marker/duplicate/unsafe-procedure screen), `community.ts` (2-of-3 master review, challenge → patch/retire), `Studio.tsx` (#/flux-studio, gated by a beaten work order), `Queue.tsx` (#/flux-queue). Masters, vouches and bounties are same-device DEMO.
+- Lab Blueprints: `blueprint.ts` (whitelisted expressions, code gate = blueprint tests must pass) + `BlueprintEpisode.tsx`. New threshold episodes are JSON in `app/src/flux/blueprints/` (EV: #/flux-ev). Never add `eval`.
+- Scroll Fuel: `fuel.ts` (tank/earn/escape/mercy rules, tested), `fuelStore.ts`, `Gate.tsx` (#/flux-gate tollbooth), `ScrollFuel.tsx` (#/flux-fuel + simulator). Browser extension: `extension/src/content.js` + `scripts/build_extension.mjs` → `extension/dist` (gitignored). Unlocks accepted only from our own iframe + nonce. Toll answers never award anything. `android-gate/` is an uncompiled skeleton.
+
+## UnlockED final (2026-11-24): see reports/final/
+- One product: ScrollProof (`app/src/sp/Sp.tsx`: Learn `#/home`, Jobs, Passport, Teach, Employer seat) on the FLUX engine. Old career home moved to `#/careers`. Meme/"Sheru bhai" reels are retired from the product path.
+- Pure, tested core (`npm run test:flux` → `proof.test.ts`): `skills.ts` (competency graph + DEMO jobs + `matchJob`), `assess.ts` (seeded graders, shared with the server), `passport.ts` (records, fingerprint, levels, review binding, consent), `goal.ts` (opportunity-driven feed ranking). Store: `passportStore.ts`.
+- Motion reels (`app/src/flux/motion/`): SVG motion graphics driven by physics.ts; setup → forced prediction → payoff. Veo plates (`scripts/motion_plates.py`, `app/public/media/motion/`) are backdrops only and badged.
+- Server: `/api/proof/share` re-grades from seed + raw answers, `/api/proof/revoke`, `GET /api/proof/public/<token>` (410 after revoke).
+- Hazardous competencies always force a supervised outcome; `site.safety` is in-person only and never evidenced in-app.
+- Demo: `cd app && npm run demo`, then `#/home?demo=seed` / `#/home?demo=reset`. Walkthrough: `scripts/verify_unlocked.mjs`; video: `scripts/record_demo.mjs`.

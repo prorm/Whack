@@ -21,3 +21,6 @@ reports/moonshot/.runner.lock
 *.pyc
 __pycache__/
 **/.impeccable/hook.cache.json
+
+# built browser extension (node scripts/build_extension.mjs)
+extension/dist/

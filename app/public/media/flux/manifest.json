@@ -1,0 +1,241 @@
+{
+ "generated": "2026-11-24T13:36:03",
+ "files": {
+  "akka.webp": 81810,
+  "chotu.webp": 86914,
+  "chotu_shock.webp": 83658,
+  "dawn.webp": 110880,
+  "ev_night.webp": 88532,
+  "ev_panel.webp": 51290,
+  "fault_cable.webp": 85422,
+  "fault_mc4.webp": 112594,
+  "fault_shade.webp": 154268,
+  "noon.webp": 131512,
+  "pay.webp": 81884,
+  "sharma.webp": 116256,
+  "sharma_happy.webp": 96972,
+  "v_akka.mp4": 463559,
+  "v_chotu.mp4": 438853,
+  "v_dawn.mp4": 847531,
+  "v_ev.mp4": 231498,
+  "v_mc4.mp4": 755196,
+  "v_noon.mp4": 703911,
+  "v_pay.mp4": 704554,
+  "sfx_alarm.m4a": 13652,
+  "sfx_combo.m4a": 6057,
+  "sfx_frost.m4a": 7837,
+  "sfx_hum.m4a": 17719,
+  "sfx_powerup.m4a": 8531,
+  "sfx_wrong.m4a": 5366,
+  "sfx_zap.m4a": 3994,
+  "vo_akka_heat.m4a": 89228,
+  "vo_akka_intro.m4a": 102990,
+  "vo_akka_rule.m4a": 97801,
+  "vo_akka_win.m4a": 68868,
+  "vo_bet_lock.m4a": 59203,
+  "vo_chotu_brag.m4a": 74597,
+  "vo_chotu_oops.m4a": 73986,
+  "vo_chotu_thanks.m4a": 65347,
+  "vo_cold_open.m4a": 137845,
+  "vo_ev_balance.m4a": 79261,
+  "vo_ev_open.m4a": 107236,
+  "vo_ev_rule.m4a": 125739,
+  "vo_pay_open.m4a": 91631,
+  "vo_pay_rule.m4a": 107568,
+  "vo_reel_callback.m4a": 58093,
+  "vo_reel_cold.m4a": 56599,
+  "vo_reel_round.m4a": 93803,
+  "vo_reel_series.m4a": 89778,
+  "vo_sharma_1.m4a": 70394,
+  "vo_sharma_2.m4a": 22969,
+  "vo_sharma_3.m4a": 47298,
+  "vo_sharma_lose.m4a": 45515,
+  "vo_sharma_win.m4a": 62071
+ },
+ "voice": {
+  "cold_open": {
+   "voice": "Fenrir",
+   "who": "narrator",
+   "text": "Six forty seven A.M. Eight degrees. A brand new inverter just died. It was installed in May, and the noon test read five hundred twenty three volts. Totally safe. So what killed it?",
+   "heard": "06:47 a.m. 8 degrees. A brand new inverter just died. It was installed in May and the noon test read 523 volts. Totally safe. So, what killed it?",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "bet_lock": {
+   "voice": "Fenrir",
+   "who": "narrator",
+   "text": "Bet locked. Now go find out.",
+   "heard": "Betlocked. Now go find out.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "akka_intro": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "Listen. Cold panels push higher voltage. The coldest sunrise of the year is the most dangerous moment for your inverter. Not the hottest noon.",
+   "heard": "Cold panels push higher voltage. The coldest sunrise of the year is the most dangerous moment for your inverter, not the hottest noon.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "akka_rule": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "Take the coldest morning on record. Work out each panel's voltage there. Divide the inverter's maximum by that, and always round down.",
+   "heard": "Take the coldest morning on record, work out each panel's voltage there, divide the inverter's maximum by that, and always round down.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "akka_heat": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "Heat does the opposite. On a hot afternoon the voltage sags. Too few panels and the inverter just falls asleep.",
+   "heard": "He does the opposite. On a hot afternoon, the voltage sags. Too few panels and the inverter just falls asleep.",
+   "take": 2,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "akka_win": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "That is how a technician thinks. You checked the worst case, not the nice case.",
+   "heard": "That is how a technician thinks. You check the worst case, not the nice case.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "chotu_brag": {
+   "voice": "Puck",
+   "who": "chotu",
+   "text": "Boss, easy calculation! Six hundred divided by forty nine point six. Twelve panels. Done!",
+   "heard": "Boss easy calculation, 600 divided by 49.6, 12 panels. Done.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "chotu_oops": {
+   "voice": "Puck",
+   "who": "chotu",
+   "text": "Arre! I used the noon number. On a cold morning that string will cross six hundred volts!",
+   "heard": "Are, I used the noon number. On a cold morning that string will cross 600 volts.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "chotu_thanks": {
+   "voice": "Puck",
+   "who": "chotu",
+   "text": "Okay okay. Eleven panels. Round down. I will write it on my hand.",
+   "heard": "00:00 Okay, okay. 11 panels. Round down. I will write it on my hand.",
+   "take": 2,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "sharma_1": {
+   "voice": "Charon",
+   "who": "sharma",
+   "text": "My neighbour put twelve panels on one string. Why are you giving me only eleven? Are you cheating me?",
+   "heard": "My neighbor put 12 panels on one string. Why you giving me only 11? Are you cheating me?",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "sharma_3": {
+   "voice": "Charon",
+   "who": "sharma",
+   "text": "So will I lose power because of this?",
+   "heard": "So, will I lose power because of this?",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "sharma_win": {
+   "voice": "Charon",
+   "who": "sharma",
+   "text": "Hmm. Nobody explained it like that before. Okay, eleven it is.",
+   "heard": "Hmm, nobody explained it like that before. Okay, 11 it is.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "sharma_lose": {
+   "voice": "Charon",
+   "who": "sharma",
+   "text": "I think I will ask somebody else.",
+   "heard": "I think I will ask somebody else.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "reel_callback": {
+   "voice": "Fenrir",
+   "who": "narrator",
+   "text": "Last time this one got you. Rematch.",
+   "heard": "00:00:01 Last time, this one got you. Rematch.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "reel_cold": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "Cold panel, higher voltage. Say it with me.",
+   "heard": "code panel higher voltage. Say it with me",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "reel_round": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "Eleven point six panels is eleven panels. You cannot install point six of a panel, and you cannot round up a safety limit.",
+   "heard": "11.6 panels is 11 panels. You cannot install .6 of a panel and you cannot round up a safety limit.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "reel_series": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "In series, volts add up and current stays the same. In parallel, current adds up and volts stay the same.",
+   "heard": "In series, volts add up and current stays the same. In parallel, current adds up and volts stay the same.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "pay_open": {
+   "voice": "Fenrir",
+   "who": "narrator",
+   "text": "Eleven forty one P.M. Rahul paid four hundred ninety nine rupees for a train ticket. His bank charged him twice.",
+   "heard": "11:41 p.m. Rahul paid 499 rupees for a train ticket. His bank charged him twice.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "pay_rule": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "The network will drop replies. Your app will retry. So every payment request carries one idempotency key, and the server remembers it.",
+   "heard": "The network will drop replies, your app will retry. So every payment request carries one item potency key and the server remembers it.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "sharma_2": {
+   "voice": "Charon",
+   "who": "sharma",
+   "text": "But it is Bengaluru. It never gets cold here!",
+   "heard": "But it is Bengaluru. It never gets cold here.",
+   "take": 3,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "ev_open": {
+   "voice": "Fenrir",
+   "who": "narrator",
+   "text": "Nine oh four P.M. Dinner is cooking, the AC is on, and a brand new car charger is pulling thirty two amps. The whole flat just went dark.",
+   "heard": "9:04 p.m. Dinner is cooking, the AC is on, and a brand new car charger is pulling 32 amps. The whole flat just went dark.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "ev_rule": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "Add up every load that can run at the same time. If the total crosses the main breaker, something has to give. A smaller fixed charger current, or a charger that watches the house and backs off.",
+   "heard": "Add up every load that can run at the same time. If the total crosses the main breaker, something has to give. A smaller fixed charger current, or a charger that watches the house and backs off.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  },
+  "ev_balance": {
+   "voice": "Kore",
+   "who": "akka",
+   "text": "Load balancing means the charger measures the house and only takes what is left. Dinner first, car second.",
+   "heard": "Load balancing means the charger measures the house, and only takes what is left. Dinner first, car second.",
+   "take": 1,
+   "model": "gemini-3.8-flash-tts"
+  }
+ }
+}

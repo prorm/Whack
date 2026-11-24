@@ -48,6 +48,29 @@
         "gemini-3.8-flash-lite-tts",
         "gemini-2.5-flash-tts"
       ]
+    },
+    "flux_image": {
+      "candidates": [
+        "gemini-3.1-flash-image",
+        "gemini-3.1-flash-lite-image"
+      ]
+    },
+    "flux_video": {
+      "candidates": [
+        "veo-3.1-lite-generate-001"
+      ]
+    },
+    "flux_tts": {
+      "candidates": [
+        "gemini-3.8-flash-tts",
+        "gemini-2.5-flash-tts"
+      ]
+    },
+    "flux_qa": {
+      "candidates": [
+        "gemini-3.5-flash-lite",
+        "gemini-3.8-flash"
+      ]
     }
   },
   "models": {
