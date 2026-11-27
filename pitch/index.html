@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' file:; style-src 'self' 'unsafe-inline' file:; img-src 'self' data: file:; font-src 'self' file:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f0f0d">
+  <meta name="description" content="CAPABLE — Start with opportunity. Build capability. Return with proof.">
+  <title>CAPABLE</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/pitch.css">
+  <link rel="stylesheet" href="assets/slides-a.css">
+  <link rel="stylesheet" href="assets/slides-b.css">
+  <link rel="stylesheet" href="assets/slides-c.css">
+  <script src="assets/brand.js" defer></script>
+  <script src="assets/slides-a.js" defer></script>
+  <script src="assets/slides-b.js" defer></script>
+  <script src="assets/slides-c.js" defer></script>
+  <script src="assets/notes.js" defer></script>
+  <script src="assets/pitch.js" defer></script>
+</head>
+<body>
+  <main class="projection" id="projection" aria-label="CAPABLE pitch deck">
+    <div class="stage" id="stage">
+      <svg class="stage-grid" viewBox="0 0 1920 1080" width="1920" height="1080" fill="none" aria-hidden="true">
+        <path class="stage-grid__lines" d="M120 0v1080M1800 0v1080M0 985h1920"/>
+        <path class="stage-grid__ticks" d="M112 72h16M120 64v16M1792 72h16M1800 64v16M112 985h16M120 977v16M1792 985h16M1800 977v16"/>
+      </svg>
+      <div class="slide-slot" id="slide-slot"></div>
+      <footer class="stage-footer" id="stage-footer" aria-hidden="true">
+        <div class="stage-footer__left">
+          <span class="stage-progress" id="stage-progress"></span>
+        </div>
+        <div class="stage-footer__right">
+          <span class="stage-build" id="stage-build"></span>
+          <span class="stage-index" id="stage-index">01 / 13</span>
+        </div>
+      </footer>
+      <div class="blackout" id="blackout" aria-hidden="true"></div>
+    </div>
+    <p class="sr-only" id="slide-announcement" aria-live="polite"></p>
+    <noscript><p class="no-script">Enable JavaScript to run the CAPABLE pitch deck.</p></noscript>
+  </main>
+
+  <main class="presenter" id="presenter" hidden aria-label="CAPABLE presenter view">
+    <header class="presenter-header">
+      <div class="presenter-brand" id="presenter-brand"></div>
+      <div class="clocks">
+        <div class="total-clock">
+          <span>Pitch clock</span>
+          <output id="time-elapsed" role="timer" aria-label="Elapsed pitch time">0:00</output>
+          <span class="clock-end" id="time-limit">/ 5:00</span>
+        </div>
+        <button type="button" id="timer-button">Start clock</button>
+      </div>
+    </header>
+
+    <div class="presenter-body">
+      <div class="preview-column">
+        <div class="preview-heading"><h2>On screen</h2><span id="current-label"></span></div>
+        <div class="preview-frame" id="current-preview" role="img"></div>
+        <div class="preview-bottom">
+          <div class="next-column">
+            <div class="preview-heading"><h2>Next step / slide</h2><span id="next-label"></span></div>
+            <div class="preview-frame" id="next-preview" role="img"></div>
+          </div>
+          <nav class="presenter-tools" aria-label="Deck controls">
+            <div class="nav-pair">
+              <button type="button" id="back-button">Back</button>
+              <button type="button" id="next-button">Next</button>
+            </div>
+            <button type="button" id="black-button" aria-pressed="false">Black screen</button>
+          </nav>
+        </div>
+      </div>
+      <div class="speaker-column">
+        <section class="budget" aria-label="Section timing">
+          <div class="budget-row">
+            <h2 class="speaker-name" id="speaker-name">Pranav R Mane</h2>
+            <output id="budget-left" role="timer" aria-label="Section time remaining">1:00 left</output>
+          </div>
+          <div class="budget-track" role="progressbar" id="budget-track" aria-label="Section time used" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="budget-fill" id="budget-fill"></div>
+          </div>
+          <div class="budget-schedule" id="budget-schedule" aria-label="Run of show"></div>
+        </section>
+        <section class="notes-panel" aria-labelledby="notes-heading">
+          <h2 id="notes-heading">Speaker notes</h2>
+          <div class="notes" id="speaker-notes"></div>
+        </section>
+        <p class="sync-status" id="sync-status" role="status">Connecting to the deck…</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -184,7 +184,7 @@ export function PayEpisode() {
   const step = Math.min(s.episodes.pay?.step ?? 0, STEPS.length - 1)
   const next = () => { stopVoice(); setStep('pay', step + 1, step + 1 === STEPS.length - 1); scrollTo(0, 0) }
   return (
-    <Shell steps={STEPS} step={step} onExit={() => go('flux')} tone={`pay ${step === 0 ? 'bleed' : ''}`}>
+    <Shell steps={STEPS} step={step} onExit={() => go('home')} tone={`pay ${step === 0 ? 'bleed' : ''}`}>
       {step === 0 && <Open next={next} />}
       {step === 1 && <BetScreen bet={BET} next={next} />}
       {step === 2 && <Lab next={next} />}

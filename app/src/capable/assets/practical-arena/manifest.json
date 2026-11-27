@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "root": "CAPABLE_Workbench",
+  "calibrationMetersPerUnit": 0.16,
+  "terminals": {
+    "line": "Probe_Line",
+    "fuse-in": "Probe_FuseIn",
+    "fuse-out": "Probe_FuseOut",
+    "switch-out": "Probe_SwitchOut",
+    "lamp-n": "Probe_LampN",
+    "neutral": "Probe_Neutral",
+    "earth": "Probe_Earth"
+  },
+  "faults": {
+    "fuse": "Fault_Fuse",
+    "neutral": "Fault_Neutral",
+    "switch": "Fault_Switch",
+    "lamp": "Fault_Lamp"
+  },
+  "controls": {
+    "cover": "Hit_Cover",
+    "breakerExternal": "Hit_BreakerExterior",
+    "breakerInternal": "Hit_BreakerInterior",
+    "switch": "Fault_Switch",
+    "mode": "Hit_MeterSelector"
+  },
+  "nodes": {
+    "door": "CabinetDoor",
+    "exteriorLever": "ExteriorBreakerLever",
+    "interiorLever": "BreakerLever",
+    "wallRocker": "WallSwitchRocker",
+    "lamp": "LampDiffuser",
+    "lampHolder": "LampHolder",
+    "meter": "Multimeter",
+    "selector": "MeterSelector",
+    "display": "Display_Meter",
+    "breaker": "MCB",
+    "terminals": "TerminalBlocks",
+    "cables": "WiringAssembly",
+    "fuse": "FuseAssembly",
+    "neutral": "NeutralJoint",
+    "switch": "MainSwitch"
+  },
+  "probes": {
+    "red": {
+      "handle": "ProbeRed",
+      "tip": "Tip_Red",
+      "end": "LeadEnd_Red",
+      "park": "Park_Red",
+      "socket": "Socket_Red"
+    },
+    "black": {
+      "handle": "ProbeBlack",
+      "tip": "Tip_Black",
+      "end": "LeadEnd_Black",
+      "park": "Park_Black",
+      "socket": "Socket_Black"
+    }
+  },
+  "cameras": {
+    "overview": {
+      "label": "Overview",
+      "anchor": "Camera_Overview",
+      "target": [
+        0,
+        -0.73,
+        0.5
+      ],
+      "position": [
+        3.6,
+        2.65,
+        12.8
+      ],
+      "fit": [
+        10.7,
+        7.55
+      ]
+    },
+    "circuit": {
+      "label": "Circuit",
+      "anchor": "Camera_Circuit",
+      "target": [
+        -1.95,
+        -0.18,
+        0.52
+      ],
+      "position": [
+        -0.85,
+        1.55,
+        10.4
+      ],
+      "fit": [
+        4.76,
+        3.43
+      ]
+    },
+    "multimeter": {
+      "label": "Multimeter",
+      "anchor": "Camera_Multimeter",
+      "target": [
+        2.66,
+        -1.05,
+        1.63
+      ],
+      "position": [
+        4.0,
+        0.08,
+        9.6
+      ],
+      "fit": [
+        3.6,
+        2.48
+      ]
+    }
+  },
+  "stats": {
+    "bytes": 4237780,
+    "triangles": 43177,
+    "textures": 3
+  }
+}

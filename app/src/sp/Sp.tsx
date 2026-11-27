@@ -3,7 +3,7 @@
 // FLUX is the engine underneath. Every person, employer and listing here is DEMO and labelled so.
 import { Fragment, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useDelivery } from '../Chrome'
-import { request } from '../learn/sync'
+import { request } from '../api'
 import { routeParam, type Route } from '../router'
 import { CONCEPT_NAMES } from '../flux/Episode'
 import { misconception } from '../flux/assess'
@@ -15,37 +15,61 @@ import { CourseMap } from '../flux/learn/Learn'
 import { Home } from '../flux/learn/Home'
 import { resetCourse } from '../flux/learn/courseStore'
 import { DEMO_CANDIDATES } from './demoCandidates'
+import { CapabilitySummary } from '../os/ui/Os'
+import '../os/ui/os.css'
 import '../flux/flux.css'
 import './sp.css'
 
 const href = (r: Route, p?: Record<string, string>) => `#/${r}${p ? '?' + new URLSearchParams(p) : ''}`
-const TABS: { id: string; label: string; icon: string; route: Route }[] = [
-  { id: 'learn', label: 'Learn', icon: '▶', route: 'home' },
-  { id: 'revise', label: 'Revise', icon: '↻', route: 'flux-reels' },
-  { id: 'passport', label: 'Proof', icon: '◆', route: 'sp-passport' },
-  { id: 'jobs', label: 'Jobs', icon: '◎', route: 'sp-jobs' },
-  { id: 'teach', label: 'Teach', icon: '✚', route: 'sp-teach' },
+// one stroke family (24 grid, 1.75 stroke, round joins) for the whole tab set
+const ICONS: Record<string, ReactNode> = {
+  learn: <><path d="M3 5.5h5.5A3.5 3.5 0 0 1 12 9v10.5a2.8 2.8 0 0 0-2.8-2.8H3z" /><path d="M21 5.5h-5.5A3.5 3.5 0 0 0 12 9v10.5a2.8 2.8 0 0 1 2.8-2.8H21z" /></>,
+  revise: <><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3.5 8.4" /><path d="M3.5 3.5v4.9h4.9" /></>,
+  passport: <><path d="M12 3l7.5 2.8v5.7c0 4.4-3.2 8-7.5 9.2-4.3-1.2-7.5-4.8-7.5-9.2V5.8z" /><path d="M8.6 12.1l2.4 2.4 4.4-4.8" /></>,
+  jobs: <><rect x="3" y="7" width="18" height="13" rx="2.2" /><path d="M8.5 7V5.2A1.7 1.7 0 0 1 10.2 3.5h3.6a1.7 1.7 0 0 1 1.7 1.7V7" /><path d="M3 12.5h18" /></>,
+  teach: <><path d="M20.5 14.6a2 2 0 0 1-2 2H8l-4.5 4V5.4a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" /><path d="M12 7v6.2M8.9 10.1h6.2" /></>,
+}
+const TABS: { id: string; label: string; route: Route }[] = [
+  { id: 'learn', label: 'Learn', route: 'home' },
+  { id: 'revise', label: 'Revise', route: 'flux-reels' },
+  { id: 'passport', label: 'Proof', route: 'sp-passport' },
+  { id: 'jobs', label: 'Jobs', route: 'exchange' },
+  { id: 'teach', label: 'Teach', route: 'sp-teach' },
 ]
+const Icon = ({ id }: { id: string }) => <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS[id]}</svg>
 const fmt = (t: number) => new Date(t).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 /** Projects have many right designs: show the rule, not one 'key'. */
 const keyOf = (r: EvidenceRecord, id: string) => r.assessmentId === 'proj.rooftop' ? 'any design passing all checks' : String(r.key[id])
 const LEVEL_LABEL = Object.fromEntries(LEVELS.map((l) => [l.id, l.label])) as Record<Level, string>
 
-export function Shell({ tab, children, light }: { tab: string; children: ReactNode; light?: boolean }) {
+/** The one app frame. `bare` drops the tabs for pages a visitor opens from a shared link. */
+export function Shell({ tab, children, light, bare }: { tab: string; children: ReactNode; light?: boolean; bare?: boolean }) {
   const { online } = useDelivery()
-  return <div className={`fx-root sp-root ${light ? 'sp-light' : ''}`} lang="en">
+  return <div className={`fx-root sp-root${light ? ' sp-light' : ''}${bare ? ' sp-bare' : ''}`} lang="en">
     <a href="#sp-main" className="sp-skip" onClick={(e) => { e.preventDefault(); document.getElementById('sp-main')?.focus() }}>Skip to content</a>
-    <header className="sp-top">
+    <header className="sp-top"><div className="sp-top-inner">
       <a href="#/home" className="sp-brand" aria-label="CAPABLE home"><span className="sp-mark" aria-hidden="true"><i /><i /><i /></span><b>CAPABLE</b></a>
-      <span className="sp-engine">powered by FLUX</span>
       {!online && <span className="sp-off" role="status">Offline · learning still works</span>}
-    </header>
+      {!bare && <a className="sp-seat" href={light ? '#/home' : '#/demand'}>{light ? 'Learner view' : 'For organizations'}</a>}
+      {!bare && <nav className="sp-tabs" aria-label="Main">
+        {TABS.map((t) => <a key={t.id} href={href(t.route)} aria-current={tab === t.id ? 'page' : undefined}><Icon id={t.id} /><span>{t.label}</span></a>)}
+      </nav>}
+    </div></header>
     <main id="sp-main" tabIndex={-1} className="sp-main">{children}</main>
-    <nav className="sp-tabs" aria-label="Main">
-      {TABS.map((t) => <a key={t.id} href={href(t.route)} aria-current={tab === t.id ? 'page' : undefined}><span aria-hidden="true">{t.icon}</span>{t.label}</a>)}
-    </nav>
   </div>
 }
+
+/** Second-level links inside one tab (Learn → labs, Proof → receipts, Teach → lab notes). */
+export function SubNav({ label, items }: { label: string; items: { route: Route; text: string }[] }) {
+  const here = location.hash.replace(/^#\/?/, '').split('?')[0]
+  return <nav className="sp-subnav" aria-label={label}>
+    {items.map((i) => <a key={i.route} href={href(i.route)} aria-current={here === i.route ? 'page' : undefined}>{i.text}</a>)}
+  </nav>
+}
+export const PROOF_NAV = [{ route: 'sp-passport', text: 'Skill evidence' }, { route: 'capable-proof', text: 'Signed lab receipts' }] satisfies { route: Route; text: string }[]
+export const ORG_NAV = [{ route: 'demand', text: 'Demand intelligence' }, { route: 'sp-employer', text: 'Candidates & missions' }] satisfies { route: Route; text: string }[]
+export const TEACH_NAV = [{ route: 'sp-teach', text: 'Field Scar cards' }, { route: 'capable-scars', text: 'Lab fault notes' }] satisfies { route: Route; text: string }[]
+export const LAB_NAV = [{ route: 'codelab', text: 'CodeLab' }, { route: 'datalab', text: 'DataLab' }, { route: 'ailab', text: 'AI Pair' }, { route: 'capable', text: 'Practical Arena' }, { route: 'capable-forge', text: 'Solar Forge' }] satisfies { route: Route; text: string }[]
 
 // ---------------------------------------------------------------- shared bits
 function StateBadge({ row }: { row: Match['rows'][number] }) {
@@ -106,6 +130,7 @@ export function SpCourse() {
 function wipeDevice() {
   resetPassport(); resetCourse()
   localStorage.removeItem('scrollproof:flux:v1'); sessionStorage.clear()
+  for (const k of Object.keys(localStorage)) if (k.startsWith('capable:os:')) localStorage.removeItem(k)
 }
 function DemoControls() {
   const [armed, setArmed] = useState(false)
@@ -265,9 +290,10 @@ export function SpPassport() {
   const job = routeParam('job')
   const inApp = COMPETENCIES.filter((c) => c.assessment)
   return <Shell tab="passport">
-    <p className="fx-kicker">Proof Passport</p>
+    <SubNav label="Proof Passport" items={PROOF_NAV} />
     <h1 className="sp-h1">Your evidence</h1>
     <p className="fx-sub">What you can do, with the exact task, answers and grading behind each claim. You control who sees it.</p>
+    <CapabilitySummary />
     {open && <RecordView r={open} job={job} />}
     <ol className="sp-levels">{LEVELS.map((l) => <li key={l.id} className={l.id}><b>{l.label}</b><span>{l.meaning}</span></li>)}</ol>
     <section className="sp-panel">
@@ -405,10 +431,10 @@ export function SpTeach() {
     return { plays: ans.length, correct: ans.filter((a) => a.correct).length, provedAfter: !!provedAfter }
   }
   return <Shell tab="teach">
-    <p className="fx-kicker">Teach a skill · Field Scars</p>
+    <SubNav label="Teach" items={TEACH_NAV} />
     <h1 className="sp-h1">Turn the mistake you made on site into the card that saves the next apprentice.</h1>
     <p className="fx-sub">Upload a photo of a real fault, mark it, and write the wrong belief juniors hold. It becomes two playable cards after a safety & slop sieve and two master sign-offs. Your name stays on it.</p>
-    <div className="fx-row"><a className="fx-cta in" href={href('flux-studio')}>📷 Capture a Field Scar</a><a className="fx-btn ghost" href={href('flux-queue')}>Master review queue</a></div>
+    <div className="fx-row"><a className="fx-cta in" href={href('flux-studio')}>Capture a Field Scar</a><a className="fx-btn ghost" href={href('flux-queue')}>Master review queue</a></div>
     <section className="sp-panel">
       <h2>Your impact <small>events recorded on this device</small></h2>
       {mine.length === 0 ? <p className="sp-muted">No scars yet. Uploading unlocks after you beat an unseen work order in that domain (prove it to post it).</p>
@@ -449,7 +475,8 @@ export function SpEmployer() {
   ]
   const ranked = job ? cands.map((c) => ({ c, m: matchJob(job, (x) => statusOf(c.records, x)) })).sort((a, b) => Number(b.m.eligible) - Number(a.m.eligible) || b.m.have - a.m.have) : []
   const short = job ? pp.s.shortlist[job.id] ?? [] : []
-  return <Shell tab="jobs" light>
+  return <Shell tab="" light>
+    <SubNav label="Organization" items={ORG_NAV} />
     <p className="fx-kicker">Employer seat <DemoTag>DEMO · same device · no outbound messages</DemoTag></p>
     <label className="sp-acting">Acting as <select value={emp} onChange={(e) => { setEmp(e.target.value); setJobId('') }}>{EMPLOYERS.map(([id, n]) => <option key={id} value={id}>{n}</option>)}</select></label>
     <h1 className="sp-h1">Hire for skills you can inspect</h1>

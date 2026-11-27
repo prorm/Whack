@@ -110,7 +110,7 @@ export function Studio() {
 
   return (
     <div className="fx-hub fx-studio">
-      <header className="fx-top"><button className="fx-back" onClick={() => go('flux')} aria-label="Back to FLUX">←</button><span className="fx-logo"><b>FLUX</b><i>capture studio</i></span></header>
+      <header className="fx-top"><button className="fx-back" onClick={() => go('home')} aria-label="Back home">←</button><span className="fx-logo"><b>FLUX</b><i>capture studio</i></span></header>
       <section className="fx-hero">
         <p className="fx-kicker">Upload a Field Scar, not a lecture</p>
         <h1 className="fx-h1">One real failure → two playable cards.</h1>

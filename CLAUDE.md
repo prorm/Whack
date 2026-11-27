@@ -1,53 +1,44 @@
 # CAPABLE
 
-Learn a trade skill in a meme-format reel feed → prove it on an unseen work order → trainer reviews practical evidence → proof passport → local job match.
+Employer demand → a shared capability graph → the shortest path from what you've proven → practice in work labs (with AI Pair) → unseen work graded by code → a signed, revocable receipt → opportunities. When a role changes, only the delta is relearned.
 
 ## Layout
-- `app/` — the product: Vite + React + TS PWA (feed, work order, evidence, trainer demo view, passport, contractor preview). No runtime AI calls. `npm run build && npx vite preview --port 4173`.
-  - `src/domain.ts` — all grading / binding / matching rules (pure, deterministic). Change rules here only.
+- `app/` — the product: Vite + React + TS PWA. `npm run demo` (build + server on :4173), `npm run test:all` (65 tests), `npm run lint`.
+  - `src/sp/` — the shell: Learn `#/home`, Revise, Proof, Jobs, Teach, the employer seat and public share view.
+  - `src/flux/learn/` — FLUX Learn, the primary learning experience (`#/fl-course`, `#/fl-lesson?id=l1..l5`, `#/fl-project`). Curriculum is pure data in `course.ts`; `course.test.ts` checks narration numbers against `physics.ts`.
+  - `src/flux/` — engine: `physics.ts`, `memory.ts` (1/3/7/21 ladder), `assess.ts` (seeded graders shared with the server), `passport.ts`, `skills.ts`, `goal.ts`; story episodes (`#/flux-solar`, `#/flux-pay`, `#/flux-ev` via JSON Lab Blueprints), revision reels (`#/flux-reels`), Field Scars (`#/flux-studio`, `#/flux-queue`).
+  - `src/os/` — capability layer (`npm run test:os`): `taxonomy.ts`, `compiler.ts`, `path.ts`, `market.ts`, `evidence.ts`, `codelab.ts`, `datalab.ts`, `aipair.ts`; UI in `os/ui/` (`#/gps`, `#/demand`, `#/codelab`, `#/datalab`, `#/ailab`, `#/exchange`).
+  - `src/capable/` — TradeLab: Practical Arena (3D), Solar Forge, Mentor, lab fault notes, signed receipts (`#/capable*`).
   - `sw-template.js` + `vite.config.ts` plugin — generated service worker precaching every built and public file.
-- Feasibility lab (Python, `google-genai` only): `core/`, `schemas/`, `trends/registry/`, `config/models.json`, `scripts/run_feasibility.py`. Outputs to `outputs/`, reports to `reports/`.
+- `scripts/capable_server.mjs` — static server + SQLite API. `capable_upgrade.mjs` issues/grades/signs lab trials; `codelab_sandbox.mjs` runs learner code. `capable_gemini.mjs` is the budgeted Gemini client (compiler second opinion, Mentor).
+- `remotion/` — the CAPABLE X film only (`src/capx/`). Narration `scripts/capable_x_vo.py`, score `scripts/capx_score.mjs`, render `npm run render --prefix remotion` → `out/CAPABLE-X-Film.mp4` (gitignored).
+- Media scripts (Python, `google-genai`): `scripts/course_tts.py`, `flux_media.py`, `motion_plates.py` use `core/` (`cost_ledger.py`, `settings.py`, `vertex_client.py`) and `config/models.json`. Caches live in `outputs/` (gitignored) and are reused at $0.
+- Docs: `reports/final/CAPABLE_X_PITCH.md` (pitch + demo), `CAPABLE_X_PLAN.md`, `CAPABLE_A_TO_Z.md`, `PILOT_PLAN.md`.
 
 ## Product rules (never break)
-- A credential exists only when: simulation passed AND an approved trainer review is bound to that exact attempt id AND evidence id, with all four checklist items ticked. Feed answers and watch time never award anything.
-- Replacing evidence or starting a new attempt detaches any earlier review.
-- Demo people, listings, reviewer and the evidence fixture are always visibly labelled DEMO.
-- Contractor view is a same-device preview: no outbound messages, no fake sharing. Evidence shows there only with explicit learner opt-in.
-- Personalisation is one rule: a missed in-feed question moves that skill's callback reel to the top in a LATER session.
+- Only graded unseen work is evidence. Lessons, reels, watch time and feed answers never award anything.
+- A capability with `proof.kind 'pending'` has no validated assessment and can never be awarded; the UI says so.
+- Trainer review binds to the exact attempt id and evidence fingerprint; a new attempt or new evidence detaches it. Identity is never claimed as verified.
+- Hazardous capabilities only ever lead to a supervised outcome; `site-safety` is in-person only.
+- Every demo person, organization, listing, trainer and master is fictional and labelled DEMO. Never use real company names as demo employers. The employer seat is a same-device preview: nothing is sent.
+- Share links are re-graded on the server from seed + raw answers; revoke makes them 410.
+- Lab seeds for verified trials (CodeLab, DataLab, AI Pair code) stay on the server. CodeLab learner code runs only in the sandbox (`--permission`, no string code generation, 4 s kill). Never add `eval`.
+- AI never grades and is never ground truth. AI Pair's assistant is a labelled scripted simulation; its traps must pass every visible test and fail a hidden one (tested). `/api/capable/compile` (Gemini) may only propose existing graph ids.
+- Reels are revision only: only concepts already learned appear; a missed question moves its callback reel to the top in a LATER session.
 
-## Vertex AI routing (lab)
+## Vertex AI routing
 - Gemini 3.x (text, image) → `location="global"`. Veo / Imagen → `VERTEX_MEDIA_LOCATION` (us-central1). Two clients in `core/vertex_client.py`.
-- Never hardcode model ids in code: add them to `config/models.json` roles; `probe()` resolves available ids and logs fallbacks (Imagen 4 Fast is 404 in this project → `gemini-3.1-flash-lite-image`).
+- Never hardcode model ids: add them to `config/models.json` roles; `probe()` resolves available ids and logs fallbacks.
 - Image models hit per-minute 429s: keep `with_backoff`.
 
 ## Budget safety
-- Every call goes through `CostLedger` (`reports/cost_log.jsonl`, cumulative). `guard()` runs before every paid image/video call and refuses past `MAX_TEST_BUDGET_USD`.
+- Every paid call goes through `CostLedger` (`reports/cost_log.jsonl`, cumulative). `guard()` refuses past `MAX_TEST_BUDGET_USD`.
 - Veo calls are refused unless `ENABLE_LIVE_VIDEO_GEN=true`. Ask the user before enabling it.
-- Run `--dry-run` before any paid tier. Generated assets are cached in `outputs/assets/` and reused at $0.
 
-## Feasibility v2 (2026-11-24) — see reports/feasibility_v2/FINAL_REPORT.md
-- On-device engine (pure TS, offline): `app/src/engine/` — `graph.ts` (curated graph + percent calculator + misconception detector), `learner.ts` (event-sourced Learning Twin), `policy.ts` (rules R1–R7 + guarded bandit), `remix.ts` (Memory Remix planner), `proof.ts` (Proof Lab grading, evidence levels, audit, consent). Tests: `cd app && npm run test:engine` (node --test, no deps).
-- Hand-authored ground truth lives in `content/` (competency graph, percentages ConceptSpec). Never replace it with model output.
-- v2 LLM calls go through `core/v2_llm.py` (worst-case guard, +$2 v2 cap, $5 lifetime, disk cache). Prerequisites come from the graph, never from the model.
-- Numbers in generated lessons must be {op, args}; code recomputes every answer. Prose and Kannada remain UNVERIFIED until a fluent human reviews them.
+## Film
+- Animations key off spoken words via `at(g, beat, "phrase")`. Change narration in `scripts/capable_x_vo.py`, then `node scripts/capx_score.mjs`, then render.
+- Film numbers are the Work Compiler's real output on the Paylane DEMO requirement (4 tasks, 8 capabilities, 1 implied prerequisite; 7 shared; delta = linux/containers/ci-cd, all pending). Keep them in sync if `market.ts`/`taxonomy.ts` change.
+- Product footage in `remotion/public/capx/cap/` is recorded from the running app. Film is 9:04; the pitch close plays 8:50–9:04.
 
-## FLUX learning engine (2026-11-24): see reports/flux/README.md
-- `app/src/flux/`: `physics.ts` (solar string rules, work-order generator, misconception detector) and `memory.ts` (1/3/7/21 ladder, battery, callback ordering) are pure and tested (`npm run test:flux`). UI: `Flux.tsx` hub, `Episode.tsx` (solar), `PayLab.tsx` (payments), `Rooftop.tsx` sim, `Reels.tsx` feed. Routes `#/flux`, `#/flux-solar`, `#/flux-pay`, `#/flux-reels`.
-- Media comes from `scripts/flux_media.py` (cached in `outputs/flux/`, shipped compressed to `app/public/media/flux/`). Never bake numbers into media.
-- Field Scars (UGC): `cards.ts` (provenance + No Passive Scroll validator), `sieve.ts` (AI-marker/duplicate/unsafe-procedure screen), `community.ts` (2-of-3 master review, challenge → patch/retire), `Studio.tsx` (#/flux-studio, gated by a beaten work order), `Queue.tsx` (#/flux-queue). Masters, vouches and bounties are same-device DEMO.
-- Lab Blueprints: `blueprint.ts` (whitelisted expressions, code gate = blueprint tests must pass) + `BlueprintEpisode.tsx`. New threshold episodes are JSON in `app/src/flux/blueprints/` (EV: #/flux-ev). Never add `eval`.
-- Scroll Fuel: `fuel.ts` (tank/earn/escape/mercy rules, tested), `fuelStore.ts`, `Gate.tsx` (#/flux-gate tollbooth), `ScrollFuel.tsx` (#/flux-fuel + simulator). Browser extension: `extension/src/content.js` + `scripts/build_extension.mjs` → `extension/dist` (gitignored). Unlocks accepted only from our own iframe + nonce. Toll answers never award anything. `android-gate/` is an uncompiled skeleton.
-
-## UnlockED final (2026-11-24): see reports/final/
-- One product: CAPABLE (`app/src/sp/Sp.tsx`: Learn `#/home`, Jobs, Passport, Teach, Employer seat) on the FLUX engine. Old career home moved to `#/careers`. Meme/"Sheru bhai" reels are retired from the product path.
-- Pure, tested core (`npm run test:flux` → `proof.test.ts`): `skills.ts` (competency graph + DEMO jobs + `matchJob`), `assess.ts` (seeded graders, shared with the server), `passport.ts` (records, fingerprint, levels, review binding, consent), `goal.ts` (opportunity-driven feed ranking). Store: `passportStore.ts`.
-- Motion reels (`app/src/flux/motion/`): SVG motion graphics driven by physics.ts; setup → forced prediction → payoff. Veo plates (`scripts/motion_plates.py`, `app/public/media/motion/`) are backdrops only and badged.
-- Server: `/api/proof/share` re-grades from seed + raw answers, `/api/proof/revoke`, `GET /api/proof/public/<token>` (410 after revoke).
-- Hazardous competencies always force a supervised outcome; `site.safety` is in-person only and never evidenced in-app.
-- Demo: `cd app && npm run demo`, then `#/home?demo=seed` / `#/home?demo=reset`. Walkthrough: `scripts/verify_unlocked.mjs`; video: `scripts/record_demo.mjs`.
-
-## Product hierarchy (2026-11-24, supersedes "reels as the learning path")
-- **FLUX Learn is the primary learning experience** (`app/src/flux/learn/`, home `#/home`, lessons `#/fl-lesson?id=l1..l5`, project `#/fl-project`). Narrated interactive lessons: teach → predict → experiment → trace → test → train → guided ticket → project. Curriculum is pure data in `course.ts`, tested by `course.test.ts` (narration numbers must match physics.ts).
-- **Reels are revision only** (`#/flux-reels`, tab "Revise"): only concepts already in memory appear; motion-reel quizzes are optional. Never make reels the way a concept is first taught.
-- Narration: `scripts/course_tts.py` (Chirp3-HD `en-IN-Charon`, cost-logged) → `app/public/media/learn/vo_<id>.m4a` + `vo.json`. Change a line in `script.json` → re-run it.
-- House style for Learn = FACELESS AI Day 4/6 look: navy stage, mood tint, grid floor, glass panels, rolling mono numbers, karaoke captions.
+## History
+Older product generations (ScrollProof meme reels, careers, moonshot, Scroll Fuel + extension, the feasibility lab, old films and decks) were moved to `D:\Whackiest26_archive\2026-11-28\` on 2026-11-28 and are no longer part of the repo.

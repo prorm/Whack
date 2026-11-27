@@ -4,28 +4,24 @@
 
 ## Platform
 
-Mobile-first web app with an offline-capable learning path.
+Mobile-first, offline-capable web app (PWA) with a small Node server for verified trials, signatures and share links.
 
 ## Users
 
-The first audience is people preparing for entry-level stock and dispatch work. Small-business inventory leads and vocational trainers can turn a repeated coaching task into a reviewed work sample. Employer participation is a pilot hypothesis.
+Learners who need to show they can do a job: engineering students and freshers aiming at backend and payments roles, and electricians and ITI students moving into solar and EV work. Employers (DEMO in this build) describe the work they need and read evidence. Experienced workers contribute Field Scars.
 
 ## Product purpose
 
-A job seeker can see what a role requires, practice the work, and decide whether to share the result. Contributors can document how they solve common problems so the next learner has a concrete starting point. The first launch scope is inventory and delivery payout calculations.
+Turn what employers actually need into practice you can't fake, and that practice into proof anyone can verify. The Work Compiler maps an employer's own words onto a shared capability graph; Career GPS plans the shortest path from what a learner has proven; labs (CodeLab, DataLab, TradeLab, AI Pair) provide practice; unseen trials are graded by code and signed; the Proof Passport shares and revokes that evidence.
 
 ## Positioning
 
-The work sample connects an opportunity to a lesson and an unseen assessment. A role explains the required task, the learner practices from traceable material, and an evidence review refers to that exact attempt. A learner can bring a listing they found elsewhere and keep the link and role notes on their device.
+Unseen work graded by code, not puzzles, certificates or an AI's opinion. AI fluency is graded too: AI Pair checks whether someone can brief an assistant safely, catch it when it is confidently wrong, and prove it. When a role changes, only the delta is relearned.
 
 ## Verified boundaries
 
-Sample roles, contributors and hiring previews are labelled as demo. Learners control sharing and identity remains unverified. Lessons and assessments can run offline. A trainer decision requires the review service. Outside roles are linked by the learner and applications happen on their original websites.
+Employers, people, listings, trainers and masters are fictional and labelled DEMO. Identity is never claimed as verified; a signature proves the record, not the person. Capabilities without a validated assessment are marked awaiting validation and are never awarded. Hazardous skills lead only to supervised, in-person practicals.
 
 ## Pilot questions
 
-Start with a vocational training partner and local retailers hiring stock assistants. An inventory lead supplies a recurring task and signs off on a scoring rubric. Learners practice offline, complete an unfamiliar version, and choose whether their reviewed work may be shown to the hiring team. The employer decides which candidates to interview.
-
-Track how many learners complete the unfamiliar task, how many opt to share, how many receive interviews, and how much reviewer time each candidate takes. Ask learners who drop out where they got stuck. Check physical Android access and fluent Kannada before expanding the cohort.
-
-Keep practice free for learners in the pilot. Test whether employers or training partners would pay for the time saved preparing and assessing candidates once there is evidence that reviewed work samples improve interview decisions.
+Does verified work change who gets an interview? Measure interview rate for receipt-holders against résumé-only candidates, employer screening minutes per candidate, and how often employers call the evidence decisive. Keep learning free; test whether employers pay per verified shortlist and whether enterprises pay for verification and AI Pair seats.

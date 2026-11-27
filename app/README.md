@@ -10,34 +10,36 @@ npm start
 
 Open [CAPABLE](http://127.0.0.1:4173/). The built app and sync API run on the same origin. The browser saves the lesson and exercise pack after the first successful load. Use localhost or an HTTPS deployment for service workers.
 
-## Walk through the demo
+## Practical labs
 
-1. Open **Explore roles**, choose **Dispatch & Payout Assistant**, and select **Start learning for this role**. Review the prefilled goal and start the diagnostic.
-2. To see a misconception repair, answer the commission question with **100**, the percentage question with **415**, and the fraction question with **0.75**.
-3. Start the recommended lesson. Switch to **Read**, then try **370** for the question about 20% of 350.
-4. Open your revision reel. It pauses on a fresh question. Submit an answer to see the calculation and continue.
-5. Submit the payout worksheet. With the server reachable, check the worksheet in **Trainer review** and approve it in demo mode.
-6. Open the Skill Passport. Give consent before opening the same-device employer preview. Clearing consent closes and hides the preview.
+The labs live inside the main app: Learn → Practical labs (CodeLab, DataLab, [Practical Arena](http://127.0.0.1:4173/#/capable), Solar Forge). Signed receipts are under Proof, lab fault notes under Teach.
 
-Open **Data & offline settings** for Automatic, Rich, Lite, Offline and Data Saver. Offline mode uses saved lessons and exercises. The app retries queued learning events and worksheets when connectivity returns, even when Offline remains selected. Job text and employer preview consent stay in the browser.
+1. **Arena.** Open a practice case or start a server-issued trial. Orbit and tap the 3D hardware, select two meter points, isolate the circuit, diagnose the open component, and test the repair. A TypeScript nodal solver calculates AC-equivalent voltages, resistance and lamp power for four seeded faults. The server independently replays the trace and checks isolation, diagnosis and the final load test.
+2. **Forge & Lens.** Pick either fictional label, cover a field, and scan with Robotics ER 2. The missing value blocks the lab until someone confirms it. Reveal the field and compare the source with the extracted values. Prepared labels and manual entry also work offline.
+3. **Solar lab.** Predict that voltage falls and choose **Very sure**, then check the prediction to trigger a FLUX contrast reel. Move the cell temperature and see the voltage cross the limit. The Mentor accepts typed or recorded teach-back, offers English and Kannada captions, and uses the device's installed voice for narration. Hydrogen can suggest an allowlisted simulator comparison for the learner to apply.
+4. **Counterfactual and proof.** Start a verified work order while online, then submit the changed-constraint exercise offline if needed. Reconnect to re-grade and sign it. The Proof Passport shows recorded evidence, exposes a revocable link and QR by request, and maps the solar work order to a demo role requirement. Use HTTPS and a reachable hostname when sharing to another device. Site work still requires supervised assessment.
+5. **Field Scars.** Review a field note, select one of the supported faults, and save it to the device's practice library. Gemini Decisions can suggest a template when its key is authorized.
 
-## Review and sync
+### Gemini credentials and budget
 
-By default, reviews are labelled as demo. Set `CAPABLE_TRAINER_CODE` in the server environment to require a trainer code for payout review. The app stores each server review against the submitted worksheet. The Skill Passport records reviewed evidence with identity unverified. The employer preview stays on the same device.
+The server reads the repository `.env`. Set the project with `GCP_PROJECT` or `GOOGLE_CLOUD_PROJECT`. Set the Vertex key with `CAPABLE_VERTEX_API_KEY`, `GOOGLE_CLOUD_API_KEY`, or the demo's `GC_KEY`. The project-scoped Vertex route serves `gemini-robotics-er-2-preview` and `gemini-4-hydrogen`. `CAPABLE_VERTEX_AUTH=project` uses the configured service-account JSON instead. API keys and raw Gemini requests stay on the server.
 
-The server stores progress in `app/.data/progress.sqlite`. The browser's generated device token scopes uploads. Starting a new worksheet detaches the previous review from the current Passport. Use `npm start -- --port 4176` for an alternate port or `--data <path>` for a different database.
+`gemini-decision-1` uses the separate [Gemini Decisions API](https://aistudio.google.com/docs/decisions-api). Set `CAPABLE_DECISIONS_API_KEY` to a key authorized for `generativelanguage.googleapis.com`. The demo key passed the Vertex tests and returned `403 API_KEY_SERVICE_BLOCKED` on Decisions. Learners can complete the deterministic workflows and manually review Field Scars with the current key.
+
+The app and live smoke script share a persistent SQLite reservation ledger at `app/.data/capable-gemini.sqlite`. It reserves $0.25 before each inference and rejects requests that would put total reservations above $4.75. Calls have capped input and output, a timeout, and zero automatic retries. Set `CAPABLE_GEMINI_ENABLED=0` to disable live inference. Google Cloud billing tracks activity outside this app separately.
+
+### Verify CAPABLE 2.0
+
+Run `npm run test:all` and `npm run build` in `app/`. From the repository root, run `node scripts/verify_capable.mjs` with Playwright and installed Chrome. The browser suite starts its own server with Gemini disabled, exercises offline completion and reconnection, and saves desktop and mobile screenshots under `outputs/capable-qa/`.
+
+Run `node scripts/capable_live_smoke.mjs` from the repository root to invoke the configured models against the fictional fixtures. Pass `lens`, `decision`, `mentor`, or `audio` to run individual groups. The `audio` check uses FFmpeg with Flite to generate a short synthetic voice sample. The smoke script uses real credits and the same $4.75 cap.
 
 ## Verify
 
 ```sh
-npm run test:engine
-npm run test:moonshot
+npm run test:all     # 65 tests: FLUX engine + curriculum, capability layer + AI Pair, server trials and signatures
 npm run lint
 npm run build
 ```
 
-From the workspace root, run `node scripts/verify_experience.mjs` with Playwright and Chromium installed. Set `PLAYWRIGHT_MODULE` and `PLAYWRIGHT_CHROMIUM` to explicit paths when using tools outside the workspace. The script starts disposable servers and saves screenshots and measurements under `outputs/experience_sprint/`.
-
-To verify the career screens, start the app with `npm start -- --port 4178`, then run `node scripts/verify_careers.mjs` from the repository root. Set `CAPABLE_CAREERS_URL` if the server uses a different address. Screenshots and results are saved under `outputs/career-experience/`.
-
-Render the vertical showcase from `reel/` with `npx remotion render PayoutCheck ../outputs/experience_sprint/capable-payout-check.mp4`.
+From the repository root, `node scripts/verify_learn.mjs` walks the course with Playwright, and `node scripts/verify_capable.mjs` checks the labs and signed receipts.

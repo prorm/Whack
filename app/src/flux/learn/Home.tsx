@@ -8,6 +8,7 @@ import { useCourse } from './courseStore'
 import { TRACKS, type Field } from './catalog'
 import './learn.css'
 import './home.css'
+import solarLabel from '../../capable/summit.jpg'
 
 const LAB_MIN_TEMP = 4
 const LAB_MAX_TEMP = 45
@@ -53,10 +54,19 @@ function SolarLab() {
 }
 
 const journey = [
-  { title: 'Learn', detail: 'Experiment with real work scenarios.', href: '#/fl-course' },
-  { title: 'Revise', detail: 'Revisit what you missed in short reels.', href: '#/flux-reels' },
-  { title: 'Prove', detail: 'Solve a new task and keep the evidence.', href: '#/sp-passport' },
-  { title: 'Connect', detail: 'Share your work for roles that need it.', href: '#/sp-jobs' },
+  { title: 'Discover', detail: 'See what employers actually ask for.', href: '#/gps?intent=start' },
+  { title: 'Learn', detail: 'Only the gap between you and the role.', href: '#/gps?intent=role' },
+  { title: 'Practice', detail: 'Real work in CodeLab, DataLab and TradeLab.', href: '#/codelab' },
+  { title: 'Prove', detail: 'Unseen tasks, graded by code, signed.', href: '#/sp-passport' },
+  { title: 'Earn', detail: 'Jobs, internships and paid projects.', href: '#/exchange' },
+]
+
+const INTENTS = [
+  { title: 'I don’t know where to start', href: '#/gps?intent=start' },
+  { title: 'I want a specific job', href: '#/gps?intent=role' },
+  { title: 'I already have skills', href: '#/gps?intent=skills' },
+  { title: 'I want to switch careers', href: '#/gps?intent=switch' },
+  { title: 'I want to start earning', href: '#/gps?intent=earn' },
 ]
 
 export function Home() {
@@ -72,12 +82,13 @@ export function Home() {
   return <div className="ln-map hm">
     <section className="hm-hero">
       <div className="hm-copy">
-        <h1>Build skills.<br /><em>Prove you can<br className="hm-title-break" /> do the work.</em></h1>
-        <p className="ln-lead">Practice real work in interactive labs, revisit what you learn in short reels, and build a Proof Passport employers can inspect.</p>
+        <h1>Learn the work.<br /><em>Prove the work.</em><br />Find opportunity.</h1>
+        <p className="ln-lead">CAPABLE turns what employers actually need into a learning path, a workplace simulation and evidence you control, across software, data, energy and the trades.</p>
         <div className="ln-row">
           {done > 0 && nextL ? <a className="ln-btn primary big" href={`#/fl-lesson?id=${nextL.id}`}>Continue · Lesson {nextL.n}: {nextL.title} →</a>
-            : <button className="ln-btn primary big" onClick={() => document.getElementById('careers-h')?.focus()}>Explore career tracks →</button>}
-          {done > 0 && due > 0 && <a className="hm-text-link" href="#/flux-reels">Revise · {due} due</a>}
+            : <a className="ln-btn primary big" href="#/gps">Plan my path →</a>}
+          {done > 0 && due > 0 ? <a className="hm-text-link" href="#/flux-reels">Revise · {due} due</a>
+            : <a className="hm-text-link" href="#/demand">For organizations: describe the work</a>}
         </div>
       </div>
       <SolarLab />
@@ -88,6 +99,51 @@ export function Home() {
         <a href={href}><strong>{title}</strong><span>{detail}</span></a>
       </li>)}
     </ol>
+
+    <section className="hm-gps" aria-labelledby="gps-h">
+      <h2 id="gps-h">What do you want to achieve?</h2>
+      <div className="hm-intents">{INTENTS.map((i) => <a key={i.href} href={i.href}>{i.title} <span aria-hidden="true">→</span></a>)}</div>
+    </section>
+
+    <section className="hm-labs" aria-labelledby="labs-h">
+      <div className="hm-labs-head">
+        <h2 id="labs-h">Hands-on labs</h2>
+        <p className="ln-lead">Reusable workplace simulations. Practice is graded on your device; a verified run is re-graded on the server and signed into your Proof Passport.</p>
+      </div>
+      <div className="hm-labs-grid">
+        <a className="hm-lab-entry" href="#/codelab">
+          <img src="/media/labs/codelab.webp" alt="" loading="lazy" width="803" height="559" />
+          <div><span className="hm-field">Software · CodeLab</span><h3>Fix a failing payment API</h3>
+            <p>Read the incident log, repair the webhook handler and pass hidden tests in a server sandbox. Then write the incident report.</p>
+            <span className="hm-lab-go">Open CodeLab <span aria-hidden="true">→</span></span></div>
+        </a>
+        <a className="hm-lab-entry" href="#/datalab">
+          <img src="/media/labs/datalab.webp" alt="" loading="lazy" width="803" height="559" />
+          <div><span className="hm-field">Data & operations · DataLab</span><h3>Reconcile a payout export</h3>
+            <p>Find duplicates, reversals and amounts that don’t match the gateway, and hold back every row that must not be paid.</p>
+            <span className="hm-lab-go">Open DataLab <span aria-hidden="true">→</span></span></div>
+        </a>
+        <a className="hm-lab-entry" href="#/capable">
+          <img src="/media/labs/arena.webp" alt="" loading="lazy" width="803" height="559" />
+          <div><span className="hm-field">Electrical · TradeLab</span><h3>Practical Arena</h3>
+            <p>Find the fault in a dark lamp circuit. Measure with a multimeter, prove isolation, repair, then test under load.</p>
+            <span className="hm-lab-go">Open the lab <span aria-hidden="true">→</span></span></div>
+        </a>
+        <a className="hm-lab-entry" href="#/capable-forge">
+          <img className="is-label" src={solarLabel} alt="" loading="lazy" width="956" height="590" />
+          <div><span className="hm-field">Solar · TradeLab</span><h3>Solar Forge</h3>
+            <p>Read a solar nameplate, confirm each value, then size a string for a cold morning on an unseen work order.</p>
+            <span className="hm-lab-go">Open the lab <span aria-hidden="true">→</span></span></div>
+        </a>
+        <a className="hm-lab-entry hm-lab-wide" href="#/ailab">
+          <img src="/media/labs/aipair.webp" alt="" loading="lazy" width="803" height="559" />
+          <div><span className="hm-field">Every field · AI Pair</span><h3>Catch the AI when it’s wrong</h3>
+            <p>Brief an assistant without leaking secrets, spot the confident patch or diagnosis that is wrong, and prove it with a test or a meter reading.</p>
+            <span className="hm-lab-go">Open AI Pair <span aria-hidden="true">→</span></span></div>
+        </a>
+      </div>
+      <p className="ln-muted hm-honest">Educational simulations. Real electrical work still needs an in-person supervised check.</p>
+    </section>
 
     <section id="careers" className="hm-careers" aria-labelledby="careers-h">
       <div className="hm-head">

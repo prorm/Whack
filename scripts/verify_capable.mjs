@@ -1,0 +1,168 @@
+// Uses installed Chrome and a Playwright installation supplied through PLAYWRIGHT_MODULE.
+import assert from 'node:assert/strict'
+import { spawn } from 'node:child_process'
+import { mkdir } from 'node:fs/promises'
+import { resolve } from 'node:path'
+import { pathToFileURL } from 'node:url'
+import { faultFor, PART_LABEL, TERMINAL_LABEL, TEST_POINTS } from '../app/src/capable/arena.ts'
+import { solarVariant, voltage } from '../app/src/capable/solar.ts'
+
+const output = resolve(import.meta.dirname, '../outputs/capable-qa')
+await mkdir(output, { recursive: true })
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href : 'playwright')
+const port = Number(process.env.CAPABLE_QA_PORT || 4397)
+const address = `http://127.0.0.1:${port}/`
+const server = spawn(process.execPath, [resolve(import.meta.dirname, './capable_server.mjs'), '--port', String(port), '--data', ':memory:'], {
+  env: { ...process.env, CAPABLE_GEMINI_ENABLED: '0' }, stdio: ['ignore', 'pipe', 'inherit'], windowsHide: true,
+})
+let browser
+const log = (message) => console.log(`PASS ${message}`)
+try {
+  await new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('Demo server did not start')), 10_000)
+    server.once('error', (error) => { clearTimeout(timer); reject(error) })
+    server.stdout.on('data', (chunk) => { if (chunk.includes('CAPABLE at')) { clearTimeout(timer); resolve() } })
+  })
+  browser = await chromium.launch({ channel: 'chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] })
+  const desktop = await browser.newContext({ viewport: { width: 1440, height: 960 }, permissions: ['microphone'] })
+  const page = await desktop.newPage()
+  const errors = []
+  page.on('pageerror', (error) => errors.push([page.url(), error.stack]))
+  const button = (name) => page.getByRole('button', { name, exact: true })
+  const waitText = (value) => page.getByText(value, { exact: typeof value === 'string' }).first().waitFor()
+  const shot = (name) => page.screenshot({ path: resolve(output, `${name}.png`), fullPage: true })
+  const start = async (label) => {
+    const response = page.waitForResponse((response) => response.url().endsWith('/api/capable/start'))
+    await button(label).click()
+    const result = await response
+    assert.equal(result.status(), 201)
+    return result.json()
+  }
+  const from = async (a, b) => {
+    await button(TERMINAL_LABEL[a]).click(); await button(TERMINAL_LABEL[b]).click()
+  }
+  await page.goto(`${address}#/home`)
+  await page.getByRole('link', { name: /Practical Arena/ }).click()
+  await page.getByRole('heading', { name: 'Practical Arena' }).waitFor()
+  await page.locator('.c2-viewport canvas').waitFor({ timeout: 25_000 })
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller), undefined, { timeout: 25_000 })
+  await page.locator('.c2-scene-label').first().waitFor()
+  await shot('arena-desktop')
+  const bounds = await page.locator('.c2-viewport canvas').boundingBox()
+  await page.mouse.click(bounds.x + bounds.width * .30, bounds.y + bounds.height * .48)
+  await button('Close cover').waitFor()
+  const fixtureLabel = page.locator('[data-point=fixture]')
+  const beforeOrbit = await fixtureLabel.getAttribute('style')
+  await page.mouse.move(bounds.x + bounds.width * .89, bounds.y + bounds.height * .80)
+  await page.mouse.down()
+  await page.mouse.move(bounds.x + bounds.width * .81, bounds.y + bounds.height * .77, { steps: 8 })
+  await page.mouse.up()
+  await page.waitForFunction((before) => document.querySelector('[data-point=fixture]')?.getAttribute('style') !== before, beforeOrbit)
+  log('home entry, offline precache, 3D raycast and orbit controls')
+
+  const trial = await start('Start verified trial')
+  await waitText('Verified trial')
+  await desktop.setOffline(true)
+  await page.reload()
+  await page.getByRole('heading', { name: 'Practical Arena' }).waitFor()
+  await button('Unscrew cover').click()
+  await button('Breaker ON').click()
+  await from('fuse-in', 'neutral')
+  assert.match(await page.locator('.c2-meter-screen').innerText(), /0\.0/)
+  await button('Resistance Ω').click()
+  const part = faultFor(trial.seed)
+  await from(...TEST_POINTS[part])
+  assert.match(await page.locator('.c2-meter-screen').innerText(), /OL/)
+  await shot('arena-diagnosis')
+  await button('Repair').click()
+  await button(`Repair ${PART_LABEL[part].toLowerCase()}`).click()
+  await button('Close cover').click()
+  await button('Breaker OFF').click()
+  await button('Run load test').click()
+  await waitText('Lamp on')
+  await button('Verify practical').click()
+  await waitText(/Saved on this device/)
+  await desktop.setOffline(false)
+  await button('Verify saved trace').click()
+  await waitText(/Server replay passed/)
+  log('reloads offline, measures, repairs, saves, reconnects and replays a seeded L4 trial')
+
+  await page.getByRole('link', { name: 'Open Proof Passport' }).click()
+  await waitText(/Ed25519 signature verified/)
+  await button('Create share link').click()
+  await page.getByRole('img', { name: 'QR code for the verification link' }).waitFor()
+  const link = await page.getByLabel('Verification link').inputValue()
+  const visitor = await browser.newPage()
+  await visitor.goto(link)
+  await visitor.getByText(/Ed25519 signature verified/).waitFor()
+  await button('Revoke link').click()
+  await visitor.reload()
+  await visitor.getByText(/learner revoked/).waitFor()
+  await visitor.close()
+  log('signed receipt, QR, verifier in a separate browser context and revocation')
+
+  await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Learn' }).click()
+  await page.getByRole('link', { name: /Solar Forge/ }).click()
+  await page.getByRole('checkbox', { name: 'Cover one value' }).check()
+  assert.equal(await button('Confirm and open lab').isDisabled(), true)
+  await shot('forge-covered')
+  await page.getByRole('checkbox', { name: 'Cover one value' }).uncheck()
+  await button('Confirm and open lab').click()
+  await page.getByRole('radio', { name: 'Voltage falls' }).check()
+  await page.getByLabel('How confident are you?').selectOption('sure')
+  await button('Check prediction').click()
+  await waitText('FLUX · Contrast reel')
+  await button('Compare 25°C and −10°C').click()
+  await waitText('Above limit')
+  await button('Try a recall check').click()
+  await button('Falls').click()
+  await waitText(/retrieval attempt was saved/)
+  await button('ಕನ್ನಡ').click()
+  assert.match(await page.locator('.c2-caption').innerText(), /[\u0C80-\u0CFF]/)
+  await button('Record voice').click()
+  await button('Stop recording').waitFor()
+  await new Promise((resolve) => setTimeout(resolve, 700))
+  await button('Stop recording').click()
+  await waitText(/Recording ready/)
+  const call = page.waitForResponse((response) => response.url().endsWith('/api/capable/mentor'))
+  await button('Ask Hydrogen').click()
+  const mentorResponse = await call
+  assert.equal(mentorResponse.status(), 503)
+  assert.equal(mentorResponse.request().postDataJSON().media.mimeType, 'audio/wav')
+  await waitText(/practice caption is available/)
+  await shot('solar-repair')
+  const solar = await start('Start verified work order')
+  const test = solarVariant(solar.profile, solar.seed)
+  const max = Math.floor(test.ceiling / voltage(solar.profile, 1, test.temp))
+  await page.getByRole('spinbutton', { name: 'Maximum modules within the voltage limit' }).fill(String(max))
+  await page.getByRole('combobox', { name: /A coworker proposes/ }).selectOption(test.proposed > max ? 'exceeds' : 'within')
+  await button('Submit work order').click()
+  await waitText(/Server regraded · Passed/)
+  await page.getByRole('link', { name: 'Open Proof Passport' }).click()
+  await waitText('Demonstrated in simulation')
+  log('blocked covered field, confidence-driven FLUX repair, Kannada caption, solar transfer grade and role evidence')
+
+  await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Teach' }).click()
+  await page.getByRole('navigation', { name: 'Teach' }).getByRole('link', { name: 'Lab fault notes' }).click()
+  await page.getByRole('textbox', { name: 'What went wrong?' }).fill('A loose neutral opened the return path in a training fixture.')
+  await page.getByRole('combobox', { name: 'Confirm the fault template' }).selectOption('neutral')
+  await button('Save practice case').click()
+  await page.getByRole('link', { name: 'Load practice case' }).click()
+  await waitText('Practice case')
+  assert.ok(page.url().includes('practice='))
+  log('reviewed Field Scar loads as a practice case')
+
+  for (const [name, hash] of [['arena-mobile', 'capable'], ['forge-mobile', 'capable-forge']]) {
+    const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true })
+    await mobile.goto(`${address}#/${hash}`)
+    await mobile.locator('.c2-main h1').waitFor()
+    if (hash === 'capable') await mobile.locator('.c2-scene-label').first().waitFor()
+    assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true)
+    await mobile.screenshot({ path: resolve(output, `${name}.png`), fullPage: true })
+    await mobile.close()
+  }
+  assert.deepEqual(errors, [])
+  log('mobile layout without overflow or uncaught desktop browser errors')
+} finally {
+  try { if (browser) await browser.close() } finally { server.kill() }
+}

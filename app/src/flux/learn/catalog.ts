@@ -35,12 +35,4 @@ export const TRACKS: Track[] = [
     depth: 'Story lesson · 5 min + 2 unseen checks', level: 'episode', minutes: 5, start: '#/flux-pay',
     learn: ['Why a customer got charged twice', 'The lost reply problem', 'Idempotency keys', 'Retries, backoff and jitter'],
     proofs: ['pay.idempotency', 'pay.backoff'], job: 'job-payments-support', pay: '₹28–35k/month (illustrative)' },
-  { id: 'inventory', title: 'Inventory & Stock Assistant', field: 'Operations', from: 'For first-time job seekers', mood: '#ff8a1f', img: '/media/careers/inventory-counter.webp',
-    depth: 'Lesson + work sample + trainer review', level: 'path', minutes: 10, start: '#/opportunity?role=inventory',
-    learn: ['Expected vs physical stock', 'Spreadsheet formulas that go wrong', 'Explaining a signed difference'],
-    proofs: [], pay: 'Retail entry roles (no listings in this demo)' },
-  { id: 'dispatch', title: 'Dispatch & Payout Assistant', field: 'Operations', from: 'For first-time job seekers', mood: '#9b6bff', img: '',
-    depth: 'Diagnostic + adaptive lessons + worksheet', level: 'path', minutes: 12, start: '#/opportunity?role=payouts',
-    learn: ['Percentage commissions', 'Per-order bonuses', 'Totalling rider payouts'],
-    proofs: [], pay: 'Delivery operations roles (no listings in this demo)' },
 ]

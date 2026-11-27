@@ -75,7 +75,7 @@ export function Queue() {
   const live = scars.filter((x) => x.status === 'live').length
   return (
     <div className="fx-hub fx-queue">
-      <header className="fx-top"><button className="fx-back" onClick={() => go('flux')} aria-label="Back to FLUX">←</button><span className="fx-logo"><b>FLUX</b><i>verification queue</i></span></header>
+      <header className="fx-top"><button className="fx-back" onClick={() => go('home')} aria-label="Back home">←</button><span className="fx-logo"><b>FLUX</b><i>verification queue</i></span></header>
       <section className="fx-hero">
         <p className="fx-kicker">2-of-3 masters · challenge forever</p>
         <h1 className="fx-h1">Nothing reaches the feed unverified.</h1>

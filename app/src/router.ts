@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+export type CapableRoute = 'capable' | 'capable-forge' | 'capable-scars' | 'capable-proof' | 'capable-public'
+export type OsRoute = 'gps' | 'demand' | 'codelab' | 'datalab' | 'ailab' | 'exchange'
 
-export type Route = 'home' | 'opportunities' | 'opportunity' | 'workspace' | 'inventory-learning' | 'mission' | 'path' | 'diagnostic' | 'delivery' | 'revision' | 'challenge' | 'skill-review' | 'skill-passport' | 'feed' | 'work-order' | 'practice' | 'evidence' | 'passport' | 'trainer' | 'contractor' | 'learn' | 'flux' | 'flux-solar' | 'flux-pay' | 'flux-reels' | 'flux-ev' | 'flux-studio' | 'flux-queue' | 'flux-fuel' | 'flux-gate' | 'careers' | 'fl-course' | 'fl-lesson' | 'fl-project' | 'sp-jobs' | 'sp-job' | 'sp-assess' | 'sp-passport' | 'sp-employer' | 'sp-teach' | 'sp-view'
-const ROUTES: Route[] = ['home', 'opportunities', 'opportunity', 'workspace', 'inventory-learning', 'mission', 'path', 'diagnostic', 'delivery', 'revision', 'challenge', 'skill-review', 'skill-passport', 'feed', 'work-order', 'practice', 'evidence', 'passport', 'trainer', 'contractor', 'learn', 'flux', 'flux-solar', 'flux-pay', 'flux-reels', 'flux-ev', 'flux-studio', 'flux-queue', 'flux-fuel', 'flux-gate', 'careers', 'fl-course', 'fl-lesson', 'fl-project', 'sp-jobs', 'sp-job', 'sp-assess', 'sp-passport', 'sp-employer', 'sp-teach', 'sp-view']
+export type Route = CapableRoute | OsRoute | 'home' | 'flux-solar' | 'flux-pay' | 'flux-reels' | 'flux-ev' | 'flux-studio' | 'flux-queue' | 'fl-course' | 'fl-lesson' | 'fl-project' | 'sp-jobs' | 'sp-job' | 'sp-assess' | 'sp-passport' | 'sp-employer' | 'sp-teach' | 'sp-view'
+const ROUTES: Route[] = ['gps', 'demand', 'codelab', 'datalab', 'ailab', 'exchange', 'capable', 'capable-forge', 'capable-scars', 'capable-proof', 'capable-public', 'home', 'flux-solar', 'flux-pay', 'flux-reels', 'flux-ev', 'flux-studio', 'flux-queue', 'fl-course', 'fl-lesson', 'fl-project', 'sp-jobs', 'sp-job', 'sp-assess', 'sp-passport', 'sp-employer', 'sp-teach', 'sp-view']
 
 function parse(): Route {
   const r = location.hash.replace(/^#\/?/, '').split('?')[0] as Route

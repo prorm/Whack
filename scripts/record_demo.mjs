@@ -1,6 +1,6 @@
 // Records the real app (1280×720) through the whole journey, then lays the app's own narration lines and music bed
 // under the capture at the exact moments they played (from the lesson player's timeline hook). No mockups.
-//   node scripts/scrollproof_server.mjs --port 4180 --data app/.data/demo.sqlite   (after npm run build)
+//   node scripts/capable_server.mjs --port 4180 --data app/.data/demo.sqlite   (after npm run build)
 //   PLAYWRIGHT_MODULE=<path>/playwright/index.mjs SP_URL=http://127.0.0.1:4180 node scripts/record_demo.mjs
 import { mkdir, rename, writeFile } from 'node:fs/promises'
 import { execFileSync } from 'node:child_process'
@@ -125,7 +125,7 @@ lines.forEach((n, k) => {
 filters.push(`[bed]${lines.map((_, k) => `[v${k}]`).join('')}amix=inputs=${lines.length + 1}:normalize=0:duration=first[mix]`)
 const wav = resolve(out, 'soundtrack.wav')
 execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-filter_complex', filters.join(';'), '-map', '[mix]', '-ar', '48000', wav])
-const mp4 = resolve(out, 'scrollproof_demo.mp4')
+const mp4 = resolve(out, 'capable-walkthrough.mp4')
 execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', resolve(out, 'raw.webm'), '-i', wav, '-map', '0:v', '-map', '1:a', '-vf', 'fps=30', '-c:v', 'libx264', '-crf', '20', '-preset', 'medium', '-c:a', 'aac', '-b:a', '128k', '-shortest', '-movflags', '+faststart', mp4])
 await writeFile(resolve(out, 'chapters.txt'), marks.join('\n') + '\n\nnarration lines: ' + lines.map((n) => n.id).join(', ') + '\n')
 console.log('->', mp4, `${lines.length} narration lines mixed`)

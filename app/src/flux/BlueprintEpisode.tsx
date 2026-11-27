@@ -192,11 +192,11 @@ export function BlueprintEpisode({ bp }: { bp: Blueprint }) {
   const gateOk = useMemo(() => runTests(bp).every((t) => t.ok), [bp])
   useEffect(() => { if (step === 0) { const t = setTimeout(() => voice(bp.media.voOpen ?? ''), 500); return () => { clearTimeout(t); stopVoice() } } }, [step, bp])
   const next = () => { stopVoice(); setStep(bp.id, step + 1, step + 1 === STEPS.length - 1); scrollTo(0, 0) }
-  if (lint.length || !gateOk) return <Shell steps={['Blocked']} step={0} onExit={() => go('flux')}>
+  if (lint.length || !gateOk) return <Shell steps={['Blocked']} step={0} onExit={() => go('home')}>
     <section className="fx-card"><h1 className="fx-h1">This blueprint cannot be played.</h1><GateBanner bp={bp} /><ul>{lint.map((l) => <li key={l}>{l}</li>)}</ul></section></Shell>
   const labels = Object.fromEntries(bp.bet.options.map((o) => [o.id, o.label]))
   return (
-    <Shell steps={STEPS} step={step} onExit={() => go('flux')} tone={step === 0 ? 'bleed' : ''}>
+    <Shell steps={STEPS} step={step} onExit={() => go('home')} tone={step === 0 ? 'bleed' : ''}>
       {step === 0 && <Plate video={bp.media.video} poster={bp.media.poster}>
         <div className="fx-stamp-time"><b>{bp.open.stamp}</b><span>{bp.open.sub}</span></div>
         <Typer onDone={() => setReady(true)} lines={bp.open.lines.map((t, i) => ({ t, at: 900 + i * 1900, cls: i === 0 ? 'fx-h1' : i === bp.open.lines.length - 1 ? 'fx-h1 hot' : undefined }))} />

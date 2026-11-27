@@ -379,7 +379,7 @@ export function Wrap({ title, concepts }: { title: string; concepts: string[] })
       <div className="fx-ladder"><span>Day 1</span><span>Day 3</span><span>Day 7</span><span>Day 21</span></div>
       <p className="fx-sub">Your memory drains like a battery. Recall reels recharge it right before it gets weak, and anything you miss comes back first next time.</p>
       <div className="fx-row"><button className="fx-cta in" onClick={() => go('flux-reels')}>Open recall reels</button>
-        <button className="fx-btn ghost" onClick={() => go('flux')}>Back to FLUX</button></div>
+        <button className="fx-btn ghost" onClick={() => go('home')}>Back home</button></div>
     </section>
   )
 }
@@ -395,7 +395,7 @@ export function SolarEpisode() {
   const next = () => { stopVoice(); setStep('solar', step + 1, step + 1 === STEPS.length - 1); scrollTo(0, 0) }
   const labels = Object.fromEntries(BET.options.map((o) => [o.id, o.label]))
   return (
-    <Shell steps={STEPS} step={step} onExit={() => go('flux')} tone={step === 0 ? 'bleed' : ''}>
+    <Shell steps={STEPS} step={step} onExit={() => go('home')} tone={step === 0 ? 'bleed' : ''}>
       {step === 0 && <ColdOpen next={next} />}
       {step === 1 && <BetScreen bet={BET} next={next} />}
       {step === 2 && <Lab next={next} />}

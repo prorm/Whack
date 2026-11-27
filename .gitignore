@@ -24,3 +24,8 @@ __pycache__/
 
 # built browser extension (node scripts/build_extension.mjs)
 extension/dist/
+
+# rendered films (too large for git; share separately)
+out/*.mp4
+# regenerable for free with node scripts/capx_score.mjs (105 MB, over the GitHub file limit)
+remotion/public/capx/score.wav
