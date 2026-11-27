@@ -29,3 +29,11 @@ extension/dist/
 out/*.mp4
 # regenerable for free with node scripts/capx_score.mjs (105 MB, over the GitHub file limit)
 remotion/public/capx/score.wav
+
+# videos and films are shared separately, never committed
+*.mp4
+*.webm
+*.mov
+*.mkv
+*.avi
+*.m4v
